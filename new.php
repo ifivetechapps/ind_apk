@@ -41,7 +41,7 @@
           <label class="align"> Project:{{$project_name}}</label>
         </div>
         <div class="col-md-6">
-          <label class="align">Job Code:{{$project_code}}  </label>
+          <label class="align">Job Code: {{$project_code}}  </label>
         </div>
       </div>
 
