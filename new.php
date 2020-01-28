@@ -38,7 +38,7 @@
     <div class="card-header">
       <div class="row">
         <div class="col-md-6">
-          <label class="align"> Project:{{$project_name}}</label>
+          <label class="align"> Project: {{$project_name}}</label>
         </div>
         <div class="col-md-6">
           <label class="align">Job Code: {{$project_code}}  </label>
