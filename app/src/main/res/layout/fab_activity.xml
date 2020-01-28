@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/so_order_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/radius_bottom"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="7dp"
+        android:scrollbars="vertical" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        fab:fab_colorNormal="#66000000"
+        fab:fab_colorPressed="#66000000"
+        fab:fab_colorRipple="#99FFFFFF"
+        fab:fab_shadowColor="#66000000"
+        fab:fab_showShadow="true"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_colorNormal="#181b1d"
+        fab:menu_labels_colorNormal="#333333"
+        fab:menu_labels_colorPressed="#444444"
+        fab:menu_labels_colorRipple="#66FFFFFF"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="true"
+        fab:menu_openDirection="up">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/create_standard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            fab:fab_colorNormal="#181b1d"
+            fab:fab_label="Create Standard"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/create_labour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            fab:fab_colorNormal="#181b1d"
+            fab:fab_label="Create Labour"
+            fab:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>
+</RelativeLayout>

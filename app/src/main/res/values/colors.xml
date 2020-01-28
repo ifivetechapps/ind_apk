@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#137083</color>
+    <color name="colorPrimaryDark">#3D0240</color>
+    <color name="colorAccent">#C0392B</color>
+    <color name="colorPrimaryDarktrans">#34b1ed</color>
+    <color name="dark_green">#2b5e36</color>
+    <color name="litecolorPrimaryDark">#203D0240</color>
+    <color name="litecolorPrimaryDark70">#703D0240</color>
+
+    <color name="lite_grey">#B7B7B7</color>
+    <color name="lite_pink">#FAE3E3</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+
+</resources>

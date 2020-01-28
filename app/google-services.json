@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "689671215369",
+    "firebase_url": "https://indsmart-e6015.firebaseio.com",
+    "project_id": "indsmart-e6015",
+    "storage_bucket": "indsmart-e6015.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689671215369:android:d7ddfe5b532c07da9d5bd8",
+        "android_client_info": {
+          "package_name": "com.ifive.insdsmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689671215369-5nrdqikafusrsp9m08sivh9hbbnojn6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtBulRHdDwiMf4RkerHJEYK9mNxquHgfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689671215369-5nrdqikafusrsp9m08sivh9hbbnojn6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

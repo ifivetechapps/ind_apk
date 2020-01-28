@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">IndSmart</string>
+
+    <string-array name="products">
+        <item>-select-</item>
+        <item>Coffee Premix Regular</item>
+        <item>Coffee Premix Janata</item>
+        <item>Headphone</item>
+        <item>Tea Premix Plain</item>
+        <item>Tea Premis Cardamom</item>
+        <item>Coffee Grand</item>
+    </string-array>
+    <string-array name="product_type">
+        <item>-select-</item>
+        <item>Box</item>
+        <item>Container</item>
+    </string-array>
+
+    <string-array name="active">
+        <item>-select-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="product_size">
+        <item>-select-</item>
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+    </string-array>
+    <string-array name="product_uom">
+        <item>-select-</item>
+        <item>KG</item>
+        <item>EA</item>
+        <item>MTR</item>
+        <item>LTR</item>
+        <item>GM</item>
+    </string-array>
+    <string-array name="customername">
+        <item>--Select--</item>
+        <item>IOB</item>
+        <item>NHAI</item>
+        <item>Ashok Leyland</item>
+    </string-array>
+    <string-array name="freightpay">
+        <item>--Select--</item>
+        <item>BUS</item>
+        <item>TRAIN</item>
+
+    </string-array>
+    <string-array name="suppliername">
+        <item>--Select--</item>
+        <item>Sriram</item>
+        <item>Worthy</item>
+        <item>Sunrise</item>
+        <item>Bluemoon</item>
+    </string-array>
+    <string-array name="freight">
+        <item>--Select--</item>
+        <item>PAY</item>
+        <item>TO PAY</item>
+
+    </string-array>
+    <string-array name="payment_type">
+        <item>--Select--</item>
+        <item>Cash</item>
+        <item>Cheque</item>
+        <item>NEFT</item>
+        <item>RTGS</item>
+
+    </string-array>
+</resources>

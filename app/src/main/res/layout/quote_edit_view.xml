@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/view_foreground"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:weightSum="6"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/product"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/left_border"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="product"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/uom"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/left_border"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:padding="1dp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/left_border"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="1dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            <EditText
+                android:id="@+id/unit_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/left_border"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="1dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            <EditText
+                android:id="@+id/discountPer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/left_border"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="1dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/left_border"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="1dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/view_foreground"
+            android:background="@color/black" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
