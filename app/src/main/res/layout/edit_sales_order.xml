@@ -5,6 +5,7 @@
     android:padding="10dp">
 
     <ScrollView
+        android:layout_above="@+id/one"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="40dp">
@@ -181,6 +182,38 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center_vertical"
+                    android:text="Tax"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_green_border_bottom"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -287,11 +320,11 @@
                 android:scrollbars="vertical" />
         </LinearLayout>
     </ScrollView>
-
     <LinearLayout
+        android:id="@+id/one"
+        android:layout_above="@+id/two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/submit"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -303,7 +336,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/helvetica"
             android:gravity="center_vertical"
-            android:text="Total Price"
+            android:text="Net Price"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -318,7 +351,74 @@
             android:padding="5dp"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:text="price"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/two"
+        android:layout_above="@+id/three"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center_vertical"
+            android:text="Total Tax"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/total_tax"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_green_border_bottom"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/three"
+        android:layout_above="@+id/submit"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center_vertical"
+            android:text="Gross Amount"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/gross_amount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_green_border_bottom"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
@@ -336,8 +436,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/helvetica"
-            android:drawableLeft="@drawable/ic_pen"
             android:text="Draft"
+            android:drawableLeft="@drawable/ic_pen"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:theme="@style/DarkButton" />
@@ -348,8 +448,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/helvetica"
-            android:text="Submit"
             android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+            android:text="Submit"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:theme="@style/DarkButton" />

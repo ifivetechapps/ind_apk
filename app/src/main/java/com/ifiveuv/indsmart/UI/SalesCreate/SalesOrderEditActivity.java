@@ -31,7 +31,7 @@ import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Connectivity.RetroFitEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
@@ -330,7 +330,11 @@ AllDataList allDataList;
         typeOfOrder.setText (salesItemLists.get (0).getTypeOfOrder ());
         customer_Name.setText (salesItemLists.get (0).getCus_name ());
         cus_id = salesItemLists.get (0).getCus_id ();
-//        enq_id =salesItemLists.get(0).getSeId ();
+        tax.setText (salesItemLists.get (0).getTaxType ());
+        total_price.setText (salesItemLists.get (0).getNetPrice ());
+        total_tax.setText (salesItemLists.get (0).getTotalTax ());
+        gross_amount.setText (salesItemLists.get (0).getTotalPrice ());
+        tax_value = Double.parseDouble (salesItemLists.get(0).getTaxValue ());
         SalesItemLineList.addAll (salesItemLists.get (0).getSalesItemLineLists ());
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
@@ -355,6 +359,11 @@ AllDataList allDataList;
         salesItemList.setDel_date (delivery_date.getText ().toString ());
         salesItemList.setStatus ("Submitted");
         salesItemList.setOnlinestatus ("0");
+        salesItemList.setTaxType (tax.getText().toString());
+        salesItemList.setTaxTypeID (String.valueOf (tax_id));
+        salesItemList.setTaxValue (String.valueOf (tax_value));
+        salesItemList.setTotalTax (total_tax.getText().toString());
+        salesItemList.setNetPrice (gross_amount.getText().toString());
         salesItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
         salesItemList.setTotalPrice (total_price.getText ().toString ());
         salesItemList.setSalesItemLineLists (SalesItemLineList);
@@ -379,6 +388,11 @@ AllDataList allDataList;
         salesItemList.setOnlinestatus ("0");
         salesItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
         salesItemList.setTotalPrice (total_price.getText ().toString ());
+        salesItemList.setTaxType (tax.getText().toString());
+        salesItemList.setTaxTypeID (String.valueOf (tax_id));
+        salesItemList.setTaxValue (String.valueOf (tax_value));
+        salesItemList.setTotalTax (total_tax.getText().toString());
+        salesItemList.setNetPrice (gross_amount.getText().toString());
         salesItemList.setSalesItemLineLists (SalesItemLineList);
         copyuploadLocalPurchase (salesItemList);
 
@@ -395,6 +409,11 @@ AllDataList allDataList;
         salesItemList.setOnlinestatus ("0");
         salesItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
         salesItemList.setTotalPrice (total_price.getText ().toString ());
+        salesItemList.setTaxType (tax.getText().toString());
+        salesItemList.setTaxTypeID (String.valueOf (tax_id));
+        salesItemList.setTaxValue (String.valueOf (tax_value));
+        salesItemList.setTotalTax (total_tax.getText().toString());
+        salesItemList.setNetPrice (gross_amount.getText().toString());
         salesItemList.setSalesItemLineLists (SalesItemLineList);
         uploadLocalPurchase (salesItemList);
 
@@ -415,6 +434,11 @@ AllDataList allDataList;
         salesItemList.setDel_date (delivery_date.getText ().toString ());
         salesItemList.setStatus ("Submitted");
         salesItemList.setOnlinestatus ("0");
+        salesItemList.setTaxType (tax.getText().toString());
+        salesItemList.setTaxTypeID (String.valueOf (tax_id));
+        salesItemList.setTaxValue (String.valueOf (tax_value));
+        salesItemList.setTotalTax (total_tax.getText().toString());
+        salesItemList.setNetPrice (gross_amount.getText().toString());
         salesItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
         salesItemList.setTotalPrice (total_price.getText ().toString ());
         salesItemList.setSalesItemLineLists (SalesItemLineList);
@@ -493,15 +517,21 @@ AllDataList allDataList;
     }
 
     public void grandTotal(List<SalesItemLineList> items) {
-
+        double grosspay = 0.0;
+        double tax_total = 0.0;
         double totalPrice = 0.0;
-        for (int i = 0; i < items.size (); i++) {
-            if (items.get (i).getLineTotal () != null) {
-                totalPrice += Double.parseDouble (items.get (i).getLineTotal ());
+        for (int i = 0; i < items.size(); i++) {
+            if(items.get(i).getLineTotal ()!=null){
+                totalPrice += Double.parseDouble (items.get(i).getLineTotal ());
             }
         }
 
         total_price.setText (String.valueOf (totalPrice));
+        tax_total = (tax_value / 100) * totalPrice;
+        grosspay = totalPrice + tax_total;
+        total_price.setText (totalPrice + "");
+        total_tax.setText (tax_total + "");
+        gross_amount.setText (grosspay + "");
     }
 
     private void uploadLocalPurchase(final SaleItemList salesItemList) {

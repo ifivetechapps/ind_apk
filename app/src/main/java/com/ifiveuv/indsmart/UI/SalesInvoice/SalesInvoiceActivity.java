@@ -16,14 +16,13 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ifiveuv.indsmart.Connectivity.EnquiryResponse;
-import com.ifiveuv.indsmart.Connectivity.RetroFitEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.SalesCreate.CreateSalesActivity;
-import com.ifiveuv.indsmart.UI.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.SalesInvoice.Adapter.InvoiceListAdapter;
 import com.ifiveuv.indsmart.UI.SalesInvoice.Model.InvoiceItemList;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
@@ -259,7 +258,7 @@ public class SalesInvoiceActivity extends BaseActivity {
         }
         invoiceItemList = new InvoiceItemList ();
         invoiceItemList.setInvoiceid (invoiceItemLists.get (0).getInvoiceid ());
-        invoiceItemList.setSo_number (Integer.parseInt (invoiceItemLists.get (0).getOnlineId ()));
+        invoiceItemList.setSo_number (invoiceItemLists.get (0).getSo_number ());
         invoiceItemList.setStatus (String.valueOf (status));
         invoiceItemList.setTypeOfOrder (String.valueOf (typeid));
         invoiceItemList.setCus_id (invoiceItemLists.get (0).getCus_id ());
@@ -296,6 +295,8 @@ public class SalesInvoiceActivity extends BaseActivity {
                             saleItemList.setOnlineId (enquiryResponse.getEnquiryId ());
                             Toast.makeText (SalesInvoiceActivity.this, enquiryResponse.getMessage (), Toast.LENGTH_SHORT).show ();
                            // sendAllData ();
+                            Intent intent = new Intent (SalesInvoiceActivity.this, SalesInvoiceActivity.class);
+                            startActivity (intent);
                         }
                     });
 

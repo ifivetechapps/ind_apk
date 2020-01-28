@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ifiveuv.indsmart.Connectivity.EnquiryResponse;
-import com.ifiveuv.indsmart.Connectivity.RetroFitEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
@@ -25,8 +25,6 @@ import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.SalesCreate.Adapter.AllSalesListAdapter;
 import com.ifiveuv.indsmart.UI.SalesCreate.Model.SaleItemList;
-import com.ifiveuv.indsmart.UI.SalesQuote.ConvertFromEnquiry;
-import com.ifiveuv.indsmart.UI.SalesQuote.CreateSalesQuote;
 
 
 import java.util.ArrayList;
@@ -166,7 +164,7 @@ public class AllSalesList extends BaseActivity {
             for (int i = 0; i < results.size (); i++) {
                 count--;
             }
-            onlineSyncMethodSingle (results.get (count).getSalesOrderid ());
+            onlineSyncMethodAll (results.get (count).getSalesOrderid ());
 
         } else {
             Intent intent = new Intent (AllSalesList.this, AllSalesList.class);
@@ -202,7 +200,7 @@ public class AllSalesList extends BaseActivity {
         saleItemList.setDel_date (IFiveEngine.myInstance.formatDate (saleItemLists.get (0).getDel_date ()));
         saleItemList.setTotalPrice (saleItemLists.get (0).getTotalPrice ());
         saleItemList.setNetPrice (saleItemLists.get (0).getNetPrice ());
-        saleItemList.setTaxTypeID (saleItemLists.get (0).getTaxTypeID ());
+        saleItemList.setTaxType (saleItemLists.get (0).getTaxType ());
         saleItemList.setTaxValue (saleItemLists.get (0).getTaxValue ());
         saleItemList.setTotalTax (saleItemLists.get (0).getTotalTax ());
         saleItemList.setOnlineseId (saleItemLists.get (0).getOnlineseId ());
@@ -228,7 +226,7 @@ public class AllSalesList extends BaseActivity {
                             saleItemList.setOnlinestatus ("1");
                             saleItemList.setOnlineId (enquiryResponse.getEnquiryId ());
                             Toast.makeText (AllSalesList.this, enquiryResponse.getMessage (), Toast.LENGTH_SHORT).show ();
-                           // sendAllData ();
+                           sendAllData ();
                             Intent intent = new Intent (AllSalesList.this, AllSalesList.class);
                             startActivity (intent);
 
@@ -276,7 +274,7 @@ public class AllSalesList extends BaseActivity {
         saleItemList.setDel_date (IFiveEngine.myInstance.formatDate (saleItemLists.get (0).getDel_date ()));
         saleItemList.setTotalPrice (saleItemLists.get (0).getTotalPrice ());
         saleItemList.setNetPrice (saleItemLists.get (0).getNetPrice ());
-        saleItemList.setTaxTypeID (saleItemLists.get (0).getTaxTypeID ());
+        saleItemList.setTaxType (saleItemLists.get (0).getTaxType ());
         saleItemList.setTaxValue (saleItemLists.get (0).getTaxValue ());
         saleItemList.setTotalTax (saleItemLists.get (0).getTotalTax ());
         saleItemList.setOnlineseId (saleItemLists.get (0).getOnlineseId ());
@@ -302,7 +300,9 @@ public class AllSalesList extends BaseActivity {
                             saleItemList.setOnlinestatus ("1");
                             saleItemList.setOnlineId (enquiryResponse.getEnquiryId ());
                             Toast.makeText (AllSalesList.this, enquiryResponse.getMessage (), Toast.LENGTH_SHORT).show ();
-                            sendAllData ();
+                          //  sendAllData ();
+                            Intent intent = new Intent (AllSalesList.this, AllSalesList.class);
+                            startActivity (intent);
                         }
                     });
 

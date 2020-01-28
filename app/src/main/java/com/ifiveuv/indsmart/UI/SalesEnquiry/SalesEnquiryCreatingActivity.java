@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Connectivity.RetroFitEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
@@ -38,7 +38,6 @@ import com.ifiveuv.indsmart.UI.Masters.Model.AllCustomerList;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Adapter.EnquiryItemAdapter;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Model.EnquiryLineList;
-import com.ifiveuv.indsmart.UI.SalesQuote.CreateSalesQuote;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
 import com.ifiveuv.indsmart.Utils.RecyclerItemTouchHelperSalesEnquiryLines;
 

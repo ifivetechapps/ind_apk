@@ -31,7 +31,7 @@ import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Connectivity.RetroFitEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
@@ -246,13 +246,13 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         so_date.setText (quoteItemLists.get (0).getQodate ());
         so_status.setText (quoteItemLists.get (0).getQstatus ());
         tax_id = Integer.parseInt (quoteItemLists.get (0).getTaxTypeid ());
+        tax_value = Double.parseDouble (quoteItemLists.get (0).getTax_value ());
 
         customer_Name.setText (quoteItemLists.get (0).getQcus_name ());
         tax.setText (quoteItemLists.get (0).getTaxType ());
         total_price.setText (quoteItemLists.get (0).getNetrice ());
         total_tax.setText (quoteItemLists.get (0).getTaxTotal ());
         gross_amount.setText (quoteItemLists.get (0).getTotalPrice ());
-        tax.setText (quoteItemLists.get (0).getTaxType ());
         typeOfOrder.setText (quoteItemLists.get (0).getQuoteType ());
         cus_id = Integer.parseInt (quoteItemLists.get (0).getQcus_id ());
         onlineSQ = quoteItemLists.get (0).getOnlineId ();
@@ -330,6 +330,11 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         saleItemList.setStatus ("Opened");
         saleItemList.setOnlinestatus ("0");
         saleItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
+        saleItemList.setTaxType (tax.getText().toString());
+        saleItemList.setTaxTypeID (String.valueOf (tax_id));
+        saleItemList.setTaxValue (String.valueOf (tax_value));
+        saleItemList.setTotalTax (total_tax.getText().toString());
+        saleItemList.setNetPrice (gross_amount.getText().toString());
         saleItemList.setTotalPrice (total_price.getText ().toString ());
         uploadLocalPurchase (saleItemList, nextId);
     }
@@ -390,15 +395,21 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     }
 
     public void grandTotal(List<QuoteItemLineList> items) {
-
+        double grosspay = 0.0;
+        double tax_total = 0.0;
         double totalPrice = 0.0;
-        for (int i = 0; i < items.size (); i++) {
-            if (items.get (i).getLineTotal () != null) {
-                totalPrice += Double.parseDouble (items.get (i).getLineTotal ());
+        for (int i = 0; i < items.size(); i++) {
+            if(items.get(i).getLineTotal ()!=null){
+                totalPrice += Double.parseDouble (items.get(i).getLineTotal ());
             }
         }
 
         total_price.setText (String.valueOf (totalPrice));
+        tax_total = (tax_value / 100) * totalPrice;
+        grosspay = totalPrice + tax_total;
+        total_price.setText (totalPrice + "");
+        total_tax.setText (tax_total + "");
+        gross_amount.setText (grosspay + "");
     }
 
 
@@ -427,6 +438,11 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         saleItemList.setStatus ("Submitted");
         saleItemList.setOnlinestatus ("0");
         saleItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
+        saleItemList.setTaxType (tax.getText().toString());
+        saleItemList.setTaxTypeID (String.valueOf (tax_id));
+        saleItemList.setTaxValue (String.valueOf (tax_value));
+        saleItemList.setTotalTax (total_tax.getText().toString());
+        saleItemList.setNetPrice (gross_amount.getText().toString());
         saleItemList.setTotalPrice (total_price.getText ().toString ());
         uploadLocalPurchase (saleItemList, nextId);
     }

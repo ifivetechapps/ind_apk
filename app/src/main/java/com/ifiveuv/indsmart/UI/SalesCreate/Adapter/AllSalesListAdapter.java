@@ -73,7 +73,7 @@ public class AllSalesListAdapter extends RecyclerView.Adapter<AllSalesListAdapte
                     @Override
                     public void onClick(View v) {
                         Toast.makeText (context, "calling method-elsse", Toast.LENGTH_SHORT).show ();
-                        allQuoteList.onlineSyncMethodAll(item.getSalesOrderid ());
+                        allQuoteList.onlineSyncMethodSingle(item.getSalesOrderid ());
 
                     }
                 });

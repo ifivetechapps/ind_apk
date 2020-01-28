@@ -31,7 +31,7 @@ import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Connectivity.RetroFitEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
@@ -296,6 +296,11 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
         salesItemLists.setDel_date (delivery_date.getText ().toString ());
         salesItemLists.setStatus ("Opened");
         salesItemLists.setOnlinestatus ("0");
+        salesItemLists.setTaxType (tax.getText().toString());
+        salesItemLists.setTaxTypeID (String.valueOf (tax_id));
+        salesItemLists.setTaxValue (String.valueOf (tax_value));
+        salesItemLists.setTotalTax (total_tax.getText().toString());
+        salesItemLists.setNetPrice (gross_amount.getText().toString());
         salesItemLists.setTypeOfOrder (typeOfOrder.getText ().toString ());
         salesItemLists.setTotalPrice (total_price.getText ().toString ());
         salesItemLists.setSalesItemLineLists (salesItemLineLists);
@@ -393,7 +398,13 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
         salesItemLists.setDel_date (delivery_date.getText ().toString ());
         salesItemLists.setStatus ("Submitted");
         salesItemLists.setOnlinestatus ("0");
+        salesItemLists.setTaxType (tax.getText().toString());
+        salesItemLists.setTaxTypeID (String.valueOf (tax_id));
+        salesItemLists.setTaxValue (String.valueOf (tax_value));
+        salesItemLists.setTotalTax (total_tax.getText().toString());
+        salesItemLists.setNetPrice (gross_amount.getText().toString());
         salesItemLists.setTypeOfOrder (typeOfOrder.getText ().toString ());
+
         salesItemLists.setTotalPrice (total_price.getText ().toString ());
         salesItemLists.setSalesItemLineLists (salesItemLineLists);
         uploadLocalPurchase (salesItemLists);
