@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Tax_type;
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
-import com.ifiveuv.indsmart.UI.SalesInvoice.CreateSalesInvoice;
 
 import java.util.ArrayList;
 import java.util.List;

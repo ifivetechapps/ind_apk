@@ -40,33 +40,39 @@
         <activity android:name=".UI.Masters.CreateSupplierActivity" />
         <activity android:name=".UI.Masters.CreateCustomerActivity" />
 
-        <activity android:name=".UI.SalesEnquiry.SalesEnquiryCreatingActivity" />
-        <activity android:name=".UI.SalesEnquiry.SalesEnquiryEditActivity" />
-        <activity android:name=".UI.SalesEnquiry.SalesEnquiryViewActivity" />
-        <activity android:name=".UI.SalesEnquiry.SalesEnquiryList" />
+        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryCreatingActivity" />
+        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryEditActivity" />
+        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryViewActivity" />
+        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryList" />
 
         <activity android:name=".UI.logout.LogoutActivity" />
         <activity android:name=".UI.DashBoard.Dashboard" />
-        <activity android:name=".UI.SalesQuote.AllQuoteList" />
-        <activity android:name=".UI.SalesQuote.CreateSalesQuote" />
-        <activity android:name=".UI.SalesQuote.ConvertFromEnquiry" />
-        <activity android:name=".UI.SalesQuote.ConvertFromEnquiryToQuoteActivity" />
-        <activity android:name=".UI.SalesQuote.SalesQuoteEditActivity" />
-        <activity android:name=".UI.SalesQuote.SalesQuoteViewActivity" />
-        <activity android:name=".UI.SalesCreate.AllSalesList" />
-        <activity android:name=".UI.SalesCreate.SalesConvertFromEnquiry" />
-        <activity android:name=".UI.SalesCreate.ConvertFromEnquiryToSalesActivity" />
-        <activity android:name=".UI.SalesCreate.CreateSalesActivity" />
-        <activity android:name=".UI.SalesCreate.SalesConvertFromQuote" />
-        <activity android:name=".UI.SalesCreate.ConvertFromQuoteToSalesActivity" />
-        <activity android:name=".UI.SalesCreate.SalesOrderViewActivity" />
-        <activity android:name=".UI.SalesCreate.SalesOrderEditActivity" />
-        <activity android:name=".UI.SalesInvoice.SalesOrdertoInvoice" />
-        <activity android:name=".UI.SalesInvoice.SalesInvoiceActivity" />
-        <activity android:name=".UI.SalesInvoice.CreateSalesInvoice" />
-        <activity android:name=".UI.SalesInvoice.SalesInvoiceEditActivity" />
+        <activity android:name=".UI.Sales.SalesQuote.AllQuoteList" />
+        <activity android:name=".UI.Sales.SalesQuote.CreateSalesQuote" />
+        <activity android:name=".UI.Sales.SalesQuote.ConvertFromEnquiry" />
+        <activity android:name=".UI.Sales.SalesQuote.ConvertFromEnquiryToQuoteActivity" />
+        <activity android:name=".UI.Sales.SalesQuote.SalesQuoteEditActivity" />
+        <activity android:name=".UI.Sales.SalesQuote.SalesQuoteViewActivity" />
+        <activity android:name=".UI.Sales.SalesCreate.AllSalesList" />
+        <activity android:name=".UI.Sales.SalesCreate.SalesConvertFromEnquiry" />
+        <activity android:name=".UI.Sales.SalesCreate.ConvertFromEnquiryToSalesActivity" />
+        <activity android:name=".UI.Sales.SalesCreate.CreateSalesActivity" />
+        <activity android:name=".UI.Sales.SalesCreate.SalesConvertFromQuote" />
+        <activity android:name=".UI.Sales.SalesCreate.ConvertFromQuoteToSalesActivity" />
+        <activity android:name=".UI.Sales.SalesCreate.SalesOrderViewActivity" />
+        <activity android:name=".UI.Sales.SalesCreate.SalesOrderEditActivity" />
+        <activity android:name=".UI.Sales.SalesInvoice.SalesOrdertoInvoice" />
+        <activity android:name=".UI.Sales.SalesInvoice.SalesInvoiceActivity" />
+        <activity android:name=".UI.Sales.SalesInvoice.CreateSalesInvoice" />
+        <activity android:name=".UI.Sales.SalesInvoice.SalesInvoiceEditActivity" />
 
-        <activity android:name=".UI.SalesInvoice.SalesInvoiceViewActivity" />
+        <activity android:name=".UI.Sales.SalesInvoice.SalesInvoiceViewActivity" />
+        <activity android:name=".UI.PurchaseRequisition.ApproveListRequisitionActivity" />
+        <activity android:name=".UI.PurchaseRequisition.ApproveRequisitionActivity" />
+        <activity android:name=".UI.PurchaseRequisition.CreateRequisitionActivity" />
+        <activity android:name=".UI.PurchaseRequisition.EditRequisitionActivity" />
+        <activity android:name=".UI.PurchaseRequisition.ListRequisitionActivity" />
+        <activity android:name=".UI.PurchaseRequisition.ViewRequisitionActivity" />
 
 
     </application>

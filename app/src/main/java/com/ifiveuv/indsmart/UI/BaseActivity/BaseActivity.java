@@ -23,9 +23,7 @@ import android.widget.TextView;
 
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.R;
-
-
-import com.ifiveuv.indsmart.UI.SalesEnquiry.SalesEnquiryList;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryList;
 import com.ifiveuv.indsmart.UI.login.LoginActivity;
 
 import java.util.ArrayList;

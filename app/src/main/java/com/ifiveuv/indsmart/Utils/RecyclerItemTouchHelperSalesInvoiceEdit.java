@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.ifiveuv.indsmart.UI.SalesInvoice.Adapter.SalesInvoiceEditAdapter;
+import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Adapter.SalesInvoiceEditAdapter;
 
 public class RecyclerItemTouchHelperSalesInvoiceEdit extends ItemTouchHelper.SimpleCallback {
     private RecyclerItemTouchHelperListener listener;

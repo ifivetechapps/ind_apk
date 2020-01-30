@@ -64,10 +64,10 @@ public class CreateSupplierActivity extends BaseActivity {
             nextId = currentIdNum.intValue() + 1;
         }
         supplierList = new SupplierList();
-        supplierList.setEmpId (nextId);
-        supplierList.setEmpName (supName.getText().toString().trim());
-        supplierList.setEmpAdd (supAdd.getText().toString().trim());
-        supplierList.setEmpNum(supNum.getText().toString().trim());
+//        supplierList.setEmpId (nextId);
+//        supplierList.setEmpName (supName.getText().toString().trim());
+//        supplierList.setEmpAdd (supAdd.getText().toString().trim());
+//        supplierList.setEmpNum(supNum.getText().toString().trim());
         uploadLocalPurchase(supplierList);
     }
 

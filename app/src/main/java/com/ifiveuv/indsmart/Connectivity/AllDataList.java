@@ -5,64 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
 import com.ifiveuv.indsmart.UI.Masters.Model.InventoryType;
 import com.ifiveuv.indsmart.UI.Masters.Model.SubInventory;
+import com.ifiveuv.indsmart.UI.Masters.Model.SupplierList;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
 public class AllDataList extends RealmObject {
-    @SerializedName("product")
-    @Expose
-    private RealmList<Products> product = null;
-    @SerializedName("product_category")
-    @Expose
-    private RealmList<ProductCategory> productCategory = null;
-    @SerializedName("product_group")
-    @Expose
-    private RealmList<ProductGroup> productGroup = null;
-    @SerializedName("uom")
-    @Expose
-    private RealmList<UomModel> uom = null;
-    @SerializedName("inventory_type")
-    @Expose
-    private RealmList<InventoryType> inventoryType = null;
-    @SerializedName("sub_inventory")
-    @Expose
-    private RealmList<SubInventory> subInventory = null;
-    @SerializedName("CustomerList")
-    @Expose
-    private RealmList<CustomerList> customerLists = null;
-
-    public RealmList<CustomerList> getCustomerLists() {
-        return customerLists;
-    }
-
-    public void setCustomerLists(RealmList<CustomerList> customerLists) {
-        this.customerLists = customerLists;
-    }
-
-    public RealmList<Shipping_address> getShipping_addresses() {
-        return shipping_addresses;
-    }
-
-    public void setShipping_addresses(RealmList<Shipping_address> shipping_addresses) {
-        this.shipping_addresses = shipping_addresses;
-    }
-
-    public RealmList<Tax_type> getTax_types() {
-        return tax_types;
-    }
-
-    public void setTax_types(RealmList<Tax_type> tax_types) {
-        this.tax_types = tax_types;
-    }
-
-    @SerializedName("shipping_address")
-    @Expose
-    private RealmList<Shipping_address> shipping_addresses = null;
-    @SerializedName("tax_type")
-    @Expose
-    private RealmList<Tax_type> tax_types = null;
 
     public RealmList<Products> getProduct() {
         return product;
@@ -111,5 +60,69 @@ public class AllDataList extends RealmObject {
     public void setSubInventory(RealmList<SubInventory> subInventory) {
         this.subInventory = subInventory;
     }
+
+    public RealmList<Shipping_address> getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(RealmList<Shipping_address> shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public RealmList<Tax_type> getTaxType() {
+        return taxType;
+    }
+
+    public void setTaxType(RealmList<Tax_type> taxType) {
+        this.taxType = taxType;
+    }
+
+    public RealmList<CustomerList> getCustomerLists() {
+        return customerLists;
+    }
+
+    public void setCustomerLists(RealmList<CustomerList> customerLists) {
+        this.customerLists = customerLists;
+    }
+
+    public RealmList<SupplierList> getSupplierList() {
+        return supplierList;
+    }
+
+    public void setSupplierList(RealmList<SupplierList> supplierList) {
+        this.supplierList = supplierList;
+    }
+
+    @SerializedName("product")
+    @Expose
+    private RealmList<Products> product = null;
+    @SerializedName("product_category")
+    @Expose
+    private RealmList<ProductCategory> productCategory = null;
+    @SerializedName("product_group")
+    @Expose
+    private RealmList<ProductGroup> productGroup = null;
+    @SerializedName("uom")
+    @Expose
+    private RealmList<UomModel> uom = null;
+    @SerializedName("inventory_type")
+    @Expose
+    private RealmList<InventoryType> inventoryType = null;
+    @SerializedName("sub_inventory")
+    @Expose
+    private RealmList<SubInventory> subInventory = null;
+    @SerializedName("shipping_address")
+    @Expose
+    private RealmList<Shipping_address> shippingAddress = null;
+    @SerializedName("tax_type")
+    @Expose
+    private RealmList<Tax_type> taxType = null;
+    @SerializedName("CustomerList")
+    @Expose
+    private RealmList<CustomerList> customerLists = null;
+    @SerializedName("SupplierList")
+    @Expose
+    private RealmList<SupplierList> supplierList = null;
+
 
 }

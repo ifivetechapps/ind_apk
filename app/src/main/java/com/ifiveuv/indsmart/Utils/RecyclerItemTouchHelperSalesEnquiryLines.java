@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.ifiveuv.indsmart.UI.SalesEnquiry.Adapter.EnquiryItemAdapter;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Adapter.EnquiryItemAdapter;
 
 public class RecyclerItemTouchHelperSalesEnquiryLines extends ItemTouchHelper.SimpleCallback {
     private RecyclerItemTouchHelperSalesEnquiryLines.RecyclerItemTouchHelperListener listener;

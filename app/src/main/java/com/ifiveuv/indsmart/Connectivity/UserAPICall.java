@@ -1,9 +1,10 @@
 package com.ifiveuv.indsmart.Connectivity;
 
-import com.ifiveuv.indsmart.UI.SalesCreate.Model.SaleItemList;
-import com.ifiveuv.indsmart.UI.SalesEnquiry.Model.EnquiryItemModel;
-import com.ifiveuv.indsmart.UI.SalesInvoice.Model.InvoiceItemList;
-import com.ifiveuv.indsmart.UI.SalesQuote.Model.QuoteItemList;
+import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionHeader;
+import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
+import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Model.InvoiceItemList;
+import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -35,5 +36,12 @@ public interface UserAPICall {
 
     @POST("public/api-save-so-invoice")
     Call<EnquiryResponse> sendSalesInvoiceSingleData(@Header("token") String token, @Body InvoiceItemList invoiceItemList);
+
+
+    @POST("public/api-save-po-req")
+    Call<EnquiryResponse> sendPurchaseReqSingleData(@Header("token") String token, @Body RequisitionHeader saleItemList);
+
+    @POST("public/api-poreq-approve")
+    Call<Message> purchaseReqApprovedData(@Header("token") String token, @Body SendApprovalId sendApprovalId);
 
 }

@@ -7,19 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifiveuv.indsmart.UI.SalesCreate.AllSalesList;
-import com.ifiveuv.indsmart.UI.SalesEnquiry.SalesEnquiryList;
 import com.ifiveuv.indsmart.UI.DashBoard.DashboardItemsList;
-
-import com.ifiveuv.indsmart.UI.Masters.CreateCustomerActivity;
-import com.ifiveuv.indsmart.UI.Masters.CreateSupplierActivity;
-import com.ifiveuv.indsmart.UI.Masters.CreateUomActivity;
-
-import com.ifiveuv.indsmart.Connectivity.SessionManager;
-import com.ifiveuv.indsmart.UI.SalesInvoice.SalesInvoiceActivity;
-import com.ifiveuv.indsmart.UI.SalesQuote.AllQuoteList;
+import com.ifiveuv.indsmart.UI.PurchaseRequisition.ApproveListRequisitionActivity;
+import com.ifiveuv.indsmart.UI.PurchaseRequisition.CreateRequisitionActivity;
+import com.ifiveuv.indsmart.UI.PurchaseRequisition.ListRequisitionActivity;
+import com.ifiveuv.indsmart.UI.Sales.SalesCreate.AllSalesList;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryList;
+import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.SalesInvoiceActivity;
+import com.ifiveuv.indsmart.UI.Sales.SalesQuote.AllQuoteList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +59,9 @@ public class SubDashboard extends BaseActivity {
             setMenuRecycler ();
         } else if (typeName.equals ("Purchase")) {
             dashboardItemsList = new ArrayList<> ();
+            dashboardItemsList.add(setMenuItem(CreateRequisitionActivity.class, "Create Requisition", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add(setMenuItem(ListRequisitionActivity.class, "Requisition List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add(setMenuItem(ApproveListRequisitionActivity.class, "Requisition Approval List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
 
 
             setMenuRecycler ();

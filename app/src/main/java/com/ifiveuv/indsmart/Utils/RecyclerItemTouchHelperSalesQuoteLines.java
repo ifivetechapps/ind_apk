@@ -5,7 +5,8 @@ import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import com.ifiveuv.indsmart.UI.SalesQuote.Adapter.QuoteItemAdapter;
+
+import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.QuoteItemAdapter;
 
 public class RecyclerItemTouchHelperSalesQuoteLines extends ItemTouchHelper.SimpleCallback {
     private RecyclerItemTouchHelperListener listener;

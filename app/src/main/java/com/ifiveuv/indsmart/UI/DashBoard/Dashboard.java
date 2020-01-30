@@ -12,17 +12,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
-import com.ifiveuv.indsmart.Engine.RetroFitEngine;
+import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-
-import com.ifiveuv.indsmart.UI.Masters.CreateUomActivity;
-
-
-import com.ifiveuv.indsmart.Connectivity.SessionManager;
-import com.ifiveuv.indsmart.UI.SalesEnquiry.SalesEnquiryList;
+import com.ifiveuv.indsmart.UI.PurchaseRequisition.CreateRequisitionActivity;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryList;
 import com.ifiveuv.indsmart.UI.login.LoginActivity;
 
 import java.util.ArrayList;
@@ -79,7 +76,7 @@ public class Dashboard extends BaseActivity {
             private void getMenuItems() {
         dashboardItemsList = new ArrayList<> ();
         dashboardItemsList.add (setMenuItem (SalesEnquiryList.class, "Sales", R.drawable.sale, null, R.color.colorPrimaryDark));
-        dashboardItemsList.add (setMenuItem (CreateUomActivity.class, "Master", R.drawable.purchase, null, R.color.colorPrimaryDark));
+        dashboardItemsList.add (setMenuItem (CreateRequisitionActivity.class, "Purchase", R.drawable.purchase, null, R.color.colorPrimaryDark));
         setMenuRecycler ();
     }
 
@@ -107,6 +104,7 @@ public class Dashboard extends BaseActivity {
                     public void onFailure(Call<AllDataList> call, Throwable t) {
                         if ((pDialog != null) && pDialog.isShowing ())
                             pDialog.dismiss ();
+                        Log.d ("throwing Error",t.getMessage ());
                         Toast.makeText (Dashboard.this, "Please check the ID or Password", Toast.LENGTH_SHORT).show ();
                     }
                 });
@@ -118,7 +116,7 @@ public class Dashboard extends BaseActivity {
 
     }
     private void uploadToRealmDB(final AllDataList body) {
-//        realm = Realm.getDefaultInstance();
+
         Observable<Integer> observable = Observable.just(1);
         observable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -129,10 +127,7 @@ public class Dashboard extends BaseActivity {
                         AllDataList allDatasResponse = realm.copyToRealm(body);
                         realm.commitTransaction();
 
-//                        ApiIds();
-//                        saveDelivered();
                         Toast.makeText(Dashboard.this, "Sync Completed.", Toast.LENGTH_SHORT).show();
-                        // openMainActivity();
                     }
 
                     @Override
