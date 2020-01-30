@@ -73,6 +73,12 @@
         <activity android:name=".UI.PurchaseRequisition.EditRequisitionActivity" />
         <activity android:name=".UI.PurchaseRequisition.ListRequisitionActivity" />
         <activity android:name=".UI.PurchaseRequisition.ViewRequisitionActivity" />
+        <activity android:name=".UI.PurchaseEnquiry.ConvertRequisitionToEnquiryActivity" />
+        <activity android:name=".UI.PurchaseEnquiry.CreateEnquiryActivity" />
+        <activity android:name=".UI.PurchaseEnquiry.EditEnquiryActivity" />
+        <activity android:name=".UI.PurchaseEnquiry.ListEnquiryActivity" />
+        <activity android:name=".UI.PurchaseEnquiry.RequisitionList" />
+        <activity android:name=".UI.PurchaseEnquiry.ViewEnquiryActivity" />
 
 
     </application>

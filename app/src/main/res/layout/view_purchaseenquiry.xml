@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/two"
+        android:layout_marginBottom="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Supplier Name *"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/helvetica"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_marginStart="5dp" />
+
+                <TextView
+                    android:id="@+id/supplier_name"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:hint="Select Supplier Name"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/rounded_green_border_bottom"
+                    android:textSize="15sp"
+                    android:paddingStart="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Supplier Site Name *"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_marginStart="5dp" />
+
+                <TextView
+                    android:id="@+id/supplier_site_name"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:hint="Supplier Site Name"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/rounded_green_border_bottom"
+                    android:textSize="15sp"
+                    android:paddingStart="10dp" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="18"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent">
+                <TextView
+                    android:background="@drawable/left_top_head_corner"
+                    android:layout_width="0dip"
+                    android:layout_weight="7"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/helvetica"
+                    android:singleLine="true"
+                    android:textSize="@dimen/sub_text"
+                    android:layout_marginRight="1dp"
+                    android:text="Product Name"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:background="@drawable/top_head_middle"
+                    android:layout_width="0dip"
+                    android:layout_weight="3"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/helvetica"
+                    android:singleLine="true"
+                    android:textSize="@dimen/sub_text"
+                    android:layout_marginRight="1dp"
+                    android:text="Uom"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_weight="4"
+                    android:padding="5dp"
+                    android:textSize="@dimen/sub_text"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/helvetica"
+                    android:singleLine="true"
+                    android:layout_marginRight="1dp"
+                    android:text="Ord. Qty"
+                    android:background="@drawable/top_head_middle"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_weight="4"
+                    android:padding="5dp"
+                    android:textSize="@dimen/sub_text"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:singleLine="true"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_marginRight="1dp"
+                    android:text="Date"
+                    android:background="@drawable/right_top_head_corner"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/items_data"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit"
+        android:layout_weight="2">
+        <Button
+            android:id="@+id/draft_data"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="BACK"
+            android:fontFamily="@font/helvetica"
+            android:drawableLeft="@drawable/ic_back"
+            android:theme="@style/DarkButton"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_back" />
+    </LinearLayout>
+
+</RelativeLayout>
