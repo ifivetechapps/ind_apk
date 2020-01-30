@@ -2,6 +2,7 @@ package com.ifiveuv.indsmart.UI.SalesCreate.Adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.SalesCreate.SalesConvertFromEnquiry;
+import com.ifiveuv.indsmart.UI.SalesCreate.ConvertFromEnquiryToSalesActivity;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Model.EnquiryItemModel;
 
 import io.realm.Realm;
@@ -42,19 +44,19 @@ public class SalesConvertFromEnquiryAdapter extends RecyclerView.Adapter<SalesCo
     public void onBindViewHolder(SalesConvertFromEnquiryAdapter.MyViewHolder holder, final int position) {
         final EnquiryItemModel item = cartList.get(position);
 
-//        holder.so_num.setText(item.getEnqOnlineId ());
-//        holder.so_date.setText(item.getEnquiryDate ());
-//        holder.cus_name.setText(item.getEnquiryCustomerName ());
-//        holder.enq_type.setText(item.getEnquiryType ());
-//        holder.status.setText(item.getEnquiryStatus ());
-//        holder.viewForeground.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, ConvertFromEnquiryToSalesActivity.class);
-//                intent.putExtra("hdrid", String.valueOf(item.getEnquiryId ()));
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.so_num.setText(item.getEnqOnlineId ());
+        holder.so_date.setText(item.getEnquiryDate ());
+        holder.cus_name.setText(item.getEnquiryCustomerName ());
+        holder.enq_type.setText(item.getEnquiryType ());
+        holder.status.setText(item.getEnquiryStatus ());
+        holder.viewForeground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConvertFromEnquiryToSalesActivity.class);
+                intent.putExtra("hdrid", String.valueOf(item.getEnquiryId ()));
+                context.startActivity(intent);
+            }
+        });
 
     }
 
