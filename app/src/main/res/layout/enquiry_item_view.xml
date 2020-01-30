@@ -5,68 +5,69 @@
     android:orientation="vertical">
 
 
-        <LinearLayout
-            android:id="@+id/view_foreground"
-            android:layout_width="match_parent"
-            android:layout_height="29dp"
-            android:weightSum="3"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/view_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-            <TextView
-                android:id="@+id/product"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/left_border"
-                android:fontFamily="@font/helvetica"
-                android:gravity="center"
-                android:padding="1dp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/product"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/left_border"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:padding="1dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/uom"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/left_border"
-                android:fontFamily="@font/helvetica"
-                android:gravity="center"
-                android:padding="1dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/uom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/left_border"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:padding="1dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/quantity"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/left_border"
-                android:fontFamily="@font/helvetica"
-                android:gravity="center"
-                android:inputType="number"
-                android:padding="1dp"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/left_border"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:inputType="number"
+            android:padding="1dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:background="@drawable/left_right_border"
-                android:fontFamily="@font/helvetica"
-                android:gravity="center"
-                android:padding="1dp"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/left_right_border"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:padding="1dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
     <View
-        android:layout_below="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/view_foreground"
         android:background="@color/black" />
 
 

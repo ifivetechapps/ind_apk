@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ifiveuv.indsmart">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,11 +26,10 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <activity android:name=".UI.login.LoginActivity" />
 
         <activity android:name=".UI.SubDashboard.SubDashboard" />
-
-
 
 
         <activity android:name=".UI.Masters.CreateUomActivity" />
@@ -60,12 +61,11 @@
         <activity android:name=".UI.SalesCreate.ConvertFromQuoteToSalesActivity" />
         <activity android:name=".UI.SalesCreate.SalesOrderViewActivity" />
         <activity android:name=".UI.SalesCreate.SalesOrderEditActivity" />
-        <activity android:name="SalesInvoiceActivity" />
         <activity android:name=".UI.SalesInvoice.SalesOrdertoInvoice" />
         <activity android:name=".UI.SalesInvoice.SalesInvoiceActivity" />
         <activity android:name=".UI.SalesInvoice.CreateSalesInvoice" />
         <activity android:name=".UI.SalesInvoice.SalesInvoiceEditActivity" />
-        <activity android:name=".UI.Sales.SalesInvoiceViewActivity" />
+
         <activity android:name=".UI.SalesInvoice.SalesInvoiceViewActivity" />
 
 

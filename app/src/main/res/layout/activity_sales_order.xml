@@ -1,149 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/one"
         android:layout_marginBottom="40dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Sales Quote Date"
-                    android:gravity="center_vertical"
-                    android:fontFamily="@font/helvetica"
-                    android:layout_weight="1"
-
+                    android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/helvetica"
+
+                    android:gravity="center_vertical"
+                    android:text="Sales Quote Date"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginStart="5dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/so_date"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="Select Date"
-                    android:fontFamily="@font/helvetica"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
                     android:background="@drawable/rounded_green_border_bottom"
-                    android:textSize="15sp"
-                    android:paddingStart="10dp" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:hint="Select Date"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Customer Name"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/helvetica"
-                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="Customer Name"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginStart="5dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/customer_Name"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
+                    android:background="@drawable/rounded_green_border_bottom"
                     android:gravity="center"
                     android:hint="--select--"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
                     android:paddingLeft="10dp"
-                    android:background="@drawable/rounded_green_border_bottom"
-                    android:textSize="15sp"
-                    android:paddingStart="10dp" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Delivery Date"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/helvetica"
-                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="Delivery Date"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginStart="5dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/delivery_date"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="-- Select Date --"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:fontFamily="@font/helvetica"
                     android:background="@drawable/rounded_green_border_bottom"
-                    android:textSize="15sp"
-                    android:paddingStart="10dp" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:hint="-- Select Date --"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Quote Type"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/helvetica"
-                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="Quote Type"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginStart="5dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/type_of_order"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="Quote Type"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:fontFamily="@font/helvetica"
                     android:background="@drawable/rounded_green_border_bottom"
-                    android:textSize="15sp"
-                    android:paddingStart="10dp" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:hint="Quote Type"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,42 +187,43 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Status"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:fontFamily="@font/helvetica"
+                    android:gravity="center_vertical"
+                    android:text="Status"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginStart="5dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/so_status"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Opened"
-                    android:fontFamily="@font/helvetica"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
                     android:background="@drawable/rounded_green_border_bottom"
-                    android:textSize="15sp"
-                    android:paddingStart="10dp" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="Opened"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="6"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:weightSum="6">
 
                 <TextView
                     android:layout_width="0dip"
@@ -230,34 +239,36 @@
                     android:text="Product"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sub_text" />
+
                 <TextView
-                    android:background="@drawable/top_head_middle"
                     android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/helvetica"
-                    android:textColor="@color/white"
-                    android:singleLine="true"
-                    android:textSize="@dimen/sub_text"
                     android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/top_head_middle"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
                     android:text="Uom"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sub_text" />
+
                 <TextView
                     android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:textSize="@dimen/sub_text"
-                    android:gravity="center"
-                    android:fontFamily="@font/helvetica"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:singleLine="true"
                     android:layout_marginRight="1dp"
-                    android:text="Qty"
+                    android:layout_weight="1"
                     android:background="@drawable/top_head_middle"
-                    android:layout_height="match_parent" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:text="Qty"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sub_text" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -272,6 +283,7 @@
                     android:text="Unit price"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sub_text" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -285,40 +297,42 @@
                     android:text="Dis. %"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sub_text" />
+
                 <TextView
                     android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:textSize="@dimen/sub_text"
-                    android:gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/helvetica"
-                    android:textColor="@color/white"
-                    android:singleLine="true"
                     android:layout_marginRight="1dp"
-                    android:text="Amount"
+                    android:layout_weight="1"
                     android:background="@drawable/right_top_head_corner"
-                    android:layout_height="match_parent" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:text="Amount"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sub_text" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/items_data"
                 android:layout_width="match_parent"
-                android:scrollbars="vertical"
-                android:paddingBottom="7dp"
-                android:paddingLeft="1dp"
-                android:paddingRight="1dp"
-                android:background="@drawable/radius_bottom"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical"/>
+                android:background="@drawable/radius_bottom"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="7dp"
+                android:scrollbars="vertical" />
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:id="@+id/one"
-        android:layout_above="@+id/two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/two"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -348,10 +362,11 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/two"
         android:layout_above="@+id/three"
         android:orientation="horizontal"
         android:padding="5dp">
@@ -382,10 +397,11 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/three"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/three"
         android:layout_above="@+id/submit"
         android:orientation="horizontal"
         android:padding="5dp">
@@ -429,9 +445,9 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_pen"
             android:fontFamily="@font/helvetica"
             android:text="Draft"
-            android:drawableLeft="@drawable/ic_pen"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:theme="@style/DarkButton" />
@@ -441,8 +457,8 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="@font/helvetica"
             android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+            android:fontFamily="@font/helvetica"
             android:text="Submit"
             android:textColor="@color/white"
             android:textSize="15sp"

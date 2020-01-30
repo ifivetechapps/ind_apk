@@ -13,8 +13,8 @@
             android:id="@+id/view_foreground"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:weightSum="6"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="6">
 
             <TextView
                 android:id="@+id/product"
@@ -53,6 +53,7 @@
                 android:padding="1dp"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/unit_price"
                 android:layout_width="0dp"
@@ -65,6 +66,7 @@
                 android:padding="1dp"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/discount"
                 android:layout_width="0dp"
@@ -77,6 +79,7 @@
                 android:padding="1dp"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/amount"
                 android:layout_width="0dp"
@@ -91,6 +94,7 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

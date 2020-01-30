@@ -9,7 +9,6 @@
         android:id="@+id/menu_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:contentPaddingBottom="6dp"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
@@ -17,7 +16,8 @@
         android:elevation="2dp"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="1dp"
-        card_view:cardMaxElevation="15dp">
+        card_view:cardMaxElevation="15dp"
+        card_view:contentPaddingBottom="6dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,8 +41,8 @@
                 android:fontFamily="@font/helvetica"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Title"
                 android:paddingBottom="10dp"
+                android:text="Title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sub_text" />
         </RelativeLayout>

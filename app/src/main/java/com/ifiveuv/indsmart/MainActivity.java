@@ -10,19 +10,21 @@ import com.ifiveuv.indsmart.UI.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     private SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate (savedInstanceState);
+        setContentView (R.layout.activity_main);
         sessionManager = new SessionManager ();
     }
+
     @Override
     protected void onResume() {
         super.onResume ();
         if (sessionManager.getToken (this) == null) {
 
             startActivity (new Intent (MainActivity.this, LoginActivity.class));
-        }else{
+        } else {
             startActivity (new Intent (MainActivity.this, Dashboard.class));
 
         }

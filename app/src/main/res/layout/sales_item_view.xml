@@ -13,8 +13,8 @@
             android:id="@+id/view_foreground"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:weightSum="3"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <Spinner
                 android:id="@+id/product"
@@ -56,6 +56,7 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

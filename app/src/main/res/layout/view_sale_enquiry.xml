@@ -47,6 +47,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,6 +80,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,6 +148,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -215,51 +218,54 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="3"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:weightSum="3">
+
                 <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
                     android:background="@drawable/left_top_head_corner"
-                    android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
                     android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
                     android:singleLine="true"
-                    android:textSize="@dimen/sub_text"
-                    android:layout_marginRight="1dp"
                     android:text="Product Name"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sub_text" />
+
                 <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
                     android:background="@drawable/top_head_middle"
-                    android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
                     android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
                     android:singleLine="true"
-                    android:textSize="@dimen/sub_text"
-                    android:layout_marginRight="1dp"
                     android:text="Uom"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sub_text" />
+
                 <TextView
                     android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:textSize="@dimen/sub_text"
-                    android:gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/helvetica"
-                    android:singleLine="true"
                     android:layout_marginRight="1dp"
-                    android:text="Ord. Qty"
+                    android:layout_weight="1"
                     android:background="@drawable/right_top_head_corner"
-                    android:layout_height="match_parent" />
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:text="Ord. Qty"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sub_text" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -289,10 +295,10 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="@font/helvetica"
-            android:text="Copy"
             android:drawableLeft="@drawable/ic_pen"
             android:drawableTint="@color/white"
+            android:fontFamily="@font/helvetica"
+            android:text="Copy"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:theme="@style/DarkButton" />
@@ -302,9 +308,9 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_back"
             android:fontFamily="@font/helvetica"
             android:text="Back"
-            android:drawableLeft="@drawable/ic_back"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:theme="@style/DarkButton" />

@@ -582,9 +582,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_pen"
                     android:fontFamily="@font/helvetica"
                     android:text="COPY"
-                    android:drawableLeft="@drawable/ic_pen"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sub_text"
                     android:theme="@style/DarkButton" />
@@ -595,9 +595,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_back"
                     android:fontFamily="@font/helvetica"
                     android:text="BACK"
-                    android:drawableLeft="@drawable/ic_back"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sub_text"
                     android:theme="@style/DarkButton" />
