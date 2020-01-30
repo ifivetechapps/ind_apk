@@ -27,15 +27,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
+import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
-import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
-import com.ifiveuv.indsmart.UI.Masters.Model.AllCustomerList;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Adapter.EnquiryEditAdapter;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.SalesEnquiry.Model.EnquiryLineList;
@@ -53,9 +51,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -91,7 +86,7 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
     private Menu menu;
     String enquiry_date, typeof;
     ProgressDialog pDialog;
-    AllCustomerList customerLists;
+   List<AllDataList> allDataLists;
     SessionManager sessionManager;
 
     @Override
@@ -111,6 +106,7 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         realm = Realm.getDefaultInstance ();
         Intent intent = getIntent ();
         hdrid = Integer.parseInt (intent.getStringExtra ("hdrid"));
+        allDataLists.addAll (realm.where(AllDataList.class).findAll ());
         typeof = intent.getStringExtra ("typeof");
         if (typeof.equals ("edit")) {
             loadData ();
@@ -147,12 +143,6 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         deldateCalendar = Calendar.getInstance ();
         enquiry_date = IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar);
 
-        customer_Name.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                callCustomerApi ();
-            }
-        });
     }
 
     @OnClick(R.id.delivery_date)
@@ -171,33 +161,9 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         dialog.show ();
     }
 
-    private void callCustomerApi() {
-        if (IFiveEngine.isNetworkAvailable (this)) {
-            pDialog.show ();
 
-            UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
-            Call<AllCustomerList> callEnqueue = userAPICall.customerList (sessionManager.getToken (this));
-            callEnqueue.enqueue (new Callback<AllCustomerList> () {
-                @Override
-                public void onResponse(Call<AllCustomerList> call, Response<AllCustomerList> response) {
-                    customerLists = response.body ();
-                    loadCustomerName ();
-                    Log.e ("viswa_check", response.body () + "");
-                    pDialog.dismiss ();
-                }
-
-                @Override
-                public void onFailure(Call<AllCustomerList> call, Throwable t) {
-                    if ((pDialog != null) && pDialog.isShowing ())
-                        pDialog.dismiss ();
-                }
-            });
-        } else {
-            IFiveEngine.myInstance.snackbarNoInternet (this);
-        }
-    }
-
-    private void loadCustomerName() {
+@OnClick(R.id.customer_Name)
+    public void loadCustomerName() {
 
         View addItemView = LayoutInflater.from (this)
                 .inflate (R.layout.autosearch_recycler, null);
@@ -211,7 +177,7 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         TextView textTitle = addItemView.findViewById (R.id.text_title);
         textTitle.setText ("Customer");
 
-        final CustomerListAdapter itemShowAdapter = new CustomerListAdapter (this, customerLists.getCustomerLists (), this);
+        final CustomerListAdapter itemShowAdapter = new CustomerListAdapter (this, allDataLists.get (0).getCustomerLists (), this);
 
         townsDataList.setAdapter (itemShowAdapter);
         mLayoutManager = new LinearLayoutManager (this);
@@ -471,8 +437,8 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
 
     @Override
     public void onItemPostion(int position) {
-        String Name = customerLists.getCustomerLists ().get (position).getCusName ();
-        int id = customerLists.getCustomerLists ().get (position).getCusNo ();
+        String Name = allDataLists.get (0).getCustomerLists ().get (position).getCusName ();
+        int id = allDataLists.get (0).getCustomerLists ().get (position).getCusNo ();
         customer_Name.setText (Name);
         customer_Name.setError (null);
         cus_id = id;

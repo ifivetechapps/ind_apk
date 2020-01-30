@@ -2,11 +2,10 @@ package com.ifiveuv.indsmart.Connectivity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
 import com.ifiveuv.indsmart.UI.Masters.Model.InventoryType;
 import com.ifiveuv.indsmart.UI.Masters.Model.SubInventory;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
-
-import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -30,6 +29,17 @@ public class AllDataList extends RealmObject {
     @SerializedName("sub_inventory")
     @Expose
     private RealmList<SubInventory> subInventory = null;
+    @SerializedName("CustomerList")
+    @Expose
+    private RealmList<CustomerList> customerLists = null;
+
+    public RealmList<CustomerList> getCustomerLists() {
+        return customerLists;
+    }
+
+    public void setCustomerLists(RealmList<CustomerList> customerLists) {
+        this.customerLists = customerLists;
+    }
 
     public RealmList<Shipping_address> getShipping_addresses() {
         return shipping_addresses;

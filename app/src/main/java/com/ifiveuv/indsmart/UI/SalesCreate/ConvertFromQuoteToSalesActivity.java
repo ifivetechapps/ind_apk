@@ -31,14 +31,11 @@ import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
-import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
-import com.ifiveuv.indsmart.UI.Masters.Model.AllCustomerList;
 import com.ifiveuv.indsmart.UI.SalesCreate.Adapter.QuoteToSalesLineAdapter;
 import com.ifiveuv.indsmart.UI.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.SalesCreate.Model.SalesItemLineList;
@@ -60,9 +57,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -100,8 +94,8 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     RealmList<QuoteItemLineList> quoteItemLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
-    AllCustomerList customerLists;
-    AllDataList allDataList;
+
+
     int nextId, cus_id = 0, tax_id;
     SaleItemList saleItemList;
     RealmResults<QuoteItemList> quoteItemLists;
@@ -111,6 +105,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     ProgressDialog pDialog;
     SessionManager sessionManager;
     double tax_value = 0.0;
+    List<AllDataList> allDataLists = new ArrayList<AllDataList> ();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,15 +127,9 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         sessionManager = new SessionManager ();
         sodateCalendar = Calendar.getInstance ();
         deldateCalendar = Calendar.getInstance ();
+        allDataLists.addAll (realm.where (AllDataList.class).findAll ());
         so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
         loadData ();
-        customer_Name.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                callCustomerApi ();
-
-            }
-        });
         tax.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -148,35 +137,14 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
 
             }
         });
+        loadCustomerName();
 
     }
 
-    private void callCustomerApi() {
-        if (IFiveEngine.isNetworkAvailable (this)) {
-            pDialog.show ();
 
-            UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
-            Call<AllCustomerList> callEnqueue = userAPICall.customerList (sessionManager.getToken (this));
-            callEnqueue.enqueue (new Callback<AllCustomerList> () {
-                @Override
-                public void onResponse(Call<AllCustomerList> call, Response<AllCustomerList> response) {
-                    customerLists = response.body ();
-                    loadCustomerName ();
-                    pDialog.dismiss ();
-                }
 
-                @Override
-                public void onFailure(Call<AllCustomerList> call, Throwable t) {
-                    if ((pDialog != null) && pDialog.isShowing ())
-                        pDialog.dismiss ();
-                }
-            });
-        } else {
-            IFiveEngine.myInstance.snackbarNoInternet (this);
-        }
-    }
-
-    private void loadCustomerName() {
+    @OnClick(R.id.customer_Name)
+    public void loadCustomerName() {
 
         View addItemView = LayoutInflater.from (this)
                 .inflate (R.layout.autosearch_recycler, null);
@@ -190,7 +158,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         TextView textTitle = addItemView.findViewById (R.id.text_title);
         textTitle.setText ("Customer");
 
-        final CustomerListAdapter itemShowAdapter = new CustomerListAdapter (this, customerLists.getCustomerLists (), this);
+        final CustomerListAdapter itemShowAdapter = new CustomerListAdapter (this, allDataLists.get (0).getCustomerLists (), this);
 
         townsDataList.setAdapter (itemShowAdapter);
         mLayoutManager = new LinearLayoutManager (this);
@@ -215,7 +183,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     }
 
     private void loadTaxName() {
-        allDataList = realm.where (AllDataList.class).findFirst ();
+
 
         View addItemView = LayoutInflater.from (this)
                 .inflate (R.layout.autosearch_recycler, null);
@@ -229,7 +197,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         TextView textTitle = addItemView.findViewById (R.id.text_title);
         textTitle.setText ("Customer");
 
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataList.getTax_types (), this);
+        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataLists.get (0).getTax_types (), this);
 
         townsDataList.setAdapter (itemShowAdapter);
         mLayoutManager = new LinearLayoutManager (this);
@@ -542,9 +510,9 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
 
     @Override
     public void onItemtaxPostion(int position) {
-        String Name = allDataList.getTax_types ().get (position).getTaxType ();
-        int id = allDataList.getTax_types ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataList.getTax_types ().get (position).getTaxValue ());
+        String Name = allDataLists.get (0).getTax_types ().get (position).getTaxType ();
+        int id = allDataLists.get (0).getTax_types ().get (position).getTaxTypeId ();
+        tax_value = Double.parseDouble (allDataLists.get (0).getTax_types ().get (position).getTaxValue ());
         tax.setText (Name);
         tax.setError (null);
         tax_id = id;
@@ -554,8 +522,8 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
 
     @Override
     public void onItemPostion(int position) {
-        String Name = customerLists.getCustomerLists ().get (position).getCusName ();
-        int id = customerLists.getCustomerLists ().get (position).getCusNo ();
+        String Name = allDataLists.get (0).getCustomerLists ().get (position).getCusName ();
+        int id = allDataLists.get (0).getCustomerLists ().get (position).getCusNo ();
         customer_Name.setText (Name);
         customer_Name.setError (null);
         cus_id = id;

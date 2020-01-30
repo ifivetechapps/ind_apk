@@ -30,14 +30,11 @@ import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
-import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
-import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
-import com.ifiveuv.indsmart.UI.Masters.Model.AllCustomerList;
 import com.ifiveuv.indsmart.UI.SalesQuote.Adapter.QuoteEditAdapter;
 import com.ifiveuv.indsmart.UI.SalesQuote.Model.QuoteItemLineList;
 import com.ifiveuv.indsmart.UI.SalesQuote.Model.QuoteItemList;
@@ -55,9 +52,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -98,7 +92,7 @@ public class SalesQuoteEditActivity extends BaseActivity implements RecyclerItem
     AlertDialog chartAlertDialog;
     QuoteItemList quoteItemList;
     private Menu menu;
-    AllCustomerList customerLists;
+    AllDataList customerLists;
     ProgressDialog pDialog;
     SessionManager sessionManager;
     String  typeof,enq_online_id;
@@ -166,38 +160,8 @@ int nextId,tax_id;
                 }
             });
         }
-        customer_Name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callCustomerApi();
-            }
-        });
-    }
-    private void callCustomerApi() {
-        if (IFiveEngine.isNetworkAvailable (this)) {
-            pDialog.show ();
+        loadCustomerName ();    }
 
-            UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
-            Call<AllCustomerList> callEnqueue = userAPICall.customerList (sessionManager.getToken (this));
-            callEnqueue.enqueue (new Callback<AllCustomerList> () {
-                @Override
-                public void onResponse(Call<AllCustomerList> call, Response<AllCustomerList> response) {
-                    customerLists = response.body ();
-                    loadCustomerName ();
-                    Log.e ("viswa_check", response.body () + "");
-                    pDialog.dismiss ();
-                }
-
-                @Override
-                public void onFailure(Call<AllCustomerList> call, Throwable t) {
-                    if ((pDialog != null) && pDialog.isShowing ())
-                        pDialog.dismiss ();
-                }
-            });
-        } else {
-            IFiveEngine.myInstance.snackbarNoInternet (this);
-        }
-    }
     private void loadTaxName() {
         allDataList = realm.where (AllDataList.class).findFirst ();
 

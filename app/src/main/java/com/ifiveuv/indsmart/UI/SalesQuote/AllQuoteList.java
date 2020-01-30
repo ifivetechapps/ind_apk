@@ -16,10 +16,10 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ifiveuv.indsmart.Connectivity.EnquiryResponse;
-import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
@@ -57,6 +57,7 @@ public class AllQuoteList extends BaseActivity {
     QuoteItemList quoteItemList;
     EnquiryResponse enquiryResponse;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
@@ -79,6 +80,7 @@ public class AllQuoteList extends BaseActivity {
         Realm.setDefaultConfiguration (realmConfiguration);
         realm = Realm.getDefaultInstance ();
         progressDialog = IFiveEngine.getProgDialog (this);
+
         RealmResults<QuoteItemList> results;
         results = realm.where (QuoteItemList.class)
                 .findAll ();
@@ -197,7 +199,7 @@ public class AllQuoteList extends BaseActivity {
         quoteItemList.setTotalPrice (quoteItemModels.get (0).getTotalPrice ());
         quoteItemList.setNetrice (quoteItemModels.get (0).getNetrice ());
         quoteItemList.setTaxTotal (quoteItemModels.get (0).getTaxTotal ());
-        quoteItemList.setEnquiryId (quoteItemModels.get (0).getOnlineEnquiryId ());
+        quoteItemList.setOnlineEnquiryId (quoteItemModels.get (0).getOnlineEnquiryId ());
         quoteItemList.setQuoteItemLines (quoteItemModels.get (0).getQuoteItemLines ());
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
@@ -269,7 +271,7 @@ public class AllQuoteList extends BaseActivity {
         quoteItemList.setQodate (IFiveEngine.myInstance.formatDate (quoteItemModels.get (0).getQodate ()));
         quoteItemList.setQdel_date (IFiveEngine.myInstance.formatDate (quoteItemModels.get (0).getQdel_date ()));
         quoteItemList.setTotalPrice (quoteItemModels.get (0).getTotalPrice ());
-        quoteItemList.setEnquiryId (quoteItemModels.get (0).getEnquiryId ());
+        quoteItemList.setOnlineEnquiryId (quoteItemModels.get (0).getOnlineEnquiryId ());
         quoteItemList.setQuoteItemLines (quoteItemModels.get (0).getQuoteItemLines ());
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
