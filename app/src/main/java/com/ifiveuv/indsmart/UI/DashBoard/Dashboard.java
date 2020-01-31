@@ -40,7 +40,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class Dashboard extends BaseActivity {
 
-    private static final String TAG = Dashboard.class.getSimpleName ();
+    private static final String TAG = Dashboard.class.getSimpleName();
     @BindView(R.id.dashboard_menu)
     RecyclerView dashboardMenu;
     List<DashboardItemsList> dashboardItemsList;
@@ -55,57 +55,58 @@ public class Dashboard extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.dashboard_activity);
-        ButterKnife.bind (this);
-        actionBar = getSupportActionBar ();
-        sessionManager = new SessionManager ();
-        pDialog = IFiveEngine.getProgDialog (this);
-        Realm.init (this);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dashboard_activity);
+        ButterKnife.bind(this);
+        actionBar = getSupportActionBar();
+        sessionManager = new SessionManager();
+        pDialog = IFiveEngine.getProgDialog(this);
+        Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration
-                .Builder ()
-                .deleteRealmIfMigrationNeeded ()
-                .build ();
-        Realm.setDefaultConfiguration (realmConfiguration);
-        realm = Realm.getDefaultInstance ();
-        getMenuItems ();
-        loadData ();
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        realm = Realm.getDefaultInstance();
+        getMenuItems();
+        loadData();
     }
 
 
-            private void getMenuItems() {
-        dashboardItemsList = new ArrayList<> ();
-        dashboardItemsList.add (setMenuItem (SalesEnquiryList.class, "Sales", R.drawable.sale, null, R.color.colorPrimaryDark));
-        dashboardItemsList.add (setMenuItem (CreateRequisitionActivity.class, "Purchase", R.drawable.purchase, null, R.color.colorPrimaryDark));
-        setMenuRecycler ();
+    private void getMenuItems() {
+        dashboardItemsList = new ArrayList<>();
+        dashboardItemsList.add(setMenuItem(SalesEnquiryList.class, "Sales", R.drawable.sale, null, R.color.colorPrimaryDark));
+        dashboardItemsList.add(setMenuItem(CreateRequisitionActivity.class, "Purchase", R.drawable.purchase, null, R.color.colorPrimaryDark));
+        dashboardItemsList.add(setMenuItem(CreateRequisitionActivity.class, "Master", R.drawable.purchase, null, R.color.colorPrimaryDark));
+        setMenuRecycler();
     }
 
     public void loadData() {
-        RealmResults<AllDataList> p = realm.where (AllDataList.class).findAll ();
-        if (p.size () == 0) {
-            realm.beginTransaction ();
-            p.deleteAllFromRealm ();
-            realm.commitTransaction ();
-            if (IFiveEngine.isNetworkAvailable (this)) {
-                pDialog.show ();
+        RealmResults<AllDataList> p = realm.where(AllDataList.class).findAll();
+        if (p.size() == 0) {
+            realm.beginTransaction();
+            p.deleteAllFromRealm();
+            realm.commitTransaction();
+            if (IFiveEngine.isNetworkAvailable(this)) {
+                pDialog.show();
 
-                UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
-                Call<AllDataList> callEnqueue = userAPICall.allDataList (sessionManager.getToken (this));
-                callEnqueue.enqueue (new Callback<AllDataList> () {
+                UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
+                Call<AllDataList> callEnqueue = userAPICall.allDataList(sessionManager.getToken(this));
+                callEnqueue.enqueue(new Callback<AllDataList>() {
                     @Override
                     public void onResponse(Call<AllDataList> call, Response<AllDataList> response) {
-                        uploadToRealmDB (response.body ());
+                        uploadToRealmDB(response.body());
 
-                        if ((pDialog != null) && pDialog.isShowing ())
-                            pDialog.dismiss ();
+                        if ((pDialog != null) && pDialog.isShowing())
+                            pDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<AllDataList> call, Throwable t) {
-                        if ((pDialog != null) && pDialog.isShowing ())
-                            pDialog.dismiss ();
-                        Log.d ("throwing Error",t.getMessage ());
-                        Toast.makeText (Dashboard.this, "Please check the ID or Password", Toast.LENGTH_SHORT).show ();
+                        if ((pDialog != null) && pDialog.isShowing())
+                            pDialog.dismiss();
+                        Log.d("throwing Error", t.getMessage());
+                        Toast.makeText(Dashboard.this, "Please check the ID or Password", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -115,12 +116,13 @@ public class Dashboard extends BaseActivity {
 
 
     }
+
     private void uploadToRealmDB(final AllDataList body) {
 
         Observable<Integer> observable = Observable.just(1);
         observable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Integer> () {
+                .subscribe(new Observer<Integer>() {
                     @Override
                     public void onCompleted() {
                         realm.beginTransaction();
@@ -168,12 +170,13 @@ public class Dashboard extends BaseActivity {
         dashboardMenu.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         dashboardMenu.setAdapter(dashboardListAdapter);
     }
+
     @Override
     protected void onResume() {
-        super.onResume ();
-        if (sessionManager.getToken (this) == null) {
+        super.onResume();
+        if (sessionManager.getToken(this) == null) {
 
-            startActivity (new Intent (Dashboard.this, LoginActivity.class));
+            startActivity(new Intent(Dashboard.this, LoginActivity.class));
         }
     }
 

@@ -12,16 +12,16 @@ import android.widget.TextView;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 
-import io.realm.RealmResults;
+import java.util.List;
 
 
 public class SaleApproveAdapter extends RecyclerView.Adapter<SaleApproveAdapter.MyViewHolder> {
     SalesOrderApprove context;
-    RealmResults<SaleItemList> results;
+    List<SaleItemList> results;
     SalesOrderApprove purchaseOrderActivity;
 
 
-    public SaleApproveAdapter(SalesOrderApprove context, RealmResults<SaleItemList> results, SalesOrderApprove purchaseOrderActivity) {
+    public SaleApproveAdapter(SalesOrderApprove context, List<SaleItemList> results, SalesOrderApprove purchaseOrderActivity) {
         this.context = context;
         this.results = results;
         this.purchaseOrderActivity = purchaseOrderActivity;

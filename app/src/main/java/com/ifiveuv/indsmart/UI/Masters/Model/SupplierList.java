@@ -239,5 +239,15 @@ public class SupplierList extends RealmObject {
     @SerializedName("cmpy_id")
     @Expose
     private Integer cmpyId;
+    public String getEmpnum() {
+        return empnum;
+    }
 
+    public void setEmpnum(String empnum) {
+        this.empnum = empnum;
+    }
+
+    @SerializedName("contact_no")
+    @Expose
+    private String empnum;
 }

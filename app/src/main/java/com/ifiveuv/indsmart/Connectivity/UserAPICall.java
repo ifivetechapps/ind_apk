@@ -1,10 +1,15 @@
 package com.ifiveuv.indsmart.Connectivity;
 
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
+import com.ifiveuv.indsmart.UI.Masters.Model.SupplierList;
+import com.ifiveuv.indsmart.UI.Masters.UomSave;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionHeader;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Model.InvoiceItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,6 +20,19 @@ import retrofit2.http.POST;
 public interface UserAPICall {
     @POST("public/api-login")
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
+
+    @POST("public/api-save-uom")
+    Call<LoginResponse> uomsave(@Header("token") String token,@Body UomSave uomSave);
+
+    @POST("public/api-save-supplier")
+    Call<LoginResponse> suppliersave(@Header("token") String token,@Body SupplierList uomSave);
+
+    @POST("public/api-save-customer")
+    Call<LoginResponse> customersave(@Header("token") String token,@Body CustomerList uomSave);
+
+    @POST("public/api-so-order-list")
+    Call<List<SaleItemList>> saleOrderList(@Header("token") String token);
+
 
     @POST("esunmr/public/api-update-fcm-token")
     Call<LoginResponse> updateFCMToken(@Header("token") String token, @Body LoginRequest loginRequest);

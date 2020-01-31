@@ -1,12 +1,19 @@
 package com.ifiveuv.indsmart.UI.Masters;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.ifiveuv.indsmart.Connectivity.LoginResponse;
+import com.ifiveuv.indsmart.Connectivity.SessionManager;
+import com.ifiveuv.indsmart.Connectivity.UserAPICall;
+import com.ifiveuv.indsmart.Engine.IFiveEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
@@ -17,6 +24,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,6 +46,8 @@ public class CreateCustomerActivity extends BaseActivity {
     ActionBar actionBar;
     CustomerList customerList;
     int nextId;
+    LoginResponse responseMsg;
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +56,8 @@ public class CreateCustomerActivity extends BaseActivity {
         setContentView(R.layout.create_customer);
         ButterKnife.bind(this);
         actionBar = getSupportActionBar();
+        pDialog = IFiveEngine.getProgDialog(this);
+
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder()
@@ -55,7 +69,17 @@ public class CreateCustomerActivity extends BaseActivity {
 
     @OnClick(R.id.submit_data)
     public void submitdata() {
-        groupsave();
+        if (cusName.getText().toString().trim() == "") {
+            cusName.setError("Required");
+        } else if (cusAdd.getText().toString().trim() == "") {
+            cusAdd.setError("Required");
+        } else if (cusNum.getText().toString().trim() == "") {
+            cusNum.setError("Required");
+        } else if (cusEmail.getText().toString().trim() == "") {
+            cusEmail.setError("Required");
+        } else {
+            groupsave();
+        }
     }
 
     private void groupsave() {
@@ -71,8 +95,42 @@ public class CreateCustomerActivity extends BaseActivity {
         customerList.setCusAdd(cusAdd.getText().toString().trim());
         customerList.setCusMobile(cusNum.getText().toString().trim());
         customerList.setCusEmail(cusEmail.getText().toString().trim());
-        uploadLocalPurchase(customerList);
+
+        saveCustomer(customerList);
+
+        //   uploadLocalPurchase(customerList);
     }
+
+    private void saveCustomer(CustomerList customerList) {
+        if (IFiveEngine.isNetworkAvailable(this)) {
+            pDialog.show();
+            responseMsg = new LoginResponse();
+            pDialog = IFiveEngine.getProgDialog(this);
+            SessionManager sessionManager = new SessionManager();
+
+            UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
+            Call<LoginResponse> callEnqueue = userAPICall.customersave(sessionManager.getToken(this), customerList);
+            callEnqueue.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    responseMsg = response.body();
+                    if (responseMsg.getMsg().equals("Success")) {
+                        Intent login = new Intent(CreateCustomerActivity.this, Dashboard.class);
+                        startActivity(login);
+                        finish();
+                    } else {
+                        Toast.makeText(CreateCustomerActivity.this, "Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
 
     private void uploadLocalPurchase(final CustomerList customerList1) {
         realm = Realm.getDefaultInstance();
