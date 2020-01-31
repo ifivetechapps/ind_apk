@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0c26fbad-b3b1-4c63-a606-7576d1fc6196" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ind_apk" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1705701342">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.24" value="1" />
+          <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.30" value="1" />
+          <entry key="project.open.time.43" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="gradle" value="3" />
+          <entry key="java" value="467" />
+          <entry key="xml" value="28" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Groovy" value="3" />
+          <entry key="JAVA" value="467" />
+          <entry key="XML" value="28" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="dummy" value="19" />
+          <entry key="java" value="2872" />
+          <entry key="txt" value="109" />
+          <entry key="xml" value="45" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="2872" />
+          <entry key="PLAIN_TEXT" value="128" />
+          <entry key="XML" value="45" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="ind_apk" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="layoutResourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>gran</find>
+      <find>EnquiryItemModel</find>
+      <find>EnquiryLineList</find>
+      <find>192.168.1.</find>
+      <find>enquiryItemModels.get (0)</find>
+      <find>uni</find>
+      <find>http://192.168.1.249/indsmart/public</find>
+      <find>CustomerList</find>
+      <find>SupplierAdapter</find>
+      <find>List</find>
+      <find>getTax_types</find>
+      <find>dvlmlkdmvdklv</find>
+      <find>192.168.1.249</find>
+      <find>darkblue</find>
+      <find>dark_blue</find>
+      <find>SalesItemList</find>
+      <find>green_bg</find>
+      <find>black_low</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>EnquiryItemModelOnline</replace>
+      <replace>LocalEnquiryItemModel</replace>
+      <replace>item</replace>
+      <replace>LocalEnquiryLineList</replace>
+      <replace>SupplierList</replace>
+      <replace>RealmList</replace>
+      <replace>getTaxType</replace>
+      <replace>SupplierListAdapter</replace>
+      <replace>SaleItemList</replace>
+      <replace>black</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/RequisitionLineAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_prequisition_line.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Model/RequisitionHeader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ListRequisitionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/create_purchaserequsition.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Model/RequisitionLines.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ApproveListRequisitionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/Connectivity/Message.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/Connectivity/SendApprovalId.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SubDashboard/SubDashboard.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/Connectivity/UserAPICall.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/Sales/SalesCreate/SalesOrderViewActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/ListRequisitionAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/CreateRequisitionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/EditRequisitionLineAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ApproveRequisitionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ViewRequisitionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/EditRequisitionActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/ApproveListRequisitionAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Model/EnquiryItemList.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Model/PurchaseEnquiryData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/create_purchaseenquiry.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/puchase_enquiry_line.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/CreateEnquiryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/EnquiryLineAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/ConvertRequisitionToEnquiryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/RequisitionEnquiryLineAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/EditEnquiryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/EditEnquiryLineAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_purchaseenquiry.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/ListEnquiryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/ListEnquiryAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_puchaseenquiry_line.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/RequisitionList.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/EquiryRequisitionAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/ViewEnquiryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_purchaseenquiry.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_purchaseenquiry_line.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/ViewEnquiryLineAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SaleApproveAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sales_orderapprove_list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SaleInvoiceApproveAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SaleQuoteApproveAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesApproveActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sales_approve.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sq_approve.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesQuoteApprove.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/so_approve.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesOrderApprove.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesInvoiceApprove.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="3" />
+    <option name="y" value="27" />
+    <option name="width" value="695" />
+    <option name="height" value="741" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages AndroidView="false" ProjectPane="false" />
+      <hideEmptyPackages AndroidView="true" ProjectPane="false" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="indsmart" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="indsmart" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="UI" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="indsmart" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="UI" type="462c0819:PsiDirectoryNode" />
+              <item name="SalesApprove" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="ind_apk" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ind_apk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ind_apk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="$USER_HOME$/Desktop/priya/SDK" />
+    <property name="device.picker.selection" value="NDD4C18926016393" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Vignesh/old/InsdSmart" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ifiveuv.indsmart.CommanAdapter" />
+      <recent name="com.ifiveuv.indsmart.UI.SalesEnquiry.Model" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.ifiveuv.indsmart.UI.PurchaseRequisition.Adapter" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0c26fbad-b3b1-4c63-a606-7576d1fc6196" name="Default Changelist" comment="" />
+      <created>1580215724781</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580215724781</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Create Sales">
+      <created>1580221120755</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1580221120755</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Changes Completed">
+      <created>1580366320993</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1580366320993</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Requisition Completed">
+      <created>1580389473303</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1580389473303</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Requisition Completed">
+      <created>1580391217390</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1580391217390</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Requisition completed &amp; Enquiry Local">
+      <created>1580391306055</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1580391306055</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added Sales Approve">
+      <created>1580459286707</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1580459286707</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added Sales order Approve">
+      <created>1580461329399</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1580461329399</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added Sales order Approve">
+      <created>1580461855054</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1580461855054</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="53" y="25" width="1313" height="743" extended-state="7" />
+    <layout>
+      <window_info id="Captures" order="0" sideWeight="0.50342464" side_tool="true" weight="0.32991317" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49489796" visible="true" weight="0.32991317" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.50510204" side_tool="true" weight="0.32991317" />
+      <window_info id="Build Variants" order="4" side_tool="true" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.0" />
+      <window_info anchor="bottom" id="Logcat" order="1" weight="0.0" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="5" sideWeight="0.50039464" side_tool="true" visible="true" weight="0.3809524" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.42006803" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.4047619" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="9" sideWeight="0.49960536" weight="0.5085034" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.50340134" />
+      <window_info anchor="right" id="Device File Explorer" order="0" sideWeight="0.5017007" side_tool="true" weight="0.50434095" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" sideWeight="0.49829933" weight="0.32991317" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Preview" order="4" sideWeight="0.49829933" weight="0.037095502" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Captures" order="0" sideWeight="0.50342464" side_tool="true" weight="0.32991317" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49489796" visible="true" weight="0.32991317" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.50510204" side_tool="true" weight="0.32991317" />
+      <window_info id="Build Variants" order="4" side_tool="true" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.0" />
+      <window_info anchor="bottom" id="Logcat" order="1" weight="0.0" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50039464" side_tool="true" weight="0.0" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.42006803" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.4047619" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="9" sideWeight="0.49960536" weight="0.5085034" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.50340134" />
+      <window_info anchor="right" id="Device File Explorer" order="0" sideWeight="0.5017007" side_tool="true" weight="0.50434095" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" sideWeight="0.49829933" weight="0.32991317" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Preview" order="4" sideWeight="0.49829933" weight="0.17600632" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+    </layout-to-restore>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create Sales" />
+    <MESSAGE value="Local Changes Completed" />
+    <MESSAGE value="Changes Completed" />
+    <MESSAGE value="Requisition Completed" />
+    <MESSAGE value="Requisition completed &amp; Enquiry Local" />
+    <MESSAGE value="Added Sales Approve" />
+    <MESSAGE value="Added Sales order Approve" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Sales order Approve" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/CreateRequisitionActivity.java</url>
+          <line>275</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/Sales/SalesCreate/Model/SalesItemLineList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Model/RequisitionHeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="93" column="31" selection-start-line="93" selection-start-column="19" selection-end-line="93" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Model/RequisitionLines.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SubDashboard/SubDashboard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-145">
+          <caret line="64" column="107" selection-start-line="64" selection-start-column="107" selection-end-line="64" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/Sales/SalesCreate/AllSalesList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="207" column="77" selection-start-line="207" selection-start-column="77" selection-end-line="207" selection-end-column="77" />
+          <folding>
+            <element signature="method#onlineSyncMethodSingle#0;class#AllSalesList#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/Sales/SalesCreate/SalesOrderViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="141" column="30" selection-start-line="141" selection-start-column="25" selection-end-line="141" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/EditRequisitionLineAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="155" column="48" selection-start-line="155" selection-start-column="48" selection-end-line="155" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ListRequisitionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="88" column="65" selection-start-line="88" selection-start-column="65" selection-end-line="88" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/ListRequisitionAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="73" column="65" selection-start-line="73" selection-start-column="12" selection-end-line="73" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/Connectivity/UserAPICall.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="44" column="33" lean-forward="true" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ViewRequisitionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="150" column="80" lean-forward="true" selection-start-line="150" selection-start-column="80" selection-end-line="150" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/EditRequisitionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="374" column="75" selection-start-line="374" selection-start-column="75" selection-end-line="374" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/Adapter/ApproveListRequisitionAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="65" column="54" selection-start-line="65" selection-start-column="54" selection-end-line="65" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ApproveRequisitionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="138" column="47" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Model/EnquiryItemList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="40" selection-start-column="40" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Model/PurchaseEnquiryData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="40" lean-forward="true" selection-start-column="40" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/create_purchaseenquiry.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="29" column="52" lean-forward="true" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/CreateRequisitionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3450">
+          <caret line="230" column="5" lean-forward="true" selection-start-line="230" selection-start-column="5" selection-end-line="230" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/puchase_enquiry_line.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1005">
+          <caret line="67" column="40" selection-start-line="67" selection-start-column="40" selection-end-line="67" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/RequisitionEnquiryLineAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="174" column="90" selection-start-line="174" selection-start-column="90" selection-end-line="174" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/ConvertRequisitionToEnquiryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="203" column="25" lean-forward="true" selection-start-line="203" selection-start-column="25" selection-end-line="203" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/EditEnquiryLineAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/EditEnquiryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="117" column="101" selection-start-line="117" selection-start-column="101" selection-end-line="117" selection-end-column="101" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3868#3878#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/CreateEnquiryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="295" column="1" selection-start-line="295" selection-start-column="1" selection-end-line="305" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/EnquiryLineAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="170" column="84" lean-forward="true" selection-start-line="170" selection-start-column="84" selection-end-line="170" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/ListEnquiryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="73" column="54" selection-start-line="73" selection-start-column="54" selection-end-line="73" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/ListEnquiryAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="54" column="90" lean-forward="true" selection-start-line="54" selection-start-column="90" selection-end-line="54" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_puchaseenquiry_line.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="193" column="1" selection-start-line="193" selection-start-column="1" selection-end-line="193" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/EquiryRequisitionAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="53" column="109" selection-start-line="53" selection-start-column="109" selection-end-line="53" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/RequisitionList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="69" column="71" selection-start-line="69" selection-start-column="71" selection-end-line="69" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_prequisition_line.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_purchaseenquiry.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="100" column="17" selection-start-line="100" selection-start-column="17" selection-end-line="100" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_purchaseenquiry.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="590">
+          <caret line="63" column="2" selection-start-line="63" selection-start-column="2" selection-end-line="63" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/ViewEnquiryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="62" column="56" lean-forward="true" selection-start-line="62" selection-start-column="56" selection-end-line="62" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseEnquiry/Adapter/ViewEnquiryLineAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_purchaseenquiry_line.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="57" column="33" lean-forward="true" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/PurchaseRequisition/ApproveListRequisitionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SaleApproveAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-360">
+          <caret line="33" column="52" selection-start-line="33" selection-start-column="52" selection-end-line="33" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sales_orderapprove_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="176" column="16" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="16" />
+          <folding>
+            <element signature="e#1259#1276#0" expanded="true" />
+            <element signature="e#1652#1669#0" expanded="true" />
+            <element signature="e#2140#2157#0" expanded="true" />
+            <element signature="e#2815#2832#0" expanded="true" />
+            <element signature="e#3208#3225#0" expanded="true" />
+            <element signature="e#3704#3721#0" expanded="true" />
+            <element signature="e#4376#4393#0" expanded="true" />
+            <element signature="e#4769#4786#0" expanded="true" />
+            <element signature="e#5262#5279#0" expanded="true" />
+            <element signature="e#5933#5950#0" expanded="true" />
+            <element signature="e#6326#6343#0" expanded="true" />
+            <element signature="e#6859#6876#0" expanded="true" />
+            <element signature="e#7568#7585#0" expanded="true" />
+            <element signature="e#8013#8030#0" expanded="true" />
+            <element signature="e#8547#8564#0" expanded="true" />
+            <element signature="e#9221#9238#0" expanded="true" />
+            <element signature="e#9634#9651#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SaleInvoiceApproveAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="41" column="50" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SaleQuoteApproveAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="31" column="57" selection-start-line="31" selection-start-column="57" selection-end-line="31" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sales_approve.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="38" lean-forward="true" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesApproveActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-90">
+          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesQuoteApprove.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sq_approve.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="37" column="15" selection-start-line="37" selection-start-column="15" selection-end-line="37" selection-end-column="15" />
+          <folding>
+            <element signature="e#1223#1245#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/Sales/SalesCreate/Model/SaleItemList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" column="32" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="32" />
+          <folding>
+            <element signature="e#5370#5371#0" expanded="true" />
+            <element signature="e#5411#5412#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesOrderApprove.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/so_approve.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+          <folding>
+            <element signature="e#1223#1245#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ifiveuv/indsmart/UI/SalesApprove/SalesInvoiceApprove.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#3202#3650#0" expanded="true" />
+            <element signature="e#3649#3650#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
