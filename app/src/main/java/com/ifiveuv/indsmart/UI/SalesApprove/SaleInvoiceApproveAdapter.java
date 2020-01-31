@@ -8,9 +8,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ifiveuv.indsmart.Fragment.SalesInvoiceApprove;
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Sales.Model.InvoiceItemList;
+import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Model.InvoiceItemList;
 
 import io.realm.RealmResults;
 
@@ -30,7 +29,7 @@ public class SaleInvoiceApproveAdapter extends RecyclerView.Adapter<SaleInvoiceA
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sales_order_list, parent, false);
+                .inflate(R.layout.sales_orderapprove_list, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -40,7 +39,7 @@ public class SaleInvoiceApproveAdapter extends RecyclerView.Adapter<SaleInvoiceA
         final InvoiceItemList item = results.get(position);
         holder.customer_Name.setText(item.getCus_name());
         holder.poNo.setText("SOI" + item.getInvoiceid());
-        holder.orderDate.setText(item.getSodate());
+        holder.orderDate.setText(item.getInvDate ());
         holder.total.setText(item.getTotalPrice());
         holder.source.setText("Sales Quote");
         holder.rejectButton.setOnClickListener(new View.OnClickListener() {

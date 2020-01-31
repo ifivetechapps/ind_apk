@@ -9,20 +9,19 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ifiveuv.indsmart.Fragment.SalesOrderApprove;
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Sales.Model.SalesItemList;
+import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 
 import io.realm.RealmResults;
 
 
 public class SaleApproveAdapter extends RecyclerView.Adapter<SaleApproveAdapter.MyViewHolder> {
     SalesOrderApprove context;
-    RealmResults<SalesItemList> results;
+    RealmResults<SaleItemList> results;
     SalesOrderApprove purchaseOrderActivity;
 
 
-    public SaleApproveAdapter(SalesOrderApprove context, RealmResults<SalesItemList> results, SalesOrderApprove purchaseOrderActivity) {
+    public SaleApproveAdapter(SalesOrderApprove context, RealmResults<SaleItemList> results, SalesOrderApprove purchaseOrderActivity) {
         this.context = context;
         this.results = results;
         this.purchaseOrderActivity = purchaseOrderActivity;
@@ -31,16 +30,16 @@ public class SaleApproveAdapter extends RecyclerView.Adapter<SaleApproveAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sales_order_list, parent, false);
+                .inflate(R.layout.sales_orderapprove_list, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final SalesItemList item = results.get(position);
+        final SaleItemList item = results.get(position);
         holder.customer_Name.setText(item.getCus_name());
-        holder.poNo.setText("SO" + item.getSalesorderId());
+        holder.poNo.setText(item.getOnlineId ());
         holder.orderDate.setText(item.getSodate());
         holder.total.setText(item.getTotalPrice());
         holder.source.setText("Sales");
@@ -48,14 +47,14 @@ public class SaleApproveAdapter extends RecyclerView.Adapter<SaleApproveAdapter.
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("REJECTED", position, item.getSalesorderId());
+                purchaseOrderActivity.changeStatus("REJECTED", position, item.getSalesOrderid ());
             }
         });
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("APPROVED", position, item.getSalesorderId());
+                purchaseOrderActivity.changeStatus("APPROVED", position, item.getSalesOrderid());
             }
         });
 

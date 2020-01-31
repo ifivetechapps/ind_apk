@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.ifiveuv.indsmart.Fragment.SalesInvoiceApprove;
-import com.ifiveuv.indsmart.Fragment.SalesOrderApprove;
-import com.ifiveuv.indsmart.Fragment.SalesQuoteApprove;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;

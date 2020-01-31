@@ -9,9 +9,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ifiveuv.indsmart.Fragment.SalesQuoteApprove;
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Sales.Model.QuoteItemList;
+import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 
 import io.realm.RealmResults;
 
@@ -31,7 +30,7 @@ public class SaleQuoteApproveAdapter extends RecyclerView.Adapter<SaleQuoteAppro
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sales_order_list, parent, false);
+                .inflate(R.layout.sales_orderapprove_list, parent, false);
 
         return new MyViewHolder(itemView);
     }
