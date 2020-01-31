@@ -85,7 +85,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     RecyclerView.LayoutManager mLayoutManager;
     int cusId;
     String typeQuote;
-    AllDataList allDataList;
+
     ActionBar actionBar;
     RealmList<QuoteItemLineList> quoteItemLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
@@ -98,6 +98,8 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     ProgressDialog pDialog;
     SessionManager sessionManager;
     double tax_value = 0.0;
+    List<AllDataList> allDataLists = new ArrayList<> ();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
@@ -116,11 +118,12 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         sodateCalendar = Calendar.getInstance ();
         deldateCalendar = Calendar.getInstance ();
         Intent intent = getIntent ();
+        allDataLists.addAll(realm.where (AllDataList.class).findAll ());
         typeQuote = intent.getStringExtra ("type");
         so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
         quoteItemLineLists.add (new QuoteItemLineList ());
         loadItemAdapter ();
-        loadCustomerName ();        tax.setOnClickListener (new View.OnClickListener () {
+             tax.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 loadTaxName ();
@@ -132,7 +135,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
 
     }
     private void loadTaxName() {
-        allDataList = realm.where (AllDataList.class).findFirst ();
+
 
         View addItemView = LayoutInflater.from (this)
                 .inflate (R.layout.autosearch_recycler, null);
@@ -146,7 +149,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         TextView textTitle = addItemView.findViewById (R.id.text_title);
         textTitle.setText ("Customer");
 
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataList.getTaxType (), this);
+        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataLists.get (0).getTaxType (), this);
 
         townsDataList.setAdapter (itemShowAdapter);
         mLayoutManager = new LinearLayoutManager (this);
@@ -170,7 +173,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         TextView textTitle = addItemView.findViewById (R.id.text_title);
         textTitle.setText ("Customer");
 
-        final CustomerListAdapter itemShowAdapter = new CustomerListAdapter (this, customerLists.getCustomerLists (), this);
+        final CustomerListAdapter itemShowAdapter = new CustomerListAdapter (this, allDataLists.get (0).getCustomerLists (), this);
 
         townsDataList.setAdapter (itemShowAdapter);
         mLayoutManager = new LinearLayoutManager (this);
@@ -199,7 +202,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         int position = quoteItemLineLists.size ();
         if (delivery_date.getText ().toString ().equals ("-- Select Date --")) {
             delivery_date.setError ("Required");
-        } else if (quoteItemLineLists.get (position - 1).getQuantity () == null) {
+        } else if (quoteItemLineLists.get (position - 1).getLineTotal () == null) {
             Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
         } else {
             headerSave ();
@@ -212,7 +215,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         int position = quoteItemLineLists.size ();
         if (delivery_date.getText ().toString ().equals ("-- Select Date --")) {
             delivery_date.setError ("Required");
-        } else if (quoteItemLineLists.get (position - 1).getQuantity () == null) {
+        } else if (quoteItemLineLists.get (position - 1).getLineTotal () == null) {
             Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
         } else {
             headerdraftSave ();
@@ -438,8 +441,8 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
 
     @Override
     public void onItemPostion(int position) {
-        String Name = customerLists.getCustomerLists ().get (position).getCusName ();
-        int id = customerLists.getCustomerLists ().get (position).getCusNo ();
+        String Name = allDataLists.get (0).getCustomerLists ().get (position).getCusName ();
+        int id = allDataLists.get (0).getCustomerLists ().get (position).getCusNo ();
         customer_Name.setText (Name);
         customer_Name.setError (null);
         cusId = id;
@@ -447,9 +450,9 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     }
     @Override
     public void onItemtaxPostion(int position) {
-        String Name = allDataList.getTaxType ().get (position).getTaxType ();
-        int id = allDataList.getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataList.getTaxType ().get (position).getTaxValue ());
+        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxType ();
+        int id = allDataLists.get (0).getTaxType ().get (position).getTaxTypeId ();
+        tax_value = Double.parseDouble (allDataLists.get (0).getTaxType ().get (position).getTaxValue ());
         tax.setText (Name);
         tax.setError (null);
         tax_id = id;

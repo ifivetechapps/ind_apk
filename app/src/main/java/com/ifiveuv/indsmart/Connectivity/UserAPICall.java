@@ -1,5 +1,6 @@
 package com.ifiveuv.indsmart.Connectivity;
 
+import com.ifiveuv.indsmart.UI.PurchaseEnquiry.Model.PurchaseEnquiryData;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionHeader;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
@@ -43,5 +44,9 @@ public interface UserAPICall {
 
     @POST("public/api-poreq-approve")
     Call<Message> purchaseReqApprovedData(@Header("token") String token, @Body SendApprovalId sendApprovalId);
+
+    @POST("public/api-save-po-enq")
+    Call<EnquiryResponse> sendPurachseEnquirySingleData(@Header("token") String token, @Body PurchaseEnquiryData saleItemList);
+
 
 }

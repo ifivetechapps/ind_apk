@@ -182,25 +182,27 @@ public class CreateEnquiryActivity extends BaseActivity implements SupplierListA
         enquiryItemLists.get (position).setOrdQty (String.valueOf (quant));
     }
 
-    public void setProductList(int pos, String price,int poId, String name, int uomId, String uomName) {
+    public void setProductList(int pos,int poId, String name, int uomId, String uomName) {
         enquiryItemLists.get (pos).setProductId (poId);
         enquiryItemLists.get (pos).setProduct (name);
         enquiryItemLists.get (pos).setUom (uomName);
         enquiryItemLists.get (pos).setUom_id (uomId);
 
-        enquiryItemLists.get (pos).setPrice (Integer.parseInt (price));
     }
 
     public void setDuedate(int mPosition, String date) {
-        enquiryItemLists.get (mPosition).setPromised_date (date);
+        enquiryItemLists.get (mPosition).setPromised_date (IFiveEngine.myInstance.formatDate (date));
     }
 
     @OnClick(R.id.draft_data)
     public void draftdata() {
+        int position = enquiryItemLists.size ();
         if (supplier_name.getText ().toString ().equals ("")) {
             supplier_name.setError ("Required");
 
-        } else {
+        } else if (enquiryItemLists.get (position - 1).getOrdQty () == null) {
+            Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+        }  else {
             headerdraftSave ();
         }
 
@@ -209,10 +211,13 @@ public class CreateEnquiryActivity extends BaseActivity implements SupplierListA
 
     @OnClick(R.id.submit_data)
     public void submitData() {
+        int position = enquiryItemLists.size ();
         if (supplier_name.getText ().toString ().equals ("")) {
             supplier_name.setError ("Required");
 
-        } else {
+        } else if (enquiryItemLists.get (position - 1).getOrdQty () == null) {
+            Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+        }  else {
             headerSave ();
         }
 
@@ -233,6 +238,8 @@ public class CreateEnquiryActivity extends BaseActivity implements SupplierListA
         purchaseEnquiryData.setEnquirySource (source_enquiry);
         purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
         purchaseEnquiryData.setSupplierSitestatus ("Submit");
+        purchaseEnquiryData.setSource ("Enquiry");
+        purchaseEnquiryData.setOnlineStatus ("0");
         purchaseEnquiryData.setEnquiryDate (enq_date);
         purchaseEnquiryData.setEnquiryItemLists (tempenquiryItemLists);
         uploadLocalPurchase (purchaseEnquiryData);
@@ -253,6 +260,8 @@ public class CreateEnquiryActivity extends BaseActivity implements SupplierListA
         purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
         purchaseEnquiryData.setSupplierSitestatus ("Draft");
         purchaseEnquiryData.setEnquiryDate (enq_date);
+        purchaseEnquiryData.setOnlineStatus ("0");
+        purchaseEnquiryData.setSource ("Enquiry");
         purchaseEnquiryData.setEnquirySource (source_enquiry);
         purchaseEnquiryData.setEnquiryItemLists (tempenquiryItemLists);
         uploadLocalPurchase (purchaseEnquiryData);

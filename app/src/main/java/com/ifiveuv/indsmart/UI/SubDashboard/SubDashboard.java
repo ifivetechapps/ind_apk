@@ -11,6 +11,7 @@ import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.DashboardItemsList;
+import com.ifiveuv.indsmart.UI.PurchaseEnquiry.ListEnquiryActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.ApproveListRequisitionActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.CreateRequisitionActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.ListRequisitionActivity;
@@ -62,6 +63,7 @@ public class SubDashboard extends BaseActivity {
             dashboardItemsList.add(setMenuItem(CreateRequisitionActivity.class, "Create Requisition", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add(setMenuItem(ListRequisitionActivity.class, "Requisition List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add(setMenuItem(ApproveListRequisitionActivity.class, "Requisition Approval List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add(setMenuItem(ListEnquiryActivity.class, "List Enquiry", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
 
 
             setMenuRecycler ();

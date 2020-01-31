@@ -8,6 +8,53 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class PurchaseEnquiryData extends RealmObject {
+
+    @PrimaryKey
+    @SerializedName("Enquiry_id")
+    @Expose
+    private int enquiryId;
+    @SerializedName("SupplierName")
+    @Expose
+    private String supplierName;
+    @SerializedName("SupplierId")
+    @Expose
+    private String supplierId;
+    @SerializedName("SupplierSiteName")
+    @Expose
+    private String supplierSiteName;
+    @SerializedName("onlineStatus")
+    @Expose
+    private String onlineStatus;
+    @SerializedName("onlineId")
+    @Expose
+    private String onlineId;
+    @SerializedName("enquiry_type_id")
+    @Expose
+    private String enquiryType;
+    @SerializedName("enquiry_date")
+    @Expose
+    private String enquiryDate;
+    @SerializedName("Enquiry_source")
+    @Expose
+    private String enquirySource;
+    @SerializedName("status")
+    @Expose
+    private String supplierSitestatus;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    @SerializedName("source")
+    @Expose
+    private String source;
+    @SerializedName("purchase_requisition_details_tbl")
+    @Expose
+    private RealmList<EnquiryItemList> enquiryItemLists;
     public int getEnquiryId() {
         return enquiryId;
     }
@@ -40,19 +87,24 @@ public class PurchaseEnquiryData extends RealmObject {
         this.supplierSiteName = supplierSiteName;
     }
 
-    @PrimaryKey
-    @SerializedName("Enquiry_id")
-    @Expose
-    private int enquiryId;
-    @SerializedName("SupplierName")
-    @Expose
-    private String supplierName;
-    @SerializedName("SupplierId")
-    @Expose
-    private String supplierId;
-    @SerializedName("SupplierSiteName")
-    @Expose
-    private String supplierSiteName;
+
+    public String getOnlineStatus() {
+        return onlineStatus;
+    }
+
+    public void setOnlineStatus(String onlineStatus) {
+        this.onlineStatus = onlineStatus;
+    }
+
+    public String getOnlineId() {
+        return onlineId;
+    }
+
+    public void setOnlineId(String onlineId) {
+        this.onlineId = onlineId;
+    }
+
+
 
     public String getEnquiryType() {
         return enquiryType;
@@ -62,9 +114,7 @@ public class PurchaseEnquiryData extends RealmObject {
         this.enquiryType = enquiryType;
     }
 
-    @SerializedName("Enquirytype")
-    @Expose
-    private String enquiryType;
+
 
     public String getEnquiryDate() {
         return enquiryDate;
@@ -74,9 +124,6 @@ public class PurchaseEnquiryData extends RealmObject {
         this.enquiryDate = enquiryDate;
     }
 
-    @SerializedName("Enquiry_date")
-    @Expose
-    private String enquiryDate;
 
     public String getEnquirySource() {
         return enquirySource;
@@ -86,9 +133,6 @@ public class PurchaseEnquiryData extends RealmObject {
         this.enquirySource = enquirySource;
     }
 
-    @SerializedName("Enquiry_source")
-    @Expose
-    private String enquirySource;
 
 
     public String getSupplierSitestatus() {
@@ -99,9 +143,6 @@ public class PurchaseEnquiryData extends RealmObject {
         this.supplierSitestatus = supplierSitestatus;
     }
 
-    @SerializedName("SupplierStatus")
-    @Expose
-    private String supplierSitestatus;
 
     public RealmList<EnquiryItemList> getEnquiryItemLists() {
         return enquiryItemLists;
@@ -111,8 +152,6 @@ public class PurchaseEnquiryData extends RealmObject {
         this.enquiryItemLists = enquiryItemLists;
     }
 
-    @SerializedName("EnquiryItemList")
-    @Expose
-    private RealmList<EnquiryItemList> enquiryItemLists;
+
 
 }

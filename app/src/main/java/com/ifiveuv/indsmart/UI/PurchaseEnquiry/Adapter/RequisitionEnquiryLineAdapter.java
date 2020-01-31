@@ -20,8 +20,6 @@ import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
-import com.ifiveuv.indsmart.UI.Masters.Model.HsnModel;
-import com.ifiveuv.indsmart.UI.Masters.Model.TaxModel;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
 import com.ifiveuv.indsmart.UI.PurchaseEnquiry.ConvertRequisitionToEnquiryActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionLines;
@@ -159,15 +157,8 @@ public class RequisitionEnquiryLineAdapter extends RecyclerView.Adapter<Requisit
                 realm.beginTransaction ();
                 itemList.setProduct (holder.productAdapter.getItem (gPosition).getProduct_name ());
                 RealmResults<UomModel> uomModels = realm.where (UomModel.class).equalTo ("uom_id", Integer.valueOf (holder.productAdapter.getItem (gPosition).getUom_id ())).findAll ();
-                RealmResults<TaxModel> taxModels = realm.where (TaxModel.class).equalTo ("taxId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_id ())).findAll ();
-                RealmResults<HsnModel> hsnModels = realm.where (HsnModel.class).equalTo ("hsnId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getHsn_id ())).findAll ();
-                int hsnid = hsnModels.get (0).getHsnId ();
-                String hsnName = hsnModels.get (0).getHsnName ();
                 holder.uom.setText (uomModels.get (0).getUom_name ());
-                int taxid = taxModels.get (0).getTaxId ();
-                String taxName = taxModels.get (0).getTaxName ();
                 createEnquiryActivity.setProductList (mPosition,
-                        holder.productAdapter.getItem (gPosition).getItemPrice (),
                         holder.productAdapter.getItem (gPosition).getPro_id (),
                         String.valueOf (holder.productAdapter.getItem (gPosition).getProduct_name ()),
                         uomModels.get (0).getUom_id (), uomModels.get (0).getUom_name ());
