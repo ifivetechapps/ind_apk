@@ -11,6 +11,9 @@ import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.DashboardItemsList;
+import com.ifiveuv.indsmart.UI.Masters.CreateCustomerActivity;
+import com.ifiveuv.indsmart.UI.Masters.CreateSupplierActivity;
+import com.ifiveuv.indsmart.UI.Masters.CreateUomActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.ApproveListRequisitionActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.CreateRequisitionActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.ListRequisitionActivity;
@@ -18,6 +21,7 @@ import com.ifiveuv.indsmart.UI.Sales.SalesCreate.AllSalesList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryList;
 import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.SalesInvoiceActivity;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.AllQuoteList;
+import com.ifiveuv.indsmart.UI.SalesApprove.SalesApproveActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +59,7 @@ public class SubDashboard extends BaseActivity {
             dashboardItemsList.add (setMenuItem (AllQuoteList.class, "Sales Quote", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add (setMenuItem (AllSalesList.class, "Sales Create", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add(setMenuItem(SalesInvoiceActivity.class, "Sales Invoice", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add(setMenuItem(SalesApproveActivity.class, "Sales Approve", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
 
             setMenuRecycler ();
         } else if (typeName.equals ("Purchase")) {
@@ -74,10 +79,10 @@ public class SubDashboard extends BaseActivity {
             setMenuRecycler ();
         } else if (typeName.equals ("Master")) {
             dashboardItemsList = new ArrayList<> ();
-//            dashboardItemsList.add (setMenuItem (CreateUomActivity.class, "Create Uom", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-//            dashboardItemsList.add (setMenuItem (CreateSupplierActivity.class, "Create Supplier", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-//            dashboardItemsList.add (setMenuItem (CreateCustomerActivity.class, "Create Customer", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-//            setMenuRecycler ();
+            dashboardItemsList.add (setMenuItem (CreateUomActivity.class, "Create Uom", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (CreateSupplierActivity.class, "Create Supplier", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (CreateCustomerActivity.class, "Create Customer", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            setMenuRecycler ();
         } else if (typeName.equals ("Production")) {
             dashboardItemsList = new ArrayList<> ();
             setMenuRecycler ();
