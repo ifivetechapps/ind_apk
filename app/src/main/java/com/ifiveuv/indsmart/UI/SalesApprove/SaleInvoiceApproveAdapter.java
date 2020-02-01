@@ -1,5 +1,7 @@
 package com.ifiveuv.indsmart.UI.SalesApprove;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +11,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Model.InvoiceItemList;
 
-import io.realm.RealmResults;
+import java.util.List;
 
 
 public class SaleInvoiceApproveAdapter extends RecyclerView.Adapter<SaleInvoiceApproveAdapter.MyViewHolder> {
     SalesInvoiceApprove context;
-    RealmResults<InvoiceItemList> results;
+    List<SoInvoiceList> results;
     SalesInvoiceApprove purchaseOrderActivity;
 
 
-    public SaleInvoiceApproveAdapter(SalesInvoiceApprove context, RealmResults<InvoiceItemList> results, SalesInvoiceApprove purchaseOrderActivity) {
+    public SaleInvoiceApproveAdapter(SalesInvoiceApprove context, List<SoInvoiceList> results, SalesInvoiceApprove purchaseOrderActivity) {
         this.context = context;
         this.results = results;
         this.purchaseOrderActivity = purchaseOrderActivity;
@@ -36,24 +37,26 @@ public class SaleInvoiceApproveAdapter extends RecyclerView.Adapter<SaleInvoiceA
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final InvoiceItemList item = results.get(position);
-        holder.customer_Name.setText(item.getCus_name());
-        holder.poNo.setText("SOI" + item.getInvoiceid());
-        holder.orderDate.setText(item.getInvDate ());
-        holder.total.setText(item.getTotalPrice());
-        holder.source.setText("Sales Quote");
+        final SoInvoiceList item = results.get(position);
+        holder.customer_Name.setText(item.getUsername());
+        holder.poNo.setText(item.getInvoiceNo());
+        holder.orderDate.setText(item.getInvoiceDate ());
+        holder.total.setText(item.getTotalAmount());
+        holder.source.setText("Sales Invoice");
         holder.rejectButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("REJECTED", position, item.getInvoiceid());
+                purchaseOrderActivity.changeStatus("REJECTED", position, item.getInvoiceId());
             }
         });
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("APPROVED", position, item.getInvoiceid());
+                purchaseOrderActivity.changeStatus("APPROVED", position, item.getInvoiceId());
             }
         });
 

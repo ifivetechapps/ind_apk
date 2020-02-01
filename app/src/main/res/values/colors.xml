@@ -13,4 +13,6 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="green_bg">#21665c</color>
+    <color name="acc_green">#0b8704</color>
+    <color name="rej_red">#b51e00</color>
 </resources>

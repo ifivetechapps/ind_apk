@@ -2,7 +2,6 @@ package com.ifiveuv.indsmart.UI.SalesApprove;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,16 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.ifiveuv.indsmart.Connectivity.CommanResponse;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Connectivity.UserAPICall;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +47,8 @@ public class SalesOrderApprove extends Fragment {
     Realm realm;
     RealmResults<SaleItemList> results;
     ProgressDialog pDialog;
-    List<SaleItemList> saleItemList;
+    SaleItemListApprove saleItemList;
+    CommanResponse commanResponse = new CommanResponse();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -80,24 +77,25 @@ public class SalesOrderApprove extends Fragment {
     private void loadData() {
         if (IFiveEngine.isNetworkAvailable(getContext())) {
             pDialog.show();
-            saleItemList = new ArrayList<>();
+            saleItemList = new SaleItemListApprove();
             SessionManager sessionManager = new SessionManager();
 
             UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
-            Call<List<SaleItemList>> callEnqueue = userAPICall.saleOrderList(sessionManager.getToken(getContext()));
-            callEnqueue.enqueue(new Callback<List<SaleItemList>>() {
+            Call<SaleItemListApprove> callEnqueue = userAPICall.saleOrderList(sessionManager.getToken(getContext()));
+            callEnqueue.enqueue(new Callback<SaleItemListApprove>() {
                 @Override
-                public void onResponse(Call<List<SaleItemList>> call, Response<List<SaleItemList>> response) {
+                public void onResponse(Call<SaleItemListApprove> call, Response<SaleItemListApprove> response) {
                     saleItemList = response.body();
-                    if (saleItemList != null) {
+                    if (saleItemList.getSoOrderList() != null) {
                         ff11.setVisibility(View.VISIBLE);
                         nodataval.setVisibility(View.GONE);
                         loadAdapter();
+                        pDialog.dismiss();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<SaleItemList>> call, Throwable t) {
+                public void onFailure(Call<SaleItemListApprove> call, Throwable t) {
 
                 }
             });
@@ -121,7 +119,7 @@ public class SalesOrderApprove extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void loadAdapter() {
-        saleApproveAdapter = new SaleApproveAdapter(this, saleItemList, this);
+        saleApproveAdapter = new SaleApproveAdapter(this, saleItemList.getSoOrderList(), this);
         manager = new LinearLayoutManager(getContext());
         so_list.setLayoutManager(manager);
         so_list.setAdapter(saleApproveAdapter);
@@ -129,9 +127,36 @@ public class SalesOrderApprove extends Fragment {
         so_list.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 
-    public void changeStatus(final String rejected, int position, final int id) {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void changeStatus(final String status, int position, final int id) {
 
-        realm.executeTransaction(new Realm.Transaction() {
+
+        if (IFiveEngine.isNetworkAvailable(getContext())) {
+            pDialog.show();
+            saleItemList = new SaleItemListApprove();
+            SessionManager sessionManager = new SessionManager();
+            ApproveRequest approveRequest = new ApproveRequest();
+            approveRequest.setId(id);
+            approveRequest.setStatus(status);
+            UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
+            Call<CommanResponse> callEnqueue = userAPICall.soApprove(sessionManager.getToken(getContext()), approveRequest);
+
+            callEnqueue.enqueue(new Callback<CommanResponse>() {
+                @Override
+                public void onResponse(Call<CommanResponse> call, Response<CommanResponse> response) {
+                    commanResponse = response.body();
+                    if (commanResponse != null) {
+                        loadData();
+                        pDialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommanResponse> call, Throwable t) {
+                    pDialog.dismiss();
+                }
+            });
+      /*  realm.executeTransaction(new Realm.Transaction() {
 
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -142,8 +167,9 @@ public class SalesOrderApprove extends Fragment {
                 startActivity(intent);
 
             }
-        });
+        });*/
 
 
+        }
     }
 }

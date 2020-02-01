@@ -9,13 +9,23 @@
         android:layout_margin="3dp">
 
         <Button
+            android:id="@+id/soe"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_green_border_bottom"
+            android:fontFamily="@font/helvetica"
+            android:text="Enquiry"
+            android:textSize="14sp" />
+
+        <Button
             android:id="@+id/soa"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_green_border_bottom"
             android:fontFamily="@font/helvetica"
-            android:text="Sales Order"
+            android:text="Order"
             android:textSize="14sp" />
 
         <Button
@@ -25,7 +35,7 @@
             android:layout_weight="1"
             android:background="@drawable/rounded_green_border_bottom"
             android:fontFamily="@font/helvetica"
-            android:text="Sales Quote"
+            android:text="Quote"
             android:textSize="14sp" />
 
         <Button
@@ -35,7 +45,7 @@
             android:layout_weight="1"
             android:background="@drawable/rounded_green_border_bottom"
             android:fontFamily="@font/helvetica"
-            android:text="Sales Invoice"
+            android:text="Invoice"
             android:textSize="14sp" />
     </LinearLayout>
 

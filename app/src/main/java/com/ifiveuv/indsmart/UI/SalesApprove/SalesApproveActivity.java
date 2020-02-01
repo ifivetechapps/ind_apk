@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 
 public class SalesApproveActivity extends BaseActivity {
 
-    Button soa, sqa, sia;
+    Button soa, sqa, sia, soe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +24,31 @@ public class SalesApproveActivity extends BaseActivity {
         setContentView(R.layout.sales_approve);
         ButterKnife.bind(this);
 
+        soe = findViewById(R.id.soe);
         soa = findViewById(R.id.soa);
         sqa = findViewById(R.id.sqa);
         sia = findViewById(R.id.sia);
-        loadFragment(new SalesOrderApprove());
-        soa.setBackgroundResource(R.drawable.blue_border);
+        loadFragment(new SalesEnquiryApprove());
+        soe.setBackgroundResource(R.drawable.blue_border);
+        soa.setBackgroundResource(R.drawable.before_click);
         sqa.setBackgroundResource(R.drawable.before_click);
         sia.setBackgroundResource(R.drawable.before_click);
 
 
         // perform setOnClickListener event on First Button
+        soe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // load First Fragment
+                loadFragment(new SalesEnquiryApprove());
+                soe.setBackgroundResource(R.drawable.blue_border);
+                soa.setBackgroundResource(R.drawable.before_click);
+                sqa.setBackgroundResource(R.drawable.before_click);
+                sia.setBackgroundResource(R.drawable.before_click);
+            }
+        });
+
+
         soa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +56,7 @@ public class SalesApproveActivity extends BaseActivity {
                 loadFragment(new SalesOrderApprove());
                 soa.setBackgroundResource(R.drawable.blue_border);
                 sqa.setBackgroundResource(R.drawable.before_click);
+                soe.setBackgroundResource(R.drawable.before_click);
                 sia.setBackgroundResource(R.drawable.before_click);
             }
         });
@@ -52,6 +68,7 @@ public class SalesApproveActivity extends BaseActivity {
                 loadFragment(new SalesQuoteApprove());
                 soa.setBackgroundResource(R.drawable.before_click);
                 sqa.setBackgroundResource(R.drawable.blue_border);
+                soe.setBackgroundResource(R.drawable.before_click);
                 sia.setBackgroundResource(R.drawable.before_click);
             }
         });
@@ -63,6 +80,7 @@ public class SalesApproveActivity extends BaseActivity {
                 loadFragment(new SalesInvoiceApprove());
                 soa.setBackgroundResource(R.drawable.before_click);
                 sqa.setBackgroundResource(R.drawable.before_click);
+                soe.setBackgroundResource(R.drawable.before_click);
                 sia.setBackgroundResource(R.drawable.blue_border);
             }
         });

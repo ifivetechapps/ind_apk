@@ -1,6 +1,8 @@
 package com.ifiveuv.indsmart.UI.SalesApprove;
 
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +12,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SaleApproveAdapter extends RecyclerView.Adapter<SaleApproveAdapter.MyViewHolder> {
     SalesOrderApprove context;
-    List<SaleItemList> results;
+    List<SoOrderList> results = new ArrayList<>();
     SalesOrderApprove purchaseOrderActivity;
 
 
-    public SaleApproveAdapter(SalesOrderApprove context, List<SaleItemList> results, SalesOrderApprove purchaseOrderActivity) {
+    public SaleApproveAdapter(SalesOrderApprove context, List<SoOrderList> results, SalesOrderApprove purchaseOrderActivity) {
         this.context = context;
         this.results = results;
         this.purchaseOrderActivity = purchaseOrderActivity;
@@ -37,24 +39,26 @@ public class SaleApproveAdapter extends RecyclerView.Adapter<SaleApproveAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final SaleItemList item = results.get(position);
-        holder.customer_Name.setText(item.getCus_name());
-        holder.poNo.setText(item.getOnlineId ());
-        holder.orderDate.setText(item.getSodate());
-        holder.total.setText(item.getTotalPrice());
+        final SoOrderList item = results.get(position);
+        holder.customer_Name.setText(item.getUsername());
+        holder.poNo.setText(item.getSalesOrderNo ());
+        holder.orderDate.setText(item.getSalesOrderDate());
+        holder.total.setText(item.getTotal());
         holder.source.setText("Sales");
         holder.rejectButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("REJECTED", position, item.getSalesOrderid ());
+                purchaseOrderActivity.changeStatus("REJECTED", position, item.getSalesOrderHdrId ());
             }
         });
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("APPROVED", position, item.getSalesOrderid());
+                purchaseOrderActivity.changeStatus("APPROVED", position, item.getSalesOrderHdrId());
             }
         });
 
