@@ -11,13 +11,10 @@ import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.DashboardItemsList;
-
 import com.ifiveuv.indsmart.UI.Masters.CreateCustomerActivity;
 import com.ifiveuv.indsmart.UI.Masters.CreateSupplierActivity;
 import com.ifiveuv.indsmart.UI.Masters.CreateUomActivity;
-
 import com.ifiveuv.indsmart.UI.PurchaseEnquiry.ListEnquiryActivity;
-
 import com.ifiveuv.indsmart.UI.PurchaseQuote.ListQuotationActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.ApproveListRequisitionActivity;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.CreateRequisitionActivity;
@@ -63,23 +60,23 @@ public class SubDashboard extends BaseActivity {
             dashboardItemsList.add (setMenuItem (SalesEnquiryList.class, "Sales Enquiry", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add (setMenuItem (AllQuoteList.class, "Sales Quote", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add (setMenuItem (AllSalesList.class, "Sales Create", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-            dashboardItemsList.add(setMenuItem(SalesInvoiceActivity.class, "Sales Invoice", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-            dashboardItemsList.add(setMenuItem(SalesApproveActivity.class, "Sales Approve", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (SalesInvoiceActivity.class, "Sales Invoice", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (SalesApproveActivity.class, "Sales Approve", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
 
             setMenuRecycler ();
         } else if (typeName.equals ("Purchase")) {
             dashboardItemsList = new ArrayList<> ();
-            dashboardItemsList.add(setMenuItem(CreateRequisitionActivity.class, "Create Requisition", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-            dashboardItemsList.add(setMenuItem(ListRequisitionActivity.class, "Requisition List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-            dashboardItemsList.add(setMenuItem(ApproveListRequisitionActivity.class, "Requisition Approval List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-           // dashboardItemsList.add(setMenuItem(ListEnquiryActivity.class, "List Enquiry", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-           // dashboardItemsList.add(setMenuItem(ListQuotationActivity.class, "List Quote", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (CreateRequisitionActivity.class, "Create Requisition", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (ListRequisitionActivity.class, "Requisition List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (ApproveListRequisitionActivity.class, "Requisition Approval List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (ListEnquiryActivity.class, "List Enquiry", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
+            dashboardItemsList.add (setMenuItem (ListQuotationActivity.class, "List Quote", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
 
 
             setMenuRecycler ();
         } else if (typeName.equals ("Dispatch")) {
             dashboardItemsList = new ArrayList<> ();
-         // dashboardItemsList.add(setMenuItem(PaymentReceivableActivityList.class, "Payment Receivable", R.drawable.ic_keyboard_arrow_right, null, R.color.dark));
+            // dashboardItemsList.add(setMenuItem(PaymentReceivableActivityList.class, "Payment Receivable", R.drawable.ic_keyboard_arrow_right, null, R.color.dark));
             setMenuRecycler ();
         } else if (typeName.equals ("Inventory")) {
             dashboardItemsList = new ArrayList<> ();
