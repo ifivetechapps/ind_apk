@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
 import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
@@ -228,12 +229,28 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
 
     @OnClick(R.id.submit_data)
     public void submitdata() {
-        headerSave ();
+        int position = enquiryLineLists.size ();
+        if (delivery_date.getText ().toString ().equals ("-- Select Date --")) {
+            delivery_date.setError ("Required");
+        } else if (enquiryLineLists.get (position - 1).getLineTotal () == null) {
+            Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+        } else {
+            headerSave ();
+        }
+
     }
 
     @OnClick(R.id.draft_data)
     public void draftdata() {
-        headerdraftSave ();
+        int position = enquiryLineLists.size ();
+        if (delivery_date.getText ().toString ().equals ("-- Select Date --")) {
+            delivery_date.setError ("Required");
+        } else if (enquiryLineLists.get (position - 1).getLineTotal () == null) {
+            Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+        } else {
+            headerdraftSave ();
+        }
+
     }
 
     private void headerdraftSave() {

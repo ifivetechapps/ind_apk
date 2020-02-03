@@ -162,7 +162,8 @@ public class EditEnquiryLineAdapter extends RecyclerView.Adapter<EditEnquiryLine
 
                 holder.uom.setText (uomModels.get (0).getUom_name ());
 
-                createEnquiryActivity.setProductList (mPosition, holder.productAdapter.getItem (gPosition).getItemPrice (), holder.productAdapter.getItem (gPosition).getPro_id (), String.valueOf (holder.productAdapter.getItem (gPosition).getProduct_name ()), Integer.valueOf (holder.productAdapter.getItem (gPosition).getUom_id ()), uomModels.get (0).getUom_name ());
+                createEnquiryActivity.setProductList (mPosition,
+                         holder.productAdapter.getItem (gPosition).getPro_id (), String.valueOf (holder.productAdapter.getItem (gPosition).getProduct_name ()), Integer.valueOf (holder.productAdapter.getItem (gPosition).getUom_id ()), uomModels.get (0).getUom_name ());
                 realm.commitTransaction ();
             }
 

@@ -42,6 +42,8 @@ public class EnquiryItemList extends RealmObject {
     @Expose
     private String product;
 
+
+
     @SerializedName("ord_qty")
     @Expose
     private String ordQty;

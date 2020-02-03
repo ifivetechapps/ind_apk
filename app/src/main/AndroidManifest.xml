@@ -80,7 +80,15 @@
         <activity android:name=".UI.PurchaseEnquiry.RequisitionList" />
         <activity android:name=".UI.PurchaseEnquiry.ViewEnquiryActivity" />
         <activity android:name=".UI.SalesApprove.SalesApproveActivity" />
-
+        <activity android:name=".UI.PurchaseQuote.ViewQuotationActivity" />
+        <activity android:name=".UI.PurchaseQuote.QuoteFromRequisitionActivity" />
+        <activity android:name=".UI.PurchaseQuote.QuoteFromEnquiryActivity" />
+        <activity android:name=".UI.PurchaseQuote.ListQuotationActivity" />
+        <activity android:name=".UI.PurchaseQuote.ConvertRequisitiontoQuoteActivity" />
+        <activity android:name=".UI.PurchaseQuote.ConvertEnquirytoQuoteActivity" />
+        <activity android:name=".UI.PurchaseQuote.CreateQuoteActivity" />
+        <activity android:name=".UI.PurchaseQuote.EditQuotationActivity" />
+        <activity android:name=".UI.PurchaseQuote.ApprovalQuotationList" />
 
     </application>
 

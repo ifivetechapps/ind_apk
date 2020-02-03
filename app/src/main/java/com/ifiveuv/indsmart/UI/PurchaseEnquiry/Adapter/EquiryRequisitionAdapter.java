@@ -1,5 +1,6 @@
 package com.ifiveuv.indsmart.UI.PurchaseEnquiry.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -19,28 +20,30 @@ import io.realm.RealmResults;
 
 
 public class EquiryRequisitionAdapter extends RecyclerView.Adapter<EquiryRequisitionAdapter.MyViewHolder> {
-    private RequisitionList context;
+    private Context context;
     private RealmResults<RequisitionHeader> cartList;
     Realm realm;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout viewForeground;
-        public TextView enq_num, supp_name, req_date, enq_type, status;
+        public TextView req_num, req_name, req_date, req_type, status;
 
         public MyViewHolder(View view) {
             super (view);
-            enq_num = view.findViewById (R.id.enq_num);
-            supp_name = view.findViewById (R.id.supp_name);
-            enq_type = view.findViewById (R.id.enq_type);
+            req_num = view.findViewById (R.id.req_num);
             req_date = view.findViewById (R.id.req_date);
+            req_name = view.findViewById (R.id.req_name);
+            req_type = view.findViewById (R.id.req_type);
+            status = view.findViewById (R.id.status);
 
-            viewForeground = view.findViewById (R.id.view_foreground);
+            viewForeground = view.findViewById (R.id.viewForeground);
         }
     }
 
-    public EquiryRequisitionAdapter(RealmResults<RequisitionHeader> cartList, RequisitionList context) {
+    public EquiryRequisitionAdapter(Context context,RealmResults<RequisitionHeader> cartList, RequisitionList requisitionList) {
         this.context = context;
+        this.context = requisitionList;
         this.cartList = cartList;
         realm = Realm.getDefaultInstance ();
     }
@@ -50,7 +53,7 @@ public class EquiryRequisitionAdapter extends RecyclerView.Adapter<EquiryRequisi
     public EquiryRequisitionAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-        View itemView = LayoutInflater.from (parent.getContext ()).inflate (R.layout.list_puchaseenquiry_line, parent, false);
+        View itemView = LayoutInflater.from (parent.getContext ()).inflate (R.layout.list_requisitionpenquiry, parent, false);
         return new EquiryRequisitionAdapter.MyViewHolder (itemView);
     }
 
@@ -58,10 +61,11 @@ public class EquiryRequisitionAdapter extends RecyclerView.Adapter<EquiryRequisi
     public void onBindViewHolder(EquiryRequisitionAdapter.MyViewHolder holder, final int position) {
         final RequisitionHeader item = cartList.get (position);
 
-        holder.enq_num.setText ("REQ" + item.getHdrid ());
-        holder.supp_name.setText (item.getRequestorName ());
-        holder.enq_type.setText (item.getRequestStatus ());
+        holder.req_num.setText (item.getOnlineReqId ());
+        holder.req_name.setText (item.getRequestorName ());
+        holder.req_type.setText (item.getTypeRequisition ());
         holder.req_date.setText (item.getRequestDate ());
+        holder.status.setText (item.getRequestStatus ());
         holder.viewForeground.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
