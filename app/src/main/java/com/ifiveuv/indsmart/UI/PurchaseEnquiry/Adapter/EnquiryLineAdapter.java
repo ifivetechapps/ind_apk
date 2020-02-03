@@ -162,7 +162,6 @@ public class EnquiryLineAdapter extends RecyclerView.Adapter<EnquiryLineAdapter.
                 holder.uom.setText(uomModels.get(0).getUom_name());
 
                 createEnquiryActivity.setProductList(mPosition,
-                        holder.productAdapter.getItem(gPosition).getItemPrice (),
                         holder.productAdapter.getItem(gPosition).getPro_id (),
                         String.valueOf(holder.productAdapter.getItem(gPosition).getProduct_name()),
                         uomModels.get(0).getUom_id (),uomModels.get(0).getUom_name()

@@ -59,13 +59,14 @@ public class RequisitionList extends BaseActivity {
         realm = Realm.getDefaultInstance ();
         RealmResults<RequisitionHeader> results;
         results = realm.where (RequisitionHeader.class)
+                .equalTo ("onlineStatus", "1")
                 .equalTo ("requestStatus", "Approved")
                 .findAll ();
 
         if (results.size () != 0) {
             ll1.setVisibility (View.VISIBLE);
             ll2.setVisibility (View.GONE);
-            EquiryRequisitionAdapter adapter = new EquiryRequisitionAdapter (results, this);
+            EquiryRequisitionAdapter adapter = new EquiryRequisitionAdapter (this,results, this);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager (this, LinearLayoutManager.VERTICAL, false);
 
             salesorder_list.setLayoutManager (linearLayoutManager);

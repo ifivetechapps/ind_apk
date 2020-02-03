@@ -197,13 +197,11 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
         reqLine.get (position).setOrdQty (String.valueOf (quant));
     }
 
-    public void setProductList(int pos, String price, int poId, String name, int uomId, String uomName) {
+    public void setProductList(int pos, int poId, String name, int uomId, String uomName) {
         reqLine.get (pos).setProductId (String.valueOf (poId));
         reqLine.get (pos).setProduct (name);
         reqLine.get (pos).setUom (uomName);
         reqLine.get (pos).setUom_id (uomId);
-
-        reqLine.get (pos).setPrice (Integer.parseInt (price));
     }
 
     public void setEnquiryDuedate(int mPosition, String date) {
@@ -212,10 +210,13 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
 
     @OnClick(R.id.draft_data)
     public void draftdata() {
+        int position = reqLine.size ();
         if (supplier_name.getText ().toString ().equals ("")) {
             supplier_name.setError ("Required");
 
-        } else {
+        } else if (reqLine.get (position - 1).getOrdQty () == null) {
+            Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+        }  else {
             headerdraftSave ();
         }
 
@@ -224,9 +225,12 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
 
     @OnClick(R.id.submit_data)
     public void submitData() {
+        int position = reqLine.size ();
         if (supplier_name.getText ().toString ().equals ("")) {
             supplier_name.setError ("Required");
 
+        } else if (reqLine.get (position - 1).getOrdQty () == null) {
+            Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
         } else {
             headerSave ();
         }
@@ -254,10 +258,11 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
         purchaseEnquiryData.setSupplierName (supplier_name.getText ().toString ());
         purchaseEnquiryData.setSupplierSiteName (supplier_site_name.getText ().toString ());
         purchaseEnquiryData.setEnquiryType (type_enquiry);
+        purchaseEnquiryData.setOnlineStatus ("0");
+        purchaseEnquiryData.setSource ("Requisition");
         purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
         purchaseEnquiryData.setSupplierSitestatus ("Submit");
         purchaseEnquiryData.setEnquiryDate (enq_date);
-
         uploadLocalPurchase (purchaseEnquiryData, nextId);
     }
 
@@ -282,6 +287,8 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
         purchaseEnquiryData.setSupplierName (supplier_name.getText ().toString ());
         purchaseEnquiryData.setSupplierSiteName (supplier_site_name.getText ().toString ());
         purchaseEnquiryData.setEnquiryType (type_enquiry);
+        purchaseEnquiryData.setOnlineStatus ("0");
+        purchaseEnquiryData.setSource ("Requisition");
         purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
         purchaseEnquiryData.setSupplierSitestatus ("Draft");
         purchaseEnquiryData.setEnquiryDate (enq_date);
@@ -329,6 +336,7 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
         for (int i = 0; i < reqLine.size (); i++) {
             EnquiryItemList salesItemLineList = realm.createObject (EnquiryItemList.class);
             salesItemLineList.setProduct (reqLine.get (i).getProduct ());
+            salesItemLineList.setProductId (Integer.parseInt (reqLine.get (i).getProductId ()));
             salesItemLineList.setUom (reqLine.get (i).getUom ());
             salesItemLineList.setPrice (reqLine.get (i).getPrice ());
             salesItemLineList.setUom_id (reqLine.get (i).getUom_id ());
@@ -348,11 +356,11 @@ public class ConvertRequisitionToEnquiryActivity extends BaseActivity implements
     @Override
     public void onItemPostion(int position) {
 
-            String name =  allDataLists.get (0).getSupplierList ().get (position).getSupplierName ();
-            supplier_name.setText (name);
-            supplier_site_name.setText (name);
-            supplier_id = allDataLists.get (0).getSupplierList ().get (position).getSupplierTblId ();
-            chartAlertDialog.dismiss ();
+        String name = allDataLists.get (0).getSupplierList ().get (position).getSupplierName ();
+        supplier_name.setText (name);
+        supplier_site_name.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
+        supplier_id = allDataLists.get (0).getSupplierList ().get (position).getSupplierTblId ();
+        chartAlertDialog.dismiss ();
 
 
     }

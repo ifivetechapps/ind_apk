@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.ifiveuv.indsmart.CommanAdapter.SupplierListAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
+import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.PurchaseEnquiry.Adapter.EditEnquiryLineAdapter;
@@ -45,13 +47,17 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class EditEnquiryActivity extends BaseActivity implements SupplierListAdapter.onItemClickListner {
-    int hdrid;
+    int hdrid,nextId;
     Menu menu;
     Realm realm;
     @BindView(R.id.supplier_name)
     TextView supplier_name;
     @BindView(R.id.supplier_site_name)
     TextView supplier_site_name;
+    @BindView(R.id.submit_data)
+    Button submit_data;
+    @BindView(R.id.draft_data)
+    Button draft_data;
     @BindView(R.id.items_data)
     RecyclerView items_data;
     RecyclerView.LayoutManager mLayoutManager;
@@ -63,7 +69,7 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
     AlertDialog chartAlertDialog;
     int supplier_id;
     List<AllDataList> allDataLists = new ArrayList<> ();
-    String source;
+    String source,typeof;
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate (savedInstance);
@@ -79,9 +85,87 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
 
         Intent intent = getIntent ();
         hdrid = Integer.parseInt (intent.getStringExtra ("headerid"));
+        typeof = intent.getStringExtra ("typeof");
         allDataLists.addAll (realm.where (AllDataList.class)
                 .findAll ());
-        loadAdapter (hdrid);
+
+        if (typeof.equals ("edit")) {
+            loadAdapter (hdrid);
+            submit_data.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+
+
+                        int position = enquiryItemLists.size ();
+                        if (supplier_name.getText ().toString ().equals ("")) {
+                            supplier_name.setError ("Required");
+
+                        } else if (enquiryItemLists.get (position - 1).getOrdQty () == null)  {
+                            Toast.makeText (EditEnquiryActivity.this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+                        }  else {
+                            headerSave ();
+                        }
+
+
+
+
+
+                }
+            });
+            draft_data.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+
+
+                        int position = enquiryItemLists.size ();
+                        if (supplier_name.getText ().toString ().equals ("")) {
+                            supplier_name.setError ("Required");
+
+                        } else if (enquiryItemLists.get (position - 1).getOrdQty () == null)  {
+                            Toast.makeText (EditEnquiryActivity.this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+                        }  else {
+                            headerdraftSave ();
+                        }
+
+
+                }
+            });
+
+        } else {
+            loadAdapter (hdrid);
+            submit_data.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    int position = enquiryItemLists.size ();
+                    if (supplier_name.getText ().toString ().equals ("")) {
+                        supplier_name.setError ("Required");
+
+                    } else if (enquiryItemLists.get (position - 1).getOrdQty () == null)  {
+                        Toast.makeText (EditEnquiryActivity.this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+                    }  else {
+                        copyheaderSave ();
+                    }
+
+                }
+            });
+            draft_data.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+
+                    int position = enquiryItemLists.size ();
+                    if (supplier_name.getText ().toString ().equals ("")) {
+                        supplier_name.setError ("Required");
+
+                    } else if (enquiryItemLists.get (position - 1).getOrdQty () == null)  {
+                        Toast.makeText (EditEnquiryActivity.this, "Enter the above row", Toast.LENGTH_SHORT).show ();
+                    }  else {
+                        copyheaderdraftSave ();
+                    }
+
+                }
+            });
+        }
+
     }
 
     private void loadAdapter(int hdrid) {
@@ -111,18 +195,16 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
     }
 
 
-    public void setProductList(int pos, String price,int poId, String name, int uomId, String uomName) {
+    public void setProductList(int pos,int poId, String name, int uomId, String uomName) {
         enquiryItemLists.get (pos).setProductId (poId);
         enquiryItemLists.get (pos).setProduct (name);
         enquiryItemLists.get (pos).setUom (uomName);
         enquiryItemLists.get (pos).setUom_id (uomId);
-
-        enquiryItemLists.get (pos).setPrice (Integer.parseInt (price));
     }
 
 
     public void setDuedate(int mPosition, String date) {
-        enquiryItemLists.get (mPosition).setPromised_date (date);
+        enquiryItemLists.get (mPosition).setPromised_date (IFiveEngine.myInstance.formatDate (date));
     }
 
     @Override
@@ -195,28 +277,7 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
     }
 
 
-    @OnClick(R.id.draft_data)
-    public void draftdata() {
-        if (supplier_name.getText ().toString ().equals ("")) {
-            supplier_name.setError ("Required");
 
-        } else {
-            headerdraftSave ();
-        }
-
-    }
-
-
-    @OnClick(R.id.submit_data)
-    public void submitData() {
-        if (supplier_name.getText ().toString ().equals ("")) {
-            supplier_name.setError ("Required");
-
-        } else {
-            headerSave ();
-        }
-
-    }
 
     private void headerSave() {
 
@@ -228,9 +289,29 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
         purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
         purchaseEnquiryData.setSupplierSitestatus ("Submit");
         purchaseEnquiryData.setEnquirySource (source);
+        purchaseEnquiryData.setOnlineStatus ("0");
         purchaseEnquiryData.setEnquiryDate (purchaseEnquiryDataRealmResults.get (0).getEnquiryDate ());
         purchaseEnquiryData.setEnquiryItemLists (enquiryItemLists);
         uploadLocalPurchase (purchaseEnquiryData);
+    }  private void copyheaderSave() {
+        Number currentIdNum = realm.where (PurchaseEnquiryData.class).max ("enquiryId");
+        if (currentIdNum == null) {
+            nextId = 1;
+        } else {
+            nextId = currentIdNum.intValue () + 1;
+        }
+        purchaseEnquiryData = new PurchaseEnquiryData ();
+        purchaseEnquiryData.setEnquiryId (nextId);
+        purchaseEnquiryData.setSupplierName (supplier_name.getText ().toString ());
+        purchaseEnquiryData.setSupplierSiteName (supplier_site_name.getText ().toString ());
+        purchaseEnquiryData.setEnquiryType (purchaseEnquiryDataRealmResults.get (0).getEnquiryType ());
+        purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
+        purchaseEnquiryData.setSupplierSitestatus ("Submit");
+        purchaseEnquiryData.setEnquirySource (source);
+        purchaseEnquiryData.setOnlineStatus ("0");
+        purchaseEnquiryData.setEnquiryDate (purchaseEnquiryDataRealmResults.get (0).getEnquiryDate ());
+        purchaseEnquiryData.setEnquiryItemLists (enquiryItemLists);
+        copyuploadLocalPurchase (purchaseEnquiryData);
     }
 
     private void headerdraftSave() {
@@ -243,9 +324,31 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
         purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
         purchaseEnquiryData.setSupplierSitestatus ("Draft");
         purchaseEnquiryData.setEnquirySource (source);
+        purchaseEnquiryData.setOnlineStatus ("0");
         purchaseEnquiryData.setEnquiryDate (purchaseEnquiryDataRealmResults.get (0).getEnquiryDate ());
         purchaseEnquiryData.setEnquiryItemLists (enquiryItemLists);
         uploadLocalPurchase (purchaseEnquiryData);
+
+    }
+    private void copyheaderdraftSave() {
+        Number currentIdNum = realm.where (PurchaseEnquiryData.class).max ("enquiryId");
+        if (currentIdNum == null) {
+            nextId = 1;
+        } else {
+            nextId = currentIdNum.intValue () + 1;
+        }
+        purchaseEnquiryData = new PurchaseEnquiryData ();
+        purchaseEnquiryData.setEnquiryId (nextId);
+        purchaseEnquiryData.setSupplierName (supplier_name.getText ().toString ());
+        purchaseEnquiryData.setSupplierSiteName (supplier_site_name.getText ().toString ());
+        purchaseEnquiryData.setEnquiryType (purchaseEnquiryDataRealmResults.get (0).getEnquiryType ());
+        purchaseEnquiryData.setSupplierId (String.valueOf (supplier_id));
+        purchaseEnquiryData.setSupplierSitestatus ("Draft");
+        purchaseEnquiryData.setEnquirySource (source);
+        purchaseEnquiryData.setOnlineStatus ("0");
+        purchaseEnquiryData.setEnquiryDate (purchaseEnquiryDataRealmResults.get (0).getEnquiryDate ());
+        purchaseEnquiryData.setEnquiryItemLists (enquiryItemLists);
+        copyuploadLocalPurchase (purchaseEnquiryData);
 
     }
 
@@ -259,6 +362,36 @@ public class EditEnquiryActivity extends BaseActivity implements SupplierListAda
                     public void onCompleted() {
                         realm.beginTransaction ();
                         PurchaseEnquiryData allSalesOrder = realm.copyToRealmOrUpdate (purchaseEnquiryData);
+                        realm.commitTransaction ();
+                        Intent intent = new Intent (EditEnquiryActivity.this, SubDashboard.class);
+                        intent.putExtra ("type", "Purchase");
+                        startActivity (intent);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d ("Test", "In onError()");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        realm.executeTransaction (new Realm.Transaction () {
+                            @Override
+                            public void execute(Realm realm) {
+                            }
+                        });
+                    }
+                });
+    }    private void copyuploadLocalPurchase(final PurchaseEnquiryData purchaseEnquiryData) {
+        realm = Realm.getDefaultInstance ();
+        Observable<Integer> observable = Observable.just (1);
+        observable
+                .subscribeOn (AndroidSchedulers.mainThread ())
+                .subscribe (new Observer<Integer> () {
+                    @Override
+                    public void onCompleted() {
+                        realm.beginTransaction ();
+                        PurchaseEnquiryData allSalesOrder = realm.copyToRealm (purchaseEnquiryData);
                         realm.commitTransaction ();
                         Intent intent = new Intent (EditEnquiryActivity.this, SubDashboard.class);
                         intent.putExtra ("type", "Purchase");
