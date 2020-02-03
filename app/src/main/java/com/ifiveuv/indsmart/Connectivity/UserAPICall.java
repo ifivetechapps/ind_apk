@@ -8,8 +8,11 @@ import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Model.InvoiceItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
-
-import java.util.List;
+import com.ifiveuv.indsmart.UI.SalesApprove.ApproveRequest;
+import com.ifiveuv.indsmart.UI.SalesApprove.InvoiceItemApprove;
+import com.ifiveuv.indsmart.UI.SalesApprove.SaleItemListApprove;
+import com.ifiveuv.indsmart.UI.SalesApprove.SalesEnquiryList;
+import com.ifiveuv.indsmart.UI.SalesApprove.SoQuoteApprove;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,17 +25,37 @@ public interface UserAPICall {
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
     @POST("public/api-save-uom")
-    Call<LoginResponse> uomsave(@Header("token") String token,@Body UomSave uomSave);
+    Call<LoginResponse> uomsave(@Header("token") String token, @Body UomSave uomSave);
 
     @POST("public/api-save-supplier")
-    Call<LoginResponse> suppliersave(@Header("token") String token,@Body SupplierList uomSave);
+    Call<LoginResponse> suppliersave(@Header("token") String token, @Body SupplierList uomSave);
 
     @POST("public/api-save-customer")
-    Call<LoginResponse> customersave(@Header("token") String token,@Body CustomerList uomSave);
+    Call<LoginResponse> customersave(@Header("token") String token, @Body CustomerList uomSave);
 
     @POST("public/api-so-order-list")
-    Call<List<SaleItemList>> saleOrderList(@Header("token") String token);
+    Call<SaleItemListApprove> saleOrderList(@Header("token") String token);
 
+    @POST("public/api-so-invoice-list")
+    Call<InvoiceItemApprove> saleinvoiceList(@Header("token") String token);
+
+    @POST("public/api-so-quote-list")
+    Call<SoQuoteApprove> sqList(@Header("token") String token);
+
+    @POST("public/api-so-enquiry-list")
+    Call<SalesEnquiryList> seList(@Header("token") String token);
+
+    @POST("public/api-so-order-approve")
+    Call<CommanResponse> soApprove(@Header("token") String token, @Body ApproveRequest approveRequest);
+
+    @POST("public/api-so-quote-approve")
+    Call<CommanResponse> sqApprove(@Header("token") String token, @Body ApproveRequest approveRequest);
+
+    @POST("public/api-so-enquiry-approve")
+    Call<CommanResponse> seApprove(@Header("token") String token, @Body ApproveRequest approveRequest);
+
+    @POST("public/api-so-invoice-approve")
+    Call<CommanResponse> siApprove(@Header("token") String token, @Body ApproveRequest approveRequest);
 
     @POST("esunmr/public/api-update-fcm-token")
     Call<LoginResponse> updateFCMToken(@Header("token") String token, @Body LoginRequest loginRequest);

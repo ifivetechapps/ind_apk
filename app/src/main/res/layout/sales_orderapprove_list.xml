@@ -237,7 +237,7 @@
             android:text="Reject"
             android:textColor="@color/white"
             android:textSize="@dimen/sub_text"
-            android:theme="@style/DarkButton" />
+            android:theme="@style/RejectButton" />
 
         <Button
             android:id="@+id/accept_button"
@@ -248,7 +248,7 @@
             android:text="Approve"
             android:textColor="@color/white"
             android:textSize="@dimen/sub_text"
-            android:theme="@style/DarkButton" />
+            android:theme="@style/AcceptButton" />
     </LinearLayout>
 
     <View

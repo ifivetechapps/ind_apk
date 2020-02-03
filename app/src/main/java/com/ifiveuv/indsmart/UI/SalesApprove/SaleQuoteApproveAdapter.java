@@ -1,6 +1,8 @@
 package com.ifiveuv.indsmart.UI.SalesApprove;
 
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +12,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 
-import io.realm.RealmResults;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SaleQuoteApproveAdapter extends RecyclerView.Adapter<SaleQuoteApproveAdapter.MyViewHolder> {
     SalesQuoteApprove context;
-    RealmResults<QuoteItemList> results;
+    List<SoQuoteList> results = new ArrayList<>();
     SalesQuoteApprove purchaseOrderActivity;
 
 
-    public SaleQuoteApproveAdapter(SalesQuoteApprove context, RealmResults<QuoteItemList> results, SalesQuoteApprove purchaseOrderActivity) {
+    public SaleQuoteApproveAdapter(SalesQuoteApprove context, List<SoQuoteList> results, SalesQuoteApprove purchaseOrderActivity) {
         this.context = context;
         this.results = results;
         this.purchaseOrderActivity = purchaseOrderActivity;
@@ -37,24 +39,26 @@ public class SaleQuoteApproveAdapter extends RecyclerView.Adapter<SaleQuoteAppro
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final QuoteItemList item = results.get(position);
-        holder.customer_Name.setText(item.getQcus_name());
-        holder.poNo.setText("SOQ" + item.getQuoteItemlist());
-        holder.total.setText(item.getTotalPrice());
-        holder.orderDate.setText(item.getQodate());
+        final SoQuoteList item = results.get(position);
+        holder.customer_Name.setText(item.getUsername());
+        holder.poNo.setText(item.getSalesQuoteNo());
+        holder.total.setText(item.getTotal());
+        holder.orderDate.setText(item.getSalesQuoteDate());
         holder.source.setText("Sales Quote");
         holder.rejectButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("REJECTED", position, item.getQuoteItemlist());
+                purchaseOrderActivity.changeStatus("REJECTED", position, item.getSalesQuoteId());
             }
         });
         holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
-                purchaseOrderActivity.changeStatus("APPROVED", position, item.getQuoteItemlist());
+                purchaseOrderActivity.changeStatus("APPROVED", position, item.getSalesQuoteId());
             }
         });
 

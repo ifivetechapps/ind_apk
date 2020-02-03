@@ -2,7 +2,7 @@ package com.ifiveuv.indsmart.UI.SalesApprove;
 
 
 import android.app.Fragment;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,8 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.ifiveuv.indsmart.Connectivity.CommanResponse;
+import com.ifiveuv.indsmart.Connectivity.SessionManager;
+import com.ifiveuv.indsmart.Connectivity.UserAPICall;
+import com.ifiveuv.indsmart.Engine.IFiveEngine;
+import com.ifiveuv.indsmart.Engine.RetroFitEngine;
 import com.ifiveuv.indsmart.R;
-import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 
 import butterknife.BindView;
@@ -25,6 +29,9 @@ import butterknife.Unbinder;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SalesQuoteApprove extends Fragment {
     View view;
@@ -35,11 +42,13 @@ public class SalesQuoteApprove extends Fragment {
     FrameLayout ff11;
     @BindView(R.id.nodataval)
     FrameLayout nodataval;
-
     SaleQuoteApproveAdapter saleApproveAdapter;
     LinearLayoutManager manager;
     Realm realm;
     RealmResults<QuoteItemList> results;
+    SoQuoteApprove soQuoteApprove;
+    CommanResponse commanResponse = new CommanResponse();
+    ProgressDialog pDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -47,6 +56,8 @@ public class SalesQuoteApprove extends Fragment {
 // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.sq_approve, container, false);
         unbinder = ButterKnife.bind(this, view);
+        pDialog = IFiveEngine.getProgDialog(getContext());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Realm.init(getContext());
         }
@@ -56,9 +67,41 @@ public class SalesQuoteApprove extends Fragment {
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
         realm = Realm.getDefaultInstance();
-        getValues();
-        loadAdapter();
+       /* getValues();
+        loadAdapter();*/
+        loadData();
         return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void loadData() {
+        if (IFiveEngine.isNetworkAvailable(getContext())) {
+            pDialog.show();
+            soQuoteApprove = new SoQuoteApprove();
+            SessionManager sessionManager = new SessionManager();
+
+            UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
+            Call<SoQuoteApprove> callEnqueue = userAPICall.sqList(sessionManager.getToken(getContext()));
+            callEnqueue.enqueue(new Callback<SoQuoteApprove>() {
+                @Override
+                public void onResponse(Call<SoQuoteApprove> call, Response<SoQuoteApprove> response) {
+                    soQuoteApprove = response.body();
+                    if (soQuoteApprove.getSoQuoteList() != null) {
+                        ff11.setVisibility(View.VISIBLE);
+                        nodataval.setVisibility(View.GONE);
+                        loadAdapter();
+                        pDialog.dismiss();
+                    }else{
+                        pDialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SoQuoteApprove> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -78,7 +121,7 @@ public class SalesQuoteApprove extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void loadAdapter() {
-        saleApproveAdapter = new SaleQuoteApproveAdapter(this, results, this);
+        saleApproveAdapter = new SaleQuoteApproveAdapter(this, soQuoteApprove.getSoQuoteList(), this);
         manager = new LinearLayoutManager(getContext());
         sq_list.setLayoutManager(manager);
         sq_list.setAdapter(saleApproveAdapter);
@@ -86,9 +129,50 @@ public class SalesQuoteApprove extends Fragment {
         sq_list.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 
-    public void changeStatus(final String rejected, int position, final int id) {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void changeStatus(final String status, int position, final int id) {
 
-        realm.executeTransaction(new Realm.Transaction() {
+
+        if (IFiveEngine.isNetworkAvailable(getContext())) {
+            pDialog.show();
+            SessionManager sessionManager = new SessionManager();
+            ApproveRequest approveRequest = new ApproveRequest();
+            approveRequest.setId(id);
+            approveRequest.setStatus(status);
+            UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
+            Call<CommanResponse> callEnqueue = userAPICall.sqApprove(sessionManager.getToken(getContext()), approveRequest);
+
+            callEnqueue.enqueue(new Callback<CommanResponse>() {
+                @Override
+                public void onResponse(Call<CommanResponse> call, Response<CommanResponse> response) {
+                    commanResponse = response.body();
+                    if (commanResponse != null) {
+                        loadData();
+                        pDialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommanResponse> call, Throwable t) {
+                    pDialog.dismiss();
+                }
+            });
+      /*  realm.executeTransaction(new Realm.Transaction() {
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void execute(Realm realm) {
+                SaleItemList obj = realm.where(SaleItemList.class).equalTo("SalesOrderid", id).findFirst();
+                obj.setApprovalstatus(rejected);
+                Intent intent = new Intent(getContext(), Dashboard.class);
+                startActivity(intent);
+
+            }
+        });*/
+
+
+        }
+       /* realm.executeTransaction(new Realm.Transaction() {
 
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -101,7 +185,7 @@ public class SalesQuoteApprove extends Fragment {
 
             }
         });
-
+*/
 
     }
 }
