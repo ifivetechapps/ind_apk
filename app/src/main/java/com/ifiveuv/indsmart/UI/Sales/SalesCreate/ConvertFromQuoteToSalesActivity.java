@@ -415,7 +415,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
 
                     salesItemLineList.setUomId (quoteItemLineLists.get (i).getUomId ());
                     salesItemLineList.setUom (quoteItemLineLists.get (i).getUom ());
-
+                    salesItemLineList.setTaxId (quoteItemLineLists.get (i).getQuoteTaxId ());
                     salesItemLineList.setUnitPrice (quoteItemLineLists.get (i).getUnitPrice ());
                     salesItemLineList.setQuantity (Integer.valueOf (quoteItemLineLists.get (i).getQuantity ()));
                     salesItemLineList.setDisPer (quoteItemLineLists.get (i).getDisPer ());

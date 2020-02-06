@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Connectivity.Tax_type;
@@ -227,29 +228,34 @@ public class SalesLineAdapter extends RecyclerView.Adapter<SalesLineAdapter.MyVi
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    double quantity, up, amount, disper, disamt, unit_quan,tax_cal,total_amount;
-                    quantity = Double.parseDouble (holder.quantity.getText ().toString ());
-                    up = Double.parseDouble (holder.unit_price.getText ().toString ());
+                    double quantity, up, amount, disper, disamt, unit_quan, tax_cal, total_amount;
 
-                    realm.beginTransaction ();
-                    if (s.toString ().equals (null) || s.toString ().equals ("")) {
-                        disper = 0.0;
-                        unit_quan = 0.0;
-                        disamt = 0.0;
 
+                    if (holder.quantity.getText ().toString () == null ||holder.quantity.getText ().toString ().equals ("") || holder.unit_price.getText ().toString () == null|| holder.unit_price.getText ().toString ().equals ("")) {
+                        Toast.makeText (saleOrderActivity, "Enter quantity or price", Toast.LENGTH_SHORT).show ();
                     } else {
-                        disper = Double.parseDouble (s.toString ());
-                        unit_quan = up * quantity;
-                        disamt = ((disper / 100) * unit_quan);
-                        amount = unit_quan - disamt;
-                        tax_cal = ((tax_value / 100) * amount);
+                        quantity = Double.parseDouble (holder.quantity.getText ().toString ());
+                        up = Double.parseDouble (holder.unit_price.getText ().toString ());
+                        realm.beginTransaction ();
+                        if (s.toString ().equals (null) || s.toString ().equals ("")) {
+                            disper = 0.0;
+                            unit_quan = 0.0;
+                            disamt = 0.0;
 
-                        total_amount = amount+tax_cal;
-                        holder.amount.setText (String.valueOf (total_amount));
-                        saleOrderActivity.setLineTotal (mPosition, disper, unit_quan, disamt, total_amount);
+                        } else {
+                            disper = Double.parseDouble (s.toString ());
+                            unit_quan = up * quantity;
+                            disamt = ((disper / 100) * unit_quan);
+                            amount = unit_quan - disamt;
+                            tax_cal = ((tax_value / 100) * amount);
+
+                            total_amount = amount + tax_cal;
+                            holder.amount.setText (String.valueOf (total_amount));
+                            saleOrderActivity.setLineTotal (mPosition, disper, unit_quan, disamt, total_amount);
+                        }
+                        realm.commitTransaction ();
+
                     }
-                    realm.commitTransaction ();
-
                 }
             });
         } else {
@@ -269,28 +275,31 @@ public class SalesLineAdapter extends RecyclerView.Adapter<SalesLineAdapter.MyVi
                 @Override
                 public void afterTextChanged(Editable s) {
                     double quantity, up, amount, disper, disamt, unit_quan,tax_cal,total_amount;
-                    quantity = Double.parseDouble (holder.quantity.getText ().toString ());
-                    up = Double.parseDouble (holder.unit_price.getText ().toString ());
-
-                    realm.beginTransaction ();
-                    if (s.toString ().equals (null) || s.toString ().equals ("")) {
-                        disper = 0.0;
-                        unit_quan = 0.0;
-                        disamt = 0.0;
-
+                    if (holder.quantity.getText ().toString () == null ||holder.quantity.getText ().toString ().equals ("") || holder.unit_price.getText ().toString () == null|| holder.unit_price.getText ().toString ().equals ("")) {
+                        Toast.makeText (saleOrderActivity, "Enter quantity or price", Toast.LENGTH_SHORT).show ();
                     } else {
-                        disper = Double.parseDouble (s.toString ());
-                        unit_quan = up * quantity;
-                        disamt = ((disper / 100) * unit_quan);
-                        amount = unit_quan - disamt;
-                        tax_cal = ((tax_value / 100) * amount);
+                        quantity = Double.parseDouble (holder.quantity.getText ().toString ());
+                        up = Double.parseDouble (holder.unit_price.getText ().toString ());
 
-                        total_amount = amount+tax_cal;
-                        holder.amount.setText (String.valueOf (total_amount));
-                        saleOrderActivity.setLineTotal (mPosition, disper, unit_quan, disamt, total_amount);
+                        realm.beginTransaction ();
+                        if (s.toString ().equals (null) || s.toString ().equals ("")) {
+                            disper = 0.0;
+                            unit_quan = 0.0;
+                            disamt = 0.0;
+
+                        } else {
+                            disper = Double.parseDouble (s.toString ());
+                            unit_quan = up * quantity;
+                            disamt = ((disper / 100) * unit_quan);
+                            amount = unit_quan - disamt;
+                            tax_cal = ((tax_value / 100) * amount);
+
+                            total_amount = amount + tax_cal;
+                            holder.amount.setText (String.valueOf (total_amount));
+                            saleOrderActivity.setLineTotal (mPosition, disper, unit_quan, disamt, total_amount);
+                        }
+                        realm.commitTransaction ();
                     }
-                    realm.commitTransaction ();
-
                 }
             });
 

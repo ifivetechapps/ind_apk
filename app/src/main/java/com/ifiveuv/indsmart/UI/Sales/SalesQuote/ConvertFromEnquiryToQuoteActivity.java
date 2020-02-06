@@ -298,6 +298,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         enquiryLineLists.get (pos).setEnquiryUomId (uomId);
         enquiryLineLists.get (pos).setEnquiryUom (uomName);
 
+
         realm.commitTransaction ();
     }
 
@@ -405,6 +406,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
                     quoteItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
                     quoteItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
                     quoteItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
+                    quoteItemLineList.setQuoteTaxId (enquiryLineLists.get (j).getTaxId ());
                     quoteItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
                     quoteItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
                     quoteItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());

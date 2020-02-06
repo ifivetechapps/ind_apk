@@ -378,6 +378,7 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
                     salesItemLineList.setQuantity (Integer.valueOf (salesItemLineLists.get (j).getQuantity ()));
                     salesItemLineList.setDisPer (salesItemLineLists.get (j).getDisPer ());
                     salesItemLineList.setDisAmt (salesItemLineLists.get (j).getDisAmt ());
+                    salesItemLineList.setTaxId (salesItemLineLists.get (j).getTaxId ());
                     salesItemLineList.setOrgCost (salesItemLineLists.get (j).getOrgCost ());
                     salesItemLineList.setLineTotal (salesItemLineLists.get (j).getLineTotal ());
                     realm.insert (salesItemLineList);

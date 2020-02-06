@@ -417,6 +417,7 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
                     salesItemLineList.setQuantity (Integer.valueOf (enquiryLineLists.get (j).getEnquiryRequiredQuantity ()));
                     salesItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
                     salesItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());
+                    salesItemLineList.setTaxId (enquiryLineLists.get (j).getTaxId ());
                     salesItemLineList.setOrgCost (enquiryLineLists.get (j).getOriginalCost ());
                     salesItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
                     realm.insert (salesItemLineList);
