@@ -295,7 +295,7 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
     }
 
     private void copyheaderSave() {
-        Number currentIdNum = realm.where (SaleItemList.class).max ("id");
+        Number currentIdNum = realm.where (SaleItemList.class).max ("SalesOrderid");
         if (currentIdNum == null) {
             nextId = 1;
         } else {
@@ -335,7 +335,7 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
     }
 
     private void copyDraftSave() {
-        Number currentIdNum = realm.where (SaleItemList.class).max ("id");
+        Number currentIdNum = realm.where (SaleItemList.class).max ("SalesOrderid");
         if (currentIdNum == null) {
             nextId = 1;
         } else {
@@ -495,6 +495,7 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
                     SalesItemLineList salesItemLineLists=new SalesItemLineList ();
                     salesItemLineLists.setSaleId (salesItemLineList.get (j).getSaleId ());
                     salesItemLineLists.setSalesHdrid (hdrid);
+                    salesItemLineLists.setTaxId (salesItemLineList.get (j).getTaxId ());
                     salesItemLineLists.setProductPosition (salesItemLineList.get (j).getProductPosition ());
                     salesItemLineLists.setProduct (salesItemLineList.get (j).getProduct ());
                     salesItemLineLists.setProductId (salesItemLineList.get (j).getProductId ());
@@ -558,6 +559,7 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
                     salesItemLineLists.setProduct (salesItemLineList.get (j).getProduct ());
                     salesItemLineLists.setProductId (salesItemLineList.get (j).getProductId ());
                     salesItemLineLists.setUomId (salesItemLineList.get (j).getUomId ());
+                    salesItemLineLists.setTaxId (salesItemLineList.get (j).getTaxId ());
                     salesItemLineLists.setUom (salesItemLineList.get (j).getUom ());
                     salesItemLineLists.setUnitPrice (salesItemLineList.get (j).getUnitPrice ());
                     salesItemLineLists.setQuantity (Integer.valueOf (salesItemLineList.get (j).getQuantity ()));

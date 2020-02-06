@@ -383,6 +383,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
                     quoteItemLineList.setUnitPrice (quoteItemLineLists.get (j).getUnitPrice ());
                     quoteItemLineList.setUom (quoteItemLineLists.get (j).getUom ());
                     quoteItemLineList.setLineTotal (quoteItemLineLists.get (j).getLineTotal ());
+                    quoteItemLineList.setQuoteTaxId (quoteItemLineLists.get (j).getQuoteTaxId ());
                     quoteItemLineList.setDisPer (quoteItemLineLists.get (j).getDisPer ());
                     quoteItemLineList.setDisAmt (quoteItemLineLists.get (j).getDisAmt ());
                     quoteItemLineList.setMrp (quoteItemLineLists.get (j).getMrp ());
