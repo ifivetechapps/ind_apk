@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class QuoteItemLineList extends RealmObject {
 
@@ -43,9 +44,56 @@ public class QuoteItemLineList extends RealmObject {
     @Expose
     private Integer uomId;
 
+    public Integer getQuoteHdrId() {
+        return quoteHdrId;
+    }
+
+    public void setQuoteHdrId(Integer quoteHdrId) {
+        this.quoteHdrId = quoteHdrId;
+    }
+
+    public Integer getQuoteLineId() {
+        return quoteLineId;
+    }
+
+    public void setQuoteLineId(Integer quoteLineId) {
+        this.quoteLineId = quoteLineId;
+    }
+
+    @SerializedName("quote_Hdr_id")
+    @Expose
+    private Integer  quoteHdrId;
+    @SerializedName("quote_taxid")
+    @Expose
+    private Integer  quoteTaxId;
+    @PrimaryKey
+    @SerializedName("quote_line_id")
+    @Expose
+    private Integer quoteLineId;
+
     @SerializedName("quote_quantity")
     @Expose
     private String quantity;
+
+    public Integer getQuoteTaxId() {
+        return quoteTaxId;
+    }
+
+    public void setQuoteTaxId(Integer quoteTaxId) {
+        this.quoteTaxId = quoteTaxId;
+    }
+
+    public String getQuote_tax() {
+        return quote_tax;
+    }
+
+    public void setQuote_tax(String quote_tax) {
+        this.quote_tax = quote_tax;
+    }
+
+    @SerializedName("quote_tax")
+    @Expose
+    private String quote_tax;
 
     @SerializedName("quote_unit_price")
     @Expose

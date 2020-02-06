@@ -28,14 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
-import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Adapter.SalesLineAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SalesItemLineList;
@@ -57,7 +55,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class CreateSalesActivity extends BaseActivity implements RecyclerItemTouchHelperSalesLine.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner , TaxTypeAdapter.taxonItemClickListner{
+public class CreateSalesActivity extends BaseActivity implements RecyclerItemTouchHelperSalesLine.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner{
 
 
     @BindView(R.id.so_date)
@@ -68,14 +66,8 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
     TextView customer_Name;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
-    @BindView(R.id.total_price)
-    TextView total_price;
     @BindView(R.id.type_of_order)
     TextView typeOfOrder;
-    @BindView(R.id.tax)
-    TextView tax;
-    @BindView(R.id.total_tax)
-    TextView total_tax;
     @BindView(R.id.gross_amount)
     TextView gross_amount;
     @BindView(R.id.submit_data)
@@ -88,7 +80,7 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
     ActionBar actionBar;
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
-    int nextId, cus_id = 0,tax_id;
+    int nextId, cus_id = 0;
     SaleItemList salesItemLists;
     private Menu menu;
     AlertDialog.Builder chartDialog;
@@ -98,7 +90,7 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
     RealmList<SalesItemLineList> salesItemLineLists = new RealmList<> ();
     SalesLineAdapter salesAdapter;
     List<AllDataList> allDataLists = new ArrayList<AllDataList> ();
-    double tax_value = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
@@ -121,42 +113,13 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
         Intent intent = getIntent ();
         typeOfOrder.setText (intent.getStringExtra ("type"));
         so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
-        tax.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                loadTaxName ();
-
-            }
-        });
-        loadCustomerName ();
         allDataLists.addAll (realm.where (AllDataList.class).findAll ());
+
         salesItemLineLists.add (new SalesItemLineList ());
         loadItemAdapter ();
 
     }
-    private void loadTaxName() {
 
-
-        View addItemView = LayoutInflater.from (this)
-                .inflate (R.layout.autosearch_recycler, null);
-        chartDialog = new AlertDialog.Builder (this);
-        chartDialog.setView (addItemView);
-        chartAlertDialog = chartDialog.show ();
-
-        chartAlertDialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-        RecyclerView townsDataList = addItemView.findViewById (R.id.items_data_list);
-        final EditText search_type = addItemView.findViewById (R.id.search_type);
-        TextView textTitle = addItemView.findViewById (R.id.text_title);
-        textTitle.setText ("Customer");
-
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataLists.get (0).getTaxType (), this);
-
-        townsDataList.setAdapter (itemShowAdapter);
-        mLayoutManager = new LinearLayoutManager (this);
-        townsDataList.setLayoutManager (mLayoutManager);
-        townsDataList.setItemAnimator (new DefaultItemAnimator ());
-
-    }
     private void loadItemAdapter() {
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
@@ -260,14 +223,9 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
         salesItemLists.setDel_date (delivery_date.getText ().toString ());
         salesItemLists.setStatus ("Opened");
         salesItemLists.setOnlinestatus ("0");
-        salesItemLists.setTaxType (tax.getText().toString());
-        salesItemLists.setTaxTypeID (String.valueOf (tax_id));
-        salesItemLists.setTaxValue (String.valueOf (tax_value));
-        salesItemLists.setTotalTax (total_tax.getText().toString());
+
         salesItemLists.setNetPrice (gross_amount.getText().toString());
         salesItemLists.setTypeOfOrder (typeOfOrder.getText ().toString ());
-        salesItemLists.setTotalPrice (total_price.getText ().toString ());
-        salesItemLists.setSalesItemLineLists (salesItemLineLists);
         uploadLocalPurchase (salesItemLists);
     }
 
@@ -313,12 +271,13 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
     }
 
 
-    public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
+    public void setProductList(int pos, int pro_id, String name, int uomId, String uomName,int tax_id) {
         realm.beginTransaction ();
         salesItemLineLists.get (pos).setProduct (name);
         salesItemLineLists.get (pos).setProductId (String.valueOf (pro_id));
         salesItemLineLists.get (pos).setUomId (uomId);
         salesItemLineLists.get (pos).setUom (uomName);
+        salesItemLineLists.get (pos).setTaxId (tax_id);
         realm.commitTransaction ();
     }
 
@@ -328,19 +287,13 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
 
     public void grandTotal(List<SalesItemLineList> items) {
         double grosspay = 0.0;
-        double tax_total = 0.0;
-        double totalPrice = 0.0;
+
         for (int i = 0; i < items.size(); i++) {
             if(items.get(i).getLineTotal ()!=null){
-                totalPrice += Double.parseDouble (items.get(i).getLineTotal ());
+                grosspay += Double.parseDouble (items.get(i).getLineTotal ());
             }
         }
 
-        total_price.setText (String.valueOf (totalPrice));
-        tax_total = (tax_value / 100) * totalPrice;
-        grosspay = totalPrice + tax_total;
-        total_price.setText (totalPrice + "");
-        total_tax.setText (tax_total + "");
         gross_amount.setText (grosspay + "");
 
     }
@@ -362,15 +315,9 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
         salesItemLists.setDel_date (delivery_date.getText ().toString ());
         salesItemLists.setStatus ("Submitted");
         salesItemLists.setOnlinestatus ("0");
-        salesItemLists.setTaxType (tax.getText().toString());
-        salesItemLists.setTaxTypeID (String.valueOf (tax_id));
-        salesItemLists.setTaxValue (String.valueOf (tax_value));
-        salesItemLists.setTotalTax (total_tax.getText().toString());
+
         salesItemLists.setNetPrice (gross_amount.getText().toString());
         salesItemLists.setTypeOfOrder (typeOfOrder.getText ().toString ());
-
-        salesItemLists.setTotalPrice (total_price.getText ().toString ());
-        salesItemLists.setSalesItemLineLists (salesItemLineLists);
         uploadLocalPurchase (salesItemLists);
     }
 
@@ -385,9 +332,10 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
                         realm.beginTransaction ();
                         SaleItemList allSalesOrder = realm.copyToRealm (salesItemList);
                         realm.commitTransaction ();
-                        Intent intent = new Intent (CreateSalesActivity.this, Dashboard.class);
+                       lineSave(nextId);
+                        Intent intent = new Intent (CreateSalesActivity.this, SubDashboard.class);
+                        intent.putExtra ("type", "Sales");
                         startActivity (intent);
-
                     }
 
                     @Override
@@ -404,6 +352,40 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
                         });
                     }
                 });
+    }
+
+    private void lineSave(final int nextId) {
+        realm.executeTransaction (new Realm.Transaction () {
+            @Override
+            public void execute(Realm realm) {
+                int nextId_line;
+                for (int j = 0; j < salesItemLineLists.size (); j++) {
+                    Number currentIdNum = realm.where (SalesItemLineList.class).max ("saleId");
+                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                    }
+                    SalesItemLineList salesItemLineList=new SalesItemLineList ();
+                    salesItemLineList.setSaleId (nextId_line);
+                    salesItemLineList.setSalesHdrid (nextId);
+                    salesItemLineList.setProductPosition (salesItemLineLists.get (j).getProductPosition ());
+                    salesItemLineList.setProduct (salesItemLineLists.get (j).getProduct ());
+                    salesItemLineList.setProductId (salesItemLineLists.get (j).getProductId ());
+                    salesItemLineList.setUomId (salesItemLineLists.get (j).getUomId ());
+                    salesItemLineList.setUom (salesItemLineLists.get (j).getUom ());
+                    salesItemLineList.setUnitPrice (salesItemLineLists.get (j).getUnitPrice ());
+                    salesItemLineList.setQuantity (Integer.valueOf (salesItemLineLists.get (j).getQuantity ()));
+                    salesItemLineList.setDisPer (salesItemLineLists.get (j).getDisPer ());
+                    salesItemLineList.setDisAmt (salesItemLineLists.get (j).getDisAmt ());
+                    salesItemLineList.setOrgCost (salesItemLineLists.get (j).getOrgCost ());
+                    salesItemLineList.setLineTotal (salesItemLineLists.get (j).getLineTotal ());
+                    realm.insert (salesItemLineList);
+
+                }
+
+            }
+        });
     }
 
 
@@ -455,17 +437,7 @@ public class CreateSalesActivity extends BaseActivity implements RecyclerItemTou
         grandTotal (salesItemLineLists);
 
     }
-    @Override
-    public void onItemtaxPostion(int position) {
-        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxType ();
-        int id =  allDataLists.get (0).getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble ( allDataLists.get (0).getTaxType ().get (position).getTaxValue ());
-        tax.setText (Name);
-        tax.setError (null);
-        tax_id = id;
-        chartAlertDialog.dismiss ();
 
-    }
 
     @Override
     public void onItemPostion(int position) {

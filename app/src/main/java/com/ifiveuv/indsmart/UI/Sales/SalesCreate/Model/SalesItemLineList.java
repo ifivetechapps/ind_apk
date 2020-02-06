@@ -4,8 +4,36 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class SalesItemLineList extends RealmObject {
+    public SalesItemLineList() {
+    }
+
+    public int getSaleId() {
+        return saleId;
+    }
+
+    public void setSaleId(int saleId) {
+        this.saleId = saleId;
+    }
+
+    @PrimaryKey
+    @SerializedName("so_id")
+    @Expose
+    private int saleId;
+
+    public int getSalesHdrid() {
+        return salesHdrid;
+    }
+
+    public void setSalesHdrid(int salesHdrid) {
+        this.salesHdrid = salesHdrid;
+    }
+
+    @SerializedName("sales_hdrid")
+    @Expose
+    private int salesHdrid;
     @SerializedName("product_position")
     @Expose
     private int productPosition;
@@ -26,6 +54,18 @@ public class SalesItemLineList extends RealmObject {
     @SerializedName("so_uom_id")
     @Expose
     private Integer uomId;
+
+    public Integer getTaxId() {
+        return taxId;
+    }
+
+    public void setTaxId(Integer taxId) {
+        this.taxId = taxId;
+    }
+
+    @SerializedName("so_tax_id")
+    @Expose
+    private Integer taxId;
     @SerializedName("so_quantity")
     @Expose
     private Integer quantity;

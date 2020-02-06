@@ -71,8 +71,6 @@ public class SubDashboard extends BaseActivity {
             dashboardItemsList.add (setMenuItem (ApproveListRequisitionActivity.class, "Requisition Approval List", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add (setMenuItem (ListEnquiryActivity.class, "List Enquiry", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
             dashboardItemsList.add (setMenuItem (ListQuotationActivity.class, "List Quote", R.drawable.ic_keyboard_arrow_right, null, R.color.colorPrimaryDark));
-
-
             setMenuRecycler ();
         } else if (typeName.equals ("Dispatch")) {
             dashboardItemsList = new ArrayList<> ();

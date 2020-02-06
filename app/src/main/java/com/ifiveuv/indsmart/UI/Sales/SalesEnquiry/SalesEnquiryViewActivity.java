@@ -47,12 +47,12 @@ public class SalesEnquiryViewActivity extends BaseActivity {
     int hdrid;
     RecyclerView.LayoutManager mLayoutManager;
     Realm realm;
-    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<>();
+
     SalesEnquiryviewAdapter salesAdapter;
     int nextId;
     EnquiryItemModel enquiryItemModel;
     RealmResults<EnquiryItemModel> enquiryItemModels;
-
+    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,13 +76,17 @@ public class SalesEnquiryViewActivity extends BaseActivity {
         enquiryItemModels = realm.where(EnquiryItemModel.class)
                 .equalTo("enquiryId", hdrid)
                 .findAll();
+        enquiryLineLists.addAll(realm.copyFromRealm(realm.where(EnquiryLineList.class)
+                .equalTo("enquiryHdrId", hdrid)
+                .findAll()));
+
         enquiry_number.setText("SE" + enquiryItemModels.get(0).getEnquiryId ());
         enquiry_date.setText(enquiryItemModels.get(0).getEnquiryDate ());
         customer_Name.setText(enquiryItemModels.get(0).getEnquiryCustomerName ());
         remarks.setText(enquiryItemModels.get(0).getEnquiryRemarks ());
         so_status.setText(enquiryItemModels.get(0).getEnquiryStatus ());
         enquiry_source.setText(enquiryItemModels.get(0).getEnquiryType ());
-        enquiryLineLists.addAll(enquiryItemModels.get(0).getEnquiryLineLists());
+
         salesAdapter = new SalesEnquiryviewAdapter(this, enquiryLineLists, this);
         item_data_list.setAdapter(salesAdapter);
         item_data_list.setItemViewCacheSize(enquiryLineLists.size());
@@ -130,9 +134,8 @@ public class SalesEnquiryViewActivity extends BaseActivity {
 
     public void headerSave() {
 
-        Intent intent=new Intent (SalesEnquiryViewActivity.this,SalesEnquiryEditActivity.class);
+        Intent intent=new Intent (SalesEnquiryViewActivity.this,SalesEnquiryCopyActivity.class);
         intent.putExtra("hdrid",  String.valueOf(hdrid));
-        intent.putExtra("typeof", "copy");
         startActivity (intent);
 
     }

@@ -183,37 +183,6 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/helvetica"
-                    android:gravity="center_vertical"
-                    android:text="Tax"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tax"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_green_border_bottom"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:paddingStart="10dp"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -326,78 +295,10 @@
     </ScrollView>
 
 
+
+
     <LinearLayout
         android:id="@+id/one"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/two"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/helvetica"
-            android:gravity="center_vertical"
-            android:text="Net Price"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/total_price"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_green_border_bottom"
-            android:fontFamily="@font/helvetica"
-            android:gravity="center"
-            android:padding="5dp"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/three"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/helvetica"
-            android:gravity="center_vertical"
-            android:text="Total Tax"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/total_tax"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_green_border_bottom"
-            android:fontFamily="@font/helvetica"
-            android:gravity="center"
-            android:padding="5dp"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/three"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/submit"

@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.Connectivity.Products;
+import com.ifiveuv.indsmart.Connectivity.Tax_type;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
@@ -36,6 +37,8 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
     List<Products> productsList;
     Realm realm;
     int rate;
+    int tax_value,tax_id;
+
     private Context context;
 
     public QuoteEditAdapter(Context context, RealmList<QuoteItemLineList> cartList, List<Products> products, SalesQuoteEditActivity salesQuoteEditActivity) {
@@ -71,9 +74,13 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
                 itemList.setProductPosition (gPosition);
                 itemList.setProduct (holder.productAdapter.getItem(gPosition).getProduct_name());
                 realm.commitTransaction();
+                RealmResults<Tax_type> taxModels = realm.where (Tax_type.class).equalTo ("taxGroupId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_group_id ())).findAll ();
+                tax_value= Integer.parseInt (taxModels.get (0).getDisplayName ());
+                tax_id= Integer.parseInt (String.valueOf (taxModels.get (0).getTaxGroupId ()));
                 RealmResults<UomModel> uomModels = realm.where(UomModel.class).equalTo("uom_id", Integer.valueOf(holder.productAdapter.getItem(gPosition).getUom_id())).findAll();
                 holder.uom.setText(uomModels.get(0).getUom_name());
-                salesQuoteEditActivity.setProductList(mPosition,  holder.productAdapter.getItem(gPosition).getPro_id (),holder.productAdapter.getItem(gPosition).getProduct_name(), holder.productAdapter.getItem(gPosition).getUom_id(), uomModels.get(0).getUom_name());
+                salesQuoteEditActivity.setProductList(mPosition,  holder.productAdapter.getItem(gPosition).getPro_id (),holder.productAdapter.getItem(gPosition).getProduct_name(), holder.productAdapter.getItem(gPosition).getUom_id(), uomModels.get(0).getUom_name()
+                        ,taxModels.get (0).getTaxGroupId (),taxModels.get (0).getTaxGroupName ());
             }
 
             @Override
@@ -231,7 +238,7 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
                     double quantity = 0;
                     double total = 0;
                     double total_amount=0.0;
-
+                    double tax_cal=0.0;
 
                     double unit_price=0.0;
                     if (s.toString().equals(null) || s.toString().equals("")) {
@@ -249,8 +256,9 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
 
                         total = quantity * unit_price;
                         disamt = ((discountper / 100) * total);
+                        tax_cal = ((tax_value / 100) * disamt);
 
-                        total_amount = total - disamt;
+                        total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         realm.beginTransaction ();
                         salesQuoteEditActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
@@ -279,7 +287,7 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
                     double quantity = 0;
                     double total = 0;
                     double total_amount=0.0;
-
+                    double tax_cal=0.0;
 
                     double unit_price=0.0;
                     if (s.toString().equals(null) || s.toString().equals("")) {
@@ -294,11 +302,11 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
                         unit_price= Double.parseDouble (holder.unit_price.getText().toString ().trim ());
 
                         Log.e("454ff", String.valueOf(unit_price));
-
                         total = quantity * unit_price;
                         disamt = ((discountper / 100) * total);
+                        tax_cal = ((tax_value / 100) * disamt);
 
-                        total_amount = total - disamt;
+                        total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         realm.beginTransaction ();
                         salesQuoteEditActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );

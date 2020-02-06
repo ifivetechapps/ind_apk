@@ -25,6 +25,7 @@ import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Adapter.AllSalesListAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
+import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SalesItemLineList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +55,7 @@ public class AllSalesList extends BaseActivity {
     private FloatingActionButton createStandard, createLabour, fromenquiry,fromquote;
     Menu menu;
     List<SaleItemList> saleItemLists;
+    RealmList<SalesItemLineList> salesItemLineLists=new RealmList<> ();
     int typeid, status;
     SaleItemList saleItemList;
     EnquiryResponse enquiryResponse;
@@ -204,7 +207,10 @@ public class AllSalesList extends BaseActivity {
         saleItemList.setTotalTax (saleItemLists.get (0).getTotalTax ());
         saleItemList.setOnlineseId (saleItemLists.get (0).getOnlineseId ());
         saleItemList.setOnlinesqId (saleItemLists.get (0).getOnlinesqId ());
-        saleItemList.setSalesItemLineLists (saleItemLists.get (0).getSalesItemLineLists ());
+        salesItemLineLists.addAll (realm.copyFromRealm (realm.where (SalesItemLineList.class)
+                .equalTo ("saleId", soID)
+                .findAll ()));
+        saleItemList.setSalesItemLineLists (salesItemLineLists);
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
             UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
@@ -278,7 +284,10 @@ public class AllSalesList extends BaseActivity {
         saleItemList.setTotalTax (saleItemLists.get (0).getTotalTax ());
         saleItemList.setOnlineseId (saleItemLists.get (0).getOnlineseId ());
         saleItemList.setOnlinesqId (saleItemLists.get (0).getOnlinesqId ());
-        saleItemList.setSalesItemLineLists (saleItemLists.get (0).getSalesItemLineLists ());
+        salesItemLineLists.addAll (realm.copyFromRealm (realm.where (SalesItemLineList.class)
+                .equalTo ("saleId", soID)
+                .findAll ()));
+        saleItemList.setSalesItemLineLists (salesItemLineLists);
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
             UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);

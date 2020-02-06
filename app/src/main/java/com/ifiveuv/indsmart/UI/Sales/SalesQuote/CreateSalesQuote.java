@@ -28,14 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
-import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.QuoteItemAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
@@ -57,7 +55,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchHelperSalesQuoteLines.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner, TaxTypeAdapter.taxonItemClickListner  {
+public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchHelperSalesQuoteLines.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner {
     private Menu menu;
     QuoteItemAdapter salesAdapter;
     @BindView(R.id.so_date)
@@ -68,12 +66,6 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     TextView customer_Name;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
-    @BindView(R.id.total_price)
-    TextView total_price;
-    @BindView(R.id.tax)
-    TextView tax;
-    @BindView(R.id.total_tax)
-    TextView total_tax;
     @BindView(R.id.gross_amount)
     TextView gross_amount;
     @BindView(R.id.submit_data)
@@ -90,14 +82,13 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     RealmList<QuoteItemLineList> quoteItemLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
-    int nextId,tax_id;
+    int nextId;
     AllDataList customerLists;
     QuoteItemList quoteItemLists;
     AlertDialog.Builder chartDialog;
     AlertDialog chartAlertDialog;
     ProgressDialog pDialog;
     SessionManager sessionManager;
-    double tax_value = 0.0;
     List<AllDataList> allDataLists = new ArrayList<> ();
 
     @Override
@@ -123,40 +114,11 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
         quoteItemLineLists.add (new QuoteItemLineList ());
         loadItemAdapter ();
-             tax.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                loadTaxName ();
-
-            }
-        });
 
 
 
     }
-    private void loadTaxName() {
 
-
-        View addItemView = LayoutInflater.from (this)
-                .inflate (R.layout.autosearch_recycler, null);
-        chartDialog = new AlertDialog.Builder (this);
-        chartDialog.setView (addItemView);
-        chartAlertDialog = chartDialog.show ();
-
-        chartAlertDialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-        RecyclerView townsDataList = addItemView.findViewById (R.id.items_data_list);
-        final EditText search_type = addItemView.findViewById (R.id.search_type);
-        TextView textTitle = addItemView.findViewById (R.id.text_title);
-        textTitle.setText ("Customer");
-
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataLists.get (0).getTaxType (), this);
-
-        townsDataList.setAdapter (itemShowAdapter);
-        mLayoutManager = new LinearLayoutManager (this);
-        townsDataList.setLayoutManager (mLayoutManager);
-        townsDataList.setItemAnimator (new DefaultItemAnimator ());
-
-    }
 
     @OnClick(R.id.customer_Name)
     public void loadCustomerName() {
@@ -241,13 +203,8 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         quoteItemLists.setOnlineStatus ("0");
         quoteItemLists.setQstatus ("Opened");
         quoteItemLists.setTotalPrice (gross_amount.getText ().toString ());
-        quoteItemLists.setTaxType (tax.getText ().toString ());
-        quoteItemLists.setTaxTypeid (String.valueOf (tax_id));
-        quoteItemLists.setTax_value (String.valueOf (tax_value));
-        quoteItemLists.setNetrice (total_price.getText ().toString ().trim ());
-        quoteItemLists.setTaxTotal (total_tax.getText ().toString ().trim ());
-        quoteItemLists.setQuoteItemLines (quoteItemLineLists);
-        uploadLocalPurchase (quoteItemLists);
+
+        uploadLocalPurchase (quoteItemLists,nextId);
     }
 
 
@@ -311,12 +268,14 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         new ItemTouchHelper (itemTouchHelperCallback).attachToRecyclerView (itemRecyclerView);
     }
 
-    public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
+    public void setProductList(int pos, int pro_id, String name, int uomId, String uomName,int taxId,String taxName) {
         realm.beginTransaction ();
         quoteItemLineLists.get (pos).setProduct (name);
         quoteItemLineLists.get (pos).setProductId (String.valueOf (pro_id));
         quoteItemLineLists.get (pos).setUomId (uomId);
         quoteItemLineLists.get (pos).setUom (uomName);
+        quoteItemLineLists.get (pos).setQuote_tax (taxName);
+        quoteItemLineLists.get (pos).setQuoteTaxId (taxId);
         realm.commitTransaction ();
     }
 
@@ -339,18 +298,13 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     public void grandTotal(List<QuoteItemLineList> items) {
 
         double grosspay = 0.0;
-        double tax_total = 0.0;
-        double totalPrice = 0.0;
+
         for (int i = 0; i < items.size (); i++) {
             if (items.get (i).getLineTotal () != null) {
-                totalPrice += Double.parseDouble (items.get (i).getLineTotal ());
+                grosspay += Double.parseDouble (items.get (i).getLineTotal ());
             }
         }
-        total_price.setText (String.valueOf (totalPrice));
-        tax_total = (tax_value / 100) * totalPrice;
-        grosspay = totalPrice + tax_total;
-        total_price.setText (totalPrice + "");
-        total_tax.setText (tax_total + "");
+
         gross_amount.setText (grosspay + "");
 
     }
@@ -372,17 +326,11 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         quoteItemLists.setQdel_date (delivery_date.getText ().toString ());
         quoteItemLists.setOnlineStatus ("0");
         quoteItemLists.setQstatus ("Submitted");
-        quoteItemLists.setTaxTypeid (String.valueOf (tax_id));
         quoteItemLists.setTotalPrice (gross_amount.getText ().toString ());
-        quoteItemLists.setTaxType (tax.getText ().toString ());
-        quoteItemLists.setTax_value (String.valueOf (tax_value));
-        quoteItemLists.setNetrice (total_price.getText ().toString ().trim ());
-        quoteItemLists.setTaxTotal (total_tax.getText ().toString ().trim ());
-        quoteItemLists.setQuoteItemLines (quoteItemLineLists);
-        uploadLocalPurchase (quoteItemLists);
+        uploadLocalPurchase (quoteItemLists,nextId);
     }
 
-    private void uploadLocalPurchase(final QuoteItemList quoteItemLists) {
+    private void uploadLocalPurchase(final QuoteItemList quoteItemLists, final int nextId) {
         realm = Realm.getDefaultInstance ();
         Observable<Integer> observable = Observable.just (1);
         observable
@@ -393,8 +341,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
                         realm.beginTransaction ();
                         QuoteItemList allSalesOrder = realm.copyToRealm (quoteItemLists);
                         realm.commitTransaction ();
-                        Intent intent = new Intent (CreateSalesQuote.this, Dashboard.class);
-                        startActivity (intent);
+                        lineSave(nextId);
                     }
 
                     @Override
@@ -411,6 +358,43 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
                         });
                     }
                 });
+    }
+    public void lineSave(final int hdrid){
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                int nextId_line ;
+                for (int j = 0; j < quoteItemLineLists.size (); j++) {
+
+                    Number currentIdNum = realm.where (QuoteItemLineList.class).max ("quoteLineId");
+                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                    }
+                    QuoteItemLineList quoteItemLineList=new QuoteItemLineList ();
+                    quoteItemLineList.setQuoteLineId (nextId_line);
+                    quoteItemLineList.setQuoteHdrId (hdrid);
+                    quoteItemLineList.setProductPosition (quoteItemLineLists.get (j).getProductPosition ());
+                    quoteItemLineList.setProduct (quoteItemLineLists.get (j).getProduct ());
+                    quoteItemLineList.setProductId (quoteItemLineLists.get (j).getProductId ());
+                    quoteItemLineList.setUomId (quoteItemLineLists.get (j).getUomId ());
+                    quoteItemLineList.setUnitPrice (quoteItemLineLists.get (j).getUnitPrice ());
+                    quoteItemLineList.setUom (quoteItemLineLists.get (j).getUom ());
+                    quoteItemLineList.setLineTotal (quoteItemLineLists.get (j).getLineTotal ());
+                    quoteItemLineList.setDisPer (quoteItemLineLists.get (j).getDisPer ());
+                    quoteItemLineList.setDisAmt (quoteItemLineLists.get (j).getDisAmt ());
+                    quoteItemLineList.setMrp (quoteItemLineLists.get (j).getMrp ());
+                    quoteItemLineList.setQuantity (quoteItemLineLists.get (j).getQuantity ());
+                    realm.insert (quoteItemLineList);
+                    Intent intent = new Intent (CreateSalesQuote.this, SubDashboard.class);
+                    intent.putExtra ("type", "Sales");
+                    startActivity (intent);
+
+                }
+            }
+        });
     }
 
     @Override
@@ -448,17 +432,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
         cusId = id;
         chartAlertDialog.dismiss ();
     }
-    @Override
-    public void onItemtaxPostion(int position) {
-        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxType ();
-        int id = allDataLists.get (0).getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataLists.get (0).getTaxType ().get (position).getTaxValue ());
-        tax.setText (Name);
-        tax.setError (null);
-        tax_id = id;
-        chartAlertDialog.dismiss ();
 
-    }
 
     @Override
     public void onBackPressed() {

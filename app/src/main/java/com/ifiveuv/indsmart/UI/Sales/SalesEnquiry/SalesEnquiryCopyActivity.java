@@ -34,6 +34,7 @@ import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Adapter.EnquiryCopyAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Adapter.EnquiryEditAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
@@ -56,8 +57,8 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerItemTouchHelperSalesEnquiryEdit.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner {
-    EnquiryEditAdapter enquiryEditAdapter;
+public class SalesEnquiryCopyActivity extends BaseActivity implements RecyclerItemTouchHelperSalesEnquiryEdit.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner {
+    EnquiryCopyAdapter enquiryEditAdapter;
     @BindView(R.id.customer_Name)
     TextView customer_Name;
     @BindView(R.id.remarks)
@@ -68,7 +69,6 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
     TextView enquiry_source;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
-
     @BindView(R.id.draft_data)
     Button draft_data;
     @BindView(R.id.submit_data)
@@ -78,20 +78,18 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
     RecyclerView.LayoutManager mLayoutManager;
     ActionBar actionBar;
     RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
-
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
-    int hdrid, cus_id = 0;
+    int hdrid, cus_id = 0, nextId;
     AlertDialog.Builder chartDialog;
     AlertDialog chartAlertDialog;
     EnquiryItemModel enquiryItemModel;
     private Menu menu;
     String enquiry_date, typeof;
     ProgressDialog pDialog;
-    List<AllDataList> allDataLists = new ArrayList<> ();
-    ;
+    List<AllDataList> allDataLists=new ArrayList<> ();
     SessionManager sessionManager;
-    EnquiryLineList enquiryLineList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,22 +108,21 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         realm = Realm.getDefaultInstance ();
         Intent intent = getIntent ();
         hdrid = Integer.parseInt (intent.getStringExtra ("hdrid"));
-        allDataLists.addAll (realm.where (AllDataList.class).findAll ());
-        enquiryLineList = new EnquiryLineList ();
-        loadData ();
-        submit_data.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                editheaderSave ();
-            }
-        });
-        draft_data.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                editDraftSave ();
-            }
-        });
+        allDataLists.addAll (realm.where(AllDataList.class).findAll ());
 
+            loadData ();
+            submit_data.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    copyheaderSave ();
+                }
+            });
+            draft_data.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    copyDraftSave ();
+                }
+            });
 
         sodateCalendar = Calendar.getInstance ();
         deldateCalendar = Calendar.getInstance ();
@@ -135,7 +132,7 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
 
     @OnClick(R.id.delivery_date)
     public void salesorderDate() {
-        DatePickerDialog dialog = new DatePickerDialog (SalesEnquiryEditActivity.this, new DatePickerDialog.OnDateSetListener () {
+        DatePickerDialog dialog = new DatePickerDialog (SalesEnquiryCopyActivity.this, new DatePickerDialog.OnDateSetListener () {
 
             @Override
             public void onDateSet(DatePicker arg0, int year, int monthOfYear, int dayOfMonth) {
@@ -197,18 +194,20 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         enquiryItemModels = realm.where (EnquiryItemModel.class)
                 .equalTo ("enquiryId", hdrid)
                 .findAll ();
+
         customer_Name.setText (enquiryItemModels.get (0).getEnquiryCustomerName ());
         remarks.setText (enquiryItemModels.get (0).getEnquiryRemarks ());
         enquiry_source.setText (enquiryItemModels.get (0).getEnquiryType ());
         so_status.setText (enquiryItemModels.get (0).getEnquiryStatus ());
         delivery_date.setText (enquiryItemModels.get (0).getDeliveryDate ());
         cus_id = enquiryItemModels.get (0).getEnquiryCustomerId ();
+
         enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
                 .equalTo ("enquiryHdrId", hdrid)
                 .findAll ()));
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
-        enquiryEditAdapter = new EnquiryEditAdapter (this, enquiryLineLists, products, this);
+        enquiryEditAdapter = new EnquiryCopyAdapter (this, enquiryLineLists, products, this);
         itemRecyclerView.setAdapter (enquiryEditAdapter);
         mLayoutManager = new LinearLayoutManager (this);
         itemRecyclerView.setLayoutManager (mLayoutManager);
@@ -219,9 +218,18 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
     }
 
 
-    private void editheaderSave() {
+    private void copyheaderSave() {
+        Number currentIdNum = realm.where (EnquiryItemModel.class).max ("enquiryId");
+
+        if (currentIdNum == null) {
+            nextId = 1;
+            Log.d("jhgwjhg", String.valueOf (nextId));
+        } else {
+            nextId = currentIdNum.intValue () + 1;
+            Log.d("jhgwjhg", String.valueOf (nextId));
+        }
         enquiryItemModel = new EnquiryItemModel ();
-        enquiryItemModel.setEnquiryId (hdrid);
+        enquiryItemModel.setEnquiryId (nextId);
         enquiryItemModel.setEnquiryCustomerId (cus_id);
         enquiryItemModel.setEnquiryDate (enquiry_date);
         enquiryItemModel.setDeliveryDate (delivery_date.getText ().toString ());
@@ -230,13 +238,23 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         enquiryItemModel.setEnquiryRemarks (remarks.getText ().toString ());
         enquiryItemModel.setEnquiryStatus ("Submitted");
         enquiryItemModel.setStautsOnline ("0");
-        uploadLocalPurchase (enquiryItemModel);
+        CopyuploadLocalPurchase (enquiryItemModel,nextId);
+
     }
 
 
-    private void editDraftSave() {
+    private void copyDraftSave() {
+        Number currentIdNum = realm.where (EnquiryItemModel.class).max ("enquiryId");
+        if (currentIdNum == null) {
+            nextId = 1;
+            Log.d("jhgwjhg123", String.valueOf (nextId));
+        } else {
+            nextId = currentIdNum.intValue () + 1;
+            Log.d("jhgwjhg", String.valueOf (nextId));
+
+        }
         enquiryItemModel = new EnquiryItemModel ();
-        enquiryItemModel.setEnquiryId (hdrid);
+        enquiryItemModel.setEnquiryId (nextId);
         enquiryItemModel.setEnquiryCustomerId (cus_id);
         enquiryItemModel.setEnquiryDate (enquiry_date);
         enquiryItemModel.setDeliveryDate (delivery_date.getText ().toString ());
@@ -244,8 +262,11 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
         enquiryItemModel.setEnquiryCustomerName (customer_Name.getText ().toString ().trim ());
         enquiryItemModel.setEnquiryRemarks (remarks.getText ().toString ());
         enquiryItemModel.setEnquiryStatus ("Opened");
-        uploadLocalPurchase (enquiryItemModel);
+
+        CopyuploadLocalPurchase (enquiryItemModel,nextId);
+
     }
+
 
 
     @Override
@@ -257,6 +278,7 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId ();
         if (id == R.id.add_item) {
             int position = enquiryLineLists.size ();
@@ -268,22 +290,10 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
 
     private void insertItem(final int position) {
         enquiryLineLists.add (new EnquiryLineList ());
-
-        realm.executeTransaction (new Realm.Transaction () {
-            @Override
-            public void execute(Realm realm) {
-                int nextId_line;
-                Number currentIdNum = realm.where (EnquiryLineList.class).max ("enqLineId");
-                if (currentIdNum == null) {
-                    nextId_line = 1;
-                } else {
-                    nextId_line = currentIdNum.intValue () + 1;
-                }
-                enquiryLineLists.get (position).setEnqLineId (nextId_line);
-            }
-        });
         enquiryEditAdapter.notifyItemInserted (position);
+
     }
+
 
     public void setProductList(int pos, int gPosition, int productId, String name, int uomId, String uomName) {
         enquiryLineLists.get (pos).setEnquiryProductPosition (gPosition);
@@ -294,11 +304,15 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
     }
 
     public void setQuantity(int position, String quant) {
+
         enquiryLineLists.get (position).setEnquiryRequiredQuantity (quant);
+
     }
 
 
-    private void uploadLocalPurchase(final EnquiryItemModel enquiryItemModel) {
+    private void CopyuploadLocalPurchase(final EnquiryItemModel enquiryItemModel,final int nextId) {
+        Log.d("jhg434wjhg", String.valueOf (nextId));
+
         realm = Realm.getDefaultInstance ();
         Observable<Integer> observable = Observable.just (1);
         observable
@@ -307,11 +321,11 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
                     @Override
                     public void onCompleted() {
                         realm.beginTransaction ();
-                        EnquiryItemModel allSalesOrder = realm.copyToRealmOrUpdate (enquiryItemModel);
+                        EnquiryItemModel allSalesOrder = realm.copyToRealm (enquiryItemModel);
                         realm.commitTransaction ();
-                        lineSave (hdrid);
-                        Intent intent = new Intent (SalesEnquiryEditActivity.this, Dashboard.class);
-                        startActivity (intent);
+                        lineSave (nextId);
+//                        Intent intent = new Intent (SalesEnquiryCopyActivity.this, Dashboard.class);
+//                        startActivity (intent);
                     }
 
                     @Override
@@ -329,30 +343,42 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
                     }
                 });
     }
+    public void lineSave(final int nextId){
 
-    public void lineSave(final int hdrid) {
-
-        realm.executeTransaction (new Realm.Transaction () {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                int nextId_line ;
                 for (int j = 0; j < enquiryLineLists.size (); j++) {
+
+                    Number currentIdNum = realm.where (EnquiryLineList.class).max ("enqLineId");
+                    Log.d("jhgwjhlineg", String.valueOf (currentIdNum));
+                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                        Log.d("jhgwjhline34g", String.valueOf (currentIdNum));
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                        Log.d("jhgwjhlineg", String.valueOf (currentIdNum));
+                    }
                     EnquiryLineList enquiryLineList=new EnquiryLineList ();
-                    enquiryLineList.setEnqLineId (enquiryLineLists.get (j).getEnqLineId ());
-                    enquiryLineList.setEnquiryHdrId (hdrid);
-                    enquiryLineList.setEnquiryProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
+                    enquiryLineList.setEnqLineId (nextId_line);
+                    enquiryLineList.setEnquiryHdrId (nextId);
                     enquiryLineList.setEnquiryProductId (enquiryLineLists.get (j).getEnquiryProductId ());
+                    enquiryLineList.setEnquiryProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
                     enquiryLineList.setEnquiryProduct (enquiryLineLists.get (j).getEnquiryProduct ());
                     enquiryLineList.setEnquiryUomId (enquiryLineLists.get (j).getEnquiryUomId ());
                     enquiryLineList.setEnquiryUom (enquiryLineLists.get (j).getEnquiryUom ());
                     enquiryLineList.setEnquiryRequiredQuantity (enquiryLineLists.get (j).getEnquiryRequiredQuantity ());
-                    realm.copyToRealmOrUpdate (enquiryLineList);
-                    Intent intent = new Intent (SalesEnquiryEditActivity.this, SubDashboard.class);
+                    realm.insert (enquiryLineList);
+                    Intent intent = new Intent (SalesEnquiryCopyActivity.this, SubDashboard.class);
                     intent.putExtra ("type", "Sales");
                     startActivity (intent);
+
                 }
             }
         });
     }
+
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
@@ -393,7 +419,7 @@ public class SalesEnquiryEditActivity extends BaseActivity implements RecyclerIt
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent (SalesEnquiryEditActivity.this, Dashboard.class);
+        Intent it = new Intent (SalesEnquiryCopyActivity.this, Dashboard.class);
         it.addFlags (Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity (it);
         finish ();

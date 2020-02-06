@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
-import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
@@ -61,7 +60,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ConvertFromQuoteToSalesActivity extends BaseActivity implements RecyclerItemTouchHelperConvertEnquiryToQuote.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner, TaxTypeAdapter.taxonItemClickListner {
+public class ConvertFromQuoteToSalesActivity extends BaseActivity implements RecyclerItemTouchHelperConvertEnquiryToQuote.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner {
     int hdrid;
     QuoteToSalesLineAdapter salesAdapter;
     @BindView(R.id.so_date)
@@ -72,12 +71,6 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     TextView customer_Name;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
-    @BindView(R.id.total_price)
-    TextView total_price;
-    @BindView(R.id.tax)
-    TextView tax;
-    @BindView(R.id.total_tax)
-    TextView total_tax;
     @BindView(R.id.gross_amount)
     TextView gross_amount;
     @BindView(R.id.type_of_order)
@@ -130,14 +123,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         allDataLists.addAll (realm.where (AllDataList.class).findAll ());
         so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
         loadData ();
-        tax.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                loadTaxName ();
 
-            }
-        });
-        loadCustomerName();
 
     }
 
@@ -182,29 +168,6 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         });
     }
 
-    private void loadTaxName() {
-
-
-        View addItemView = LayoutInflater.from (this)
-                .inflate (R.layout.autosearch_recycler, null);
-        chartDialog = new AlertDialog.Builder (this);
-        chartDialog.setView (addItemView);
-        chartAlertDialog = chartDialog.show ();
-
-        chartAlertDialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-        RecyclerView townsDataList = addItemView.findViewById (R.id.items_data_list);
-        final EditText search_type = addItemView.findViewById (R.id.search_type);
-        TextView textTitle = addItemView.findViewById (R.id.text_title);
-        textTitle.setText ("Customer");
-
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataLists.get (0).getTaxType (), this);
-
-        townsDataList.setAdapter (itemShowAdapter);
-        mLayoutManager = new LinearLayoutManager (this);
-        townsDataList.setLayoutManager (mLayoutManager);
-        townsDataList.setItemAnimator (new DefaultItemAnimator ());
-
-    }
 
     private void loadData() {
         quoteItemLists = realm.where (QuoteItemList.class)
@@ -213,18 +176,18 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         delivery_date.setText (quoteItemLists.get (0).getQdel_date ());
         so_date.setText (quoteItemLists.get (0).getQodate ());
         so_status.setText (quoteItemLists.get (0).getQstatus ());
-        tax_id = Integer.parseInt (quoteItemLists.get (0).getTaxTypeid ());
-        tax_value = Double.parseDouble (quoteItemLists.get (0).getTax_value ());
+
 
         customer_Name.setText (quoteItemLists.get (0).getQcus_name ());
-        tax.setText (quoteItemLists.get (0).getTaxType ());
-        total_price.setText (quoteItemLists.get (0).getNetrice ());
-        total_tax.setText (quoteItemLists.get (0).getTaxTotal ());
+
         gross_amount.setText (quoteItemLists.get (0).getTotalPrice ());
         typeOfOrder.setText (quoteItemLists.get (0).getQuoteType ());
         cus_id = Integer.parseInt (quoteItemLists.get (0).getQcus_id ());
         onlineSQ = quoteItemLists.get (0).getOnlineId ();
-        quoteItemLineLists.addAll (quoteItemLists.get (0).getQuoteItemLines ());
+        quoteItemLineLists.addAll (realm.copyFromRealm (realm.where (QuoteItemLineList.class)
+                .equalTo ("quoteHdrId", hdrid)
+                .findAll ()));
+
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
         salesAdapter = new QuoteToSalesLineAdapter (this, quoteItemLineLists, products, this);
@@ -298,12 +261,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         saleItemList.setStatus ("Opened");
         saleItemList.setOnlinestatus ("0");
         saleItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
-        saleItemList.setTaxType (tax.getText().toString());
-        saleItemList.setTaxTypeID (String.valueOf (tax_id));
-        saleItemList.setTaxValue (String.valueOf (tax_value));
-        saleItemList.setTotalTax (total_tax.getText().toString());
         saleItemList.setNetPrice (gross_amount.getText().toString());
-        saleItemList.setTotalPrice (total_price.getText ().toString ());
         uploadLocalPurchase (saleItemList, nextId);
     }
 
@@ -363,20 +321,14 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     }
 
     public void grandTotal(List<QuoteItemLineList> items) {
-        double grosspay = 0.0;
-        double tax_total = 0.0;
-        double totalPrice = 0.0;
+  double grosspay=0.0;
         for (int i = 0; i < items.size(); i++) {
             if(items.get(i).getLineTotal ()!=null){
-                totalPrice += Double.parseDouble (items.get(i).getLineTotal ());
+                grosspay += Double.parseDouble (items.get(i).getLineTotal ());
             }
         }
 
-        total_price.setText (String.valueOf (totalPrice));
-        tax_total = (tax_value / 100) * totalPrice;
-        grosspay = totalPrice + tax_total;
-        total_price.setText (totalPrice + "");
-        total_tax.setText (tax_total + "");
+
         gross_amount.setText (grosspay + "");
     }
 
@@ -406,12 +358,9 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         saleItemList.setStatus ("Submitted");
         saleItemList.setOnlinestatus ("0");
         saleItemList.setTypeOfOrder (typeOfOrder.getText ().toString ());
-        saleItemList.setTaxType (tax.getText().toString());
         saleItemList.setTaxTypeID (String.valueOf (tax_id));
         saleItemList.setTaxValue (String.valueOf (tax_value));
-        saleItemList.setTotalTax (total_tax.getText().toString());
         saleItemList.setNetPrice (gross_amount.getText().toString());
-        saleItemList.setTotalPrice (total_price.getText ().toString ());
         uploadLocalPurchase (saleItemList, nextId);
     }
 
@@ -445,30 +394,40 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
                 });
     }
 
-    private void uploadLine(int nextid) {
+    private void uploadLine(final int nextid) {
 
-        realm.beginTransaction ();
-        for (int i = 0; i < quoteItemLineLists.size (); i++) {
-            SalesItemLineList salesItemLineList = realm.createObject (SalesItemLineList.class);
-            salesItemLineList.setProductPosition (quoteItemLineLists.get (i).getProductPosition ());
-            salesItemLineList.setProduct (quoteItemLineLists.get (i).getProduct ());
-            salesItemLineList.setProductId (quoteItemLineLists.get (i).getProductId ());
+        realm.executeTransaction (new Realm.Transaction () {
+            @Override
+            public void execute(Realm realm) {
+                for (int i = 0; i < quoteItemLineLists.size (); i++) {
+                    int nextId_line;
+                    Number currentIdNum = realm.where (SalesItemLineList.class).max ("saleId");                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                    }
+                    SalesItemLineList salesItemLineList=new SalesItemLineList ();
+                    salesItemLineList.setSaleId (nextId_line);
+                    salesItemLineList.setSalesHdrid (nextid);
+                    salesItemLineList.setProductPosition (quoteItemLineLists.get (i).getProductPosition ());
+                    salesItemLineList.setProduct (quoteItemLineLists.get (i).getProduct ());
+                    salesItemLineList.setProductId (quoteItemLineLists.get (i).getProductId ());
 
-            salesItemLineList.setUomId (quoteItemLineLists.get (i).getUomId ());
-            salesItemLineList.setUom (quoteItemLineLists.get (i).getUom ());
+                    salesItemLineList.setUomId (quoteItemLineLists.get (i).getUomId ());
+                    salesItemLineList.setUom (quoteItemLineLists.get (i).getUom ());
 
-            salesItemLineList.setUnitPrice (quoteItemLineLists.get (i).getUnitPrice ());
-            salesItemLineList.setQuantity (Integer.valueOf (quoteItemLineLists.get (i).getQuantity ()));
-            salesItemLineList.setDisPer (quoteItemLineLists.get (i).getDisPer ());
-            salesItemLineList.setDisAmt (quoteItemLineLists.get (i).getDisAmt ());
-            salesItemLineList.setOrgCost (quoteItemLineLists.get (i).getMrp ());
-            salesItemLineList.setLineTotal (quoteItemLineLists.get (i).getLineTotal ());
+                    salesItemLineList.setUnitPrice (quoteItemLineLists.get (i).getUnitPrice ());
+                    salesItemLineList.setQuantity (Integer.valueOf (quoteItemLineLists.get (i).getQuantity ()));
+                    salesItemLineList.setDisPer (quoteItemLineLists.get (i).getDisPer ());
+                    salesItemLineList.setDisAmt (quoteItemLineLists.get (i).getDisAmt ());
+                    salesItemLineList.setOrgCost (quoteItemLineLists.get (i).getMrp ());
+                    salesItemLineList.setLineTotal (quoteItemLineLists.get (i).getLineTotal ());
+                    realm.insert (salesItemLineList);
 
-            SaleItemList saleItemList = realm.where (SaleItemList.class).equalTo ("SalesOrderid", nextid).findFirst ();
-            saleItemList.getSalesItemLineLists ().add (salesItemLineList);
-        }
+                }
+            }
+        });
 
-        realm.commitTransaction ();
         Intent intent = new Intent (ConvertFromQuoteToSalesActivity.this, Dashboard.class);
         startActivity (intent);
     }
@@ -508,17 +467,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         finish ();
     }
 
-    @Override
-    public void onItemtaxPostion(int position) {
-        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxType ();
-        int id = allDataLists.get (0).getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataLists.get (0).getTaxType ().get (position).getTaxValue ());
-        tax.setText (Name);
-        tax.setError (null);
-        tax_id = id;
-        chartAlertDialog.dismiss ();
 
-    }
 
     @Override
     public void onItemPostion(int position) {

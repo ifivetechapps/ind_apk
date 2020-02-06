@@ -578,9 +578,9 @@ public class CreateSalesInvoice extends BaseActivity implements RecyclerItemTouc
 
     @Override
     public void onItemtaxPostion(int position) {
-        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxType ();
-        int id = allDataLists.get (0).getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataLists.get (0).getTaxType ().get (position).getTaxValue ());
+        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxGroupName ();
+        int id = allDataLists.get (0).getTaxType ().get (position).getTaxGroupId ();
+        tax_value = Double.parseDouble (allDataLists.get (0).getTaxType ().get (position).getDisplayName ());
         tax.setText (Name);
         tax.setError (null);
         tax_id = id;

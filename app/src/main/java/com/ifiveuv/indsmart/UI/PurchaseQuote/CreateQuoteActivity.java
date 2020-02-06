@@ -56,8 +56,6 @@ public class CreateQuoteActivity extends BaseActivity implements SupplierListAda
     TextView supplier_name;
     @BindView(R.id.supplier_site)
     TextView supplier_site;
-    @BindView(R.id.freight_address)
-    TextView freight_address;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
     @BindView(R.id.tax_total)
@@ -216,7 +214,7 @@ public class CreateQuoteActivity extends BaseActivity implements SupplierListAda
     public void onItemPostion(int position) {
         String name = allDataLists.get (0).getSupplierList ().get (position).getSupplierName ();
         supplier_name.setText (name);
-        freight_address.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
+        supplier_site.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
         supplier_id = allDataLists.get (0).getSupplierList ().get (position).getSupplierTblId ();
         chartAlertDialog.dismiss ();
 
@@ -269,7 +267,6 @@ public class CreateQuoteActivity extends BaseActivity implements SupplierListAda
         quotationHeader.setSource ("quote");
         quotationHeader.setQuoteDate (enquiry_Date);
         quotationHeader.setDeliveryDate (delivery_date.getText ().toString ());
-        quotationHeader.setFreight_carrier (freight_address.getText ().toString ());
         quotationHeader.setGrandTotal (grand_total.getText ().toString ());
         quotationHeader.setGrandTax (tax_total.getText ().toString ());
         quotationHeader.setQuotationLines (quotationLinesRealmList);
@@ -293,7 +290,6 @@ public class CreateQuoteActivity extends BaseActivity implements SupplierListAda
         quotationHeader.setSource ("quote");
         quotationHeader.setQuoteDate (enquiry_Date);
         quotationHeader.setDeliveryDate (delivery_date.getText ().toString ());
-        quotationHeader.setFreight_carrier (freight_address.getText ().toString ());
         quotationHeader.setGrandTotal (grand_total.getText ().toString ());
         quotationHeader.setGrandTax (tax_total.getText ().toString ());
         quotationHeader.setQuotationLines (quotationLinesRealmList);
@@ -333,16 +329,12 @@ public class CreateQuoteActivity extends BaseActivity implements SupplierListAda
                 });
     }
 
-    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name, Integer hsnId, String hsnName, Integer taxId, String taxName, Integer rate) {
+    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name) {
         quoteItemLineLists.get (mPosition).setProduct (product);
         quoteItemLineLists.get (mPosition).setProductId (po_id);
         quoteItemLineLists.get (mPosition).setUomId (uom_id);
         quoteItemLineLists.get (mPosition).setUom (uom_name);
-        quoteItemLineLists.get (mPosition).setHsnCode (hsnName);
-        quoteItemLineLists.get (mPosition).setHsnId (hsnId);
-        quoteItemLineLists.get (mPosition).setTaxId (taxId);
-        quoteItemLineLists.get (mPosition).setTaxGroup (taxName);
-        quoteItemLineLists.get (mPosition).setPrice (rate);
+
     }
 
     @Override

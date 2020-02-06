@@ -37,8 +37,6 @@ import com.ifiveuv.indsmart.UI.PurchaseQuote.Model.QuotationLines;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionHeader;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionLines;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
-import com.ifiveuv.indsmart.Utils.FreightListAdapter;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,8 +61,6 @@ public class ConvertRequisitiontoQuoteActivity extends BaseActivity implements S
     TextView supplier_name;
     @BindView(R.id.supplier_site)
     TextView supplier_site;
-    @BindView(R.id.freight_address)
-    TextView freight_address;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
     @BindView(R.id.tax_total)
@@ -232,10 +228,11 @@ public class ConvertRequisitiontoQuoteActivity extends BaseActivity implements S
         reqLine.get (position).setOrdQty (String.valueOf (quant));
     }
 
-    public void setDiscount(int position, double quant, double taxtotal, double grandtotal) {
-        reqLine.get (position).setDiscountAmt (String.valueOf (quant));
-        reqLine.get (position).setTaxtotal (String.valueOf (taxtotal));
-        reqLine.get (position).setLineTotal (String.valueOf (grandtotal));
+    public void setDiscount(int mPosition, double discountper, double total, double disamt, double total_amount) {
+        reqLine.get (mPosition).setDiscountPercent (String.valueOf (discountper));
+       // reqLine.get (mPosition).se (String.valueOf (total));
+        reqLine.get (mPosition).setDiscountAmt (String.valueOf (disamt));
+        reqLine.get (mPosition).setLineTotal (String.valueOf (total_amount));
         grandTotal (reqLine);
     }
 
@@ -263,16 +260,17 @@ public class ConvertRequisitiontoQuoteActivity extends BaseActivity implements S
     public void setDuedate(int mPosition, String date) {
         reqLine.get (mPosition).setPromised_date (date);
     }
+    public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
+        realm.beginTransaction ();
+        reqLine.get (pos).setProduct (name);
+        reqLine.get (pos).setProductId (String.valueOf (pro_id));
+        reqLine.get (pos).setUom_id (uomId);
+        reqLine.get (pos).setUom (uomName);
+        realm.commitTransaction ();
+    }
 
-    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name, Integer hsnId, String hsnName, Integer taxId, String taxName) {
-        reqLine.get (mPosition).setProduct (product);
-        reqLine.get (mPosition).setProductId (String.valueOf (po_id));
-        reqLine.get (mPosition).setUom_id (uom_id);
-        reqLine.get (mPosition).setUom (uom_name);
-        reqLine.get (mPosition).setHsnCode (hsnName);
-        reqLine.get (mPosition).setHsnId (hsnId);
-        reqLine.get (mPosition).setTaxId (taxId);
-        reqLine.get (mPosition).setTaxGroup (taxName);
+    public void setUnitPrice(int mPosition, int uni) {
+        reqLine.get (mPosition).setPrice (uni);
     }
 
     @OnClick(R.id.draft_data)
@@ -331,7 +329,6 @@ public class ConvertRequisitiontoQuoteActivity extends BaseActivity implements S
         quotationHeader.setStatus ("Submit");
         quotationHeader.setQuoteDate (enq_date);
         quotationHeader.setDeliveryDate (delivery_date.getText ().toString ());
-        quotationHeader.setFreight_carrier (freight_address.getText ().toString ());
         quotationHeader.setGrandTotal (grand_total.getText ().toString ());
         quotationHeader.setGrandTax (tax_total.getText ().toString ());
 
@@ -364,7 +361,6 @@ public class ConvertRequisitiontoQuoteActivity extends BaseActivity implements S
         quotationHeader.setSource (source_enquiry);
         quotationHeader.setQuoteDate (enq_date);
         quotationHeader.setDeliveryDate (delivery_date.getText ().toString ());
-        quotationHeader.setFreight_carrier (freight_address.getText ().toString ());
         quotationHeader.setGrandTotal (grand_total.getText ().toString ());
         quotationHeader.setGrandTax (tax_total.getText ().toString ());
         uploadLocalPurchase (quotationHeader, nextId);
@@ -439,7 +435,7 @@ public class ConvertRequisitiontoQuoteActivity extends BaseActivity implements S
     public void onItemPostion(int position) {
         String name = allDataLists.get (0).getSupplierList ().get (position).getSupplierName ();
         supplier_name.setText (name);
-        freight_address.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
+        supplier_site.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
         supplier_id = allDataLists.get (0).getSupplierList ().get (position).getSupplierTblId ();
         chartAlertDialog.dismiss ();
 

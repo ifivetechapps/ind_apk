@@ -82,7 +82,10 @@ public class SalesOrderViewActivity extends BaseActivity {
         order_date.setText(salesItemLists.get(0).getSodate());
         status.setText(salesItemLists.get(0).getApprovalstatus());
         customer_name.setText(salesItemLists.get(0).getCus_name());
-        salesItemLinesall.addAll(salesItemLists.get(0).getSalesItemLineLists ());
+        salesItemLinesall.addAll (realm.copyFromRealm (realm.where (SalesItemLineList.class)
+                .equalTo ("salesHdrid", hdrid)
+                .findAll ()));
+
         salesAdapter = new SalesOrderviewAdapter(this, salesItemLinesall, this);
         item_data_list.setAdapter(salesAdapter);
         item_data_list.setItemViewCacheSize(salesItemLinesall.size());

@@ -20,12 +20,9 @@ import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
-import com.ifiveuv.indsmart.UI.Masters.Model.HsnModel;
-import com.ifiveuv.indsmart.UI.Masters.Model.TaxModel;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.EditQuotationActivity;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Model.QuotationLines;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -252,28 +249,19 @@ public class EditQuoteLineAdapter extends RecyclerView.Adapter<EditQuoteLineAdap
 
                 holder.productAdapter.setPosition (gPosition);
                 itemList.setProductPosition (gPosition);
-                rate = Integer.parseInt (holder.productAdapter.getItem (gPosition).getItemPrice ());
-                holder.price.setText (rate + "");
+
                 itemList.setProduct (holder.productAdapter.getItem (gPosition).getProduct_name ());
                 RealmResults<UomModel> uomModels = realm.where (UomModel.class).equalTo ("uom_id", Integer.valueOf (holder.productAdapter.getItem (gPosition).getUom_id ())).findAll ();
-                RealmResults<HsnModel> hsnModels = realm.where (HsnModel.class).equalTo ("hsnId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getHsn_id ())).findAll ();
-                RealmResults<TaxModel> taxModels = realm.where (TaxModel.class).equalTo ("taxId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_id ())).findAll ();
-                int uomId = uomModels.get (0).getUom_id ();
+               int uomId = uomModels.get (0).getUom_id ();
                 String uomName = uomModels.get (0).getUom_name ();
-                int hsnid = hsnModels.get (0).getHsnId ();
-                String hsnName = hsnModels.get (0).getHsnName ();
-                int taxid = taxModels.get (0).getTaxId ();
-                String taxName = taxModels.get (0).getTaxName ();
-                holder.tax.setText (taxName);
-                tax = taxName;
+
                 Log.d ("values", String.valueOf (uomId));
                 createEnquiryActivity.setProductList (
                         mPosition,
                         String.valueOf (holder.productAdapter.getItem (gPosition).getProduct_name ()),
                         holder.productAdapter.getItem (gPosition).getPro_id (),
-                        uomId, uomName,
-                        hsnid, hsnName,
-                        taxid, taxName, rate
+                        uomId, uomName
+
                 );
             }
 

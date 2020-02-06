@@ -46,7 +46,7 @@ public class TaxTypeAdapter extends RecyclerView.Adapter<TaxTypeAdapter.MyViewHo
     @Override
     public void onBindViewHolder(TaxTypeAdapter.MyViewHolder holder, final int position) {
         final Tax_type item = cartList.get(position);
-        holder.listName.setText(String.valueOf(item.getTaxType ()));
+        holder.listName.setText(String.valueOf(item.getTaxGroupName ()));
 
 
     }
@@ -64,7 +64,7 @@ public class TaxTypeAdapter extends RecyclerView.Adapter<TaxTypeAdapter.MyViewHo
             cartList.addAll(idlist);
         } else {
             for (Tax_type wp : idlist) {
-                if (String.valueOf(wp.getTaxType ()).toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (String.valueOf(wp.getTaxGroupName ()).toLowerCase(Locale.getDefault()).contains(charText)) {
                     cartList.add(wp);
                 }
             }
