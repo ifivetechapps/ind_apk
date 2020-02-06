@@ -28,14 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
-import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
 import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.EnquiryToQuoteLineAdapter;
@@ -60,7 +58,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements RecyclerItemTouchHelperConvertEnquiryToQuote.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner, TaxTypeAdapter.taxonItemClickListner {
+public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements RecyclerItemTouchHelperConvertEnquiryToQuote.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner {
     int hdrid;
     EnquiryToQuoteLineAdapter salesAdapter;
     @BindView(R.id.so_date)
@@ -71,14 +69,8 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     TextView customer_Name;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
-    @BindView(R.id.total_price)
-    TextView total_price;
     @BindView(R.id.type_of_order)
     TextView typeOfOrder;
-    @BindView(R.id.tax)
-    TextView tax;
-    @BindView(R.id.total_tax)
-    TextView total_tax;
     @BindView(R.id.gross_amount)
     TextView gross_amount;
     @BindView(R.id.submit_data)
@@ -128,13 +120,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         deldateCalendar = Calendar.getInstance ();
         so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
         loadData ();
-        tax.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                loadTaxName ();
 
-            }
-        });
 
     }
 
@@ -178,29 +164,6 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         });
     }
 
-    private void loadTaxName() {
-
-
-        View addItemView = LayoutInflater.from (this)
-                .inflate (R.layout.autosearch_recycler, null);
-        chartDialog = new AlertDialog.Builder (this);
-        chartDialog.setView (addItemView);
-        chartAlertDialog = chartDialog.show ();
-
-        chartAlertDialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-        RecyclerView townsDataList = addItemView.findViewById (R.id.items_data_list);
-        final EditText search_type = addItemView.findViewById (R.id.search_type);
-        TextView textTitle = addItemView.findViewById (R.id.text_title);
-        textTitle.setText ("Customer");
-
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataList.get (0).getTaxType (), this);
-
-        townsDataList.setAdapter (itemShowAdapter);
-        mLayoutManager = new LinearLayoutManager (this);
-        townsDataList.setLayoutManager (mLayoutManager);
-        townsDataList.setItemAnimator (new DefaultItemAnimator ());
-
-    }
 
     private void loadData() {
         enquiryItemModels = realm.where (EnquiryItemModel.class)
@@ -213,7 +176,9 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         typeOfOrder.setText (enquiryItemModels.get (0).getEnquiryType ());
         cus_id = enquiryItemModels.get (0).getEnquiryCustomerId ();
         enq_online_id = enquiryItemModels.get (0).getEnqOnlineId ();
-        enquiryLineLists.addAll (enquiryItemModels.get (0).getEnquiryLineLists ());
+        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
+                .equalTo ("enquiryHdrId", hdrid)
+                .findAll ()));
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
         salesAdapter = new EnquiryToQuoteLineAdapter (this, enquiryLineLists, products, this);
@@ -278,13 +243,9 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         salesItemLists.setOnlineStatus ("0");
         salesItemLists.setQstatus ("Opened");
         salesItemLists.setQuoteType (typeOfOrder.getText ().toString ());
-        salesItemLists.setTaxType (tax.getText ().toString ());
         salesItemLists.setTaxTypeid (String.valueOf (tax_id));
         salesItemLists.setTax_value (String.valueOf (tax_value));
         salesItemLists.setTotalPrice (gross_amount.getText ().toString ());
-        salesItemLists.setNetrice (total_price.getText ().toString ().trim ());
-        salesItemLists.setTaxTotal (total_tax.getText ().toString ().trim ());
-
         uploadLocalPurchase (salesItemLists, nextId);
     }
 
@@ -336,6 +297,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         enquiryLineLists.get (pos).setProductId (String.valueOf (pro_id));
         enquiryLineLists.get (pos).setEnquiryUomId (uomId);
         enquiryLineLists.get (pos).setEnquiryUom (uomName);
+
         realm.commitTransaction ();
     }
 
@@ -346,19 +308,15 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     public void grandTotal(List<EnquiryLineList> items) {
 
         double grosspay = 0.0;
-        double tax_total = 0.0;
-        double totalPrice = 0.0;
+
         for (int i = 0; i < items.size (); i++) {
             if (items.get (i).getLineTotal () != null) {
-                totalPrice += Double.parseDouble (items.get (i).getLineTotal ());
+                grosspay += Double.parseDouble (items.get (i).getLineTotal ());
             }
         }
 
-        total_price.setText (String.valueOf (totalPrice));
-        tax_total = (tax_value / 100) * totalPrice;
-        grosspay = totalPrice + tax_total;
-        total_price.setText (totalPrice + "");
-        total_tax.setText (tax_total + "");
+
+
         gross_amount.setText (grosspay + "");
     }
 
@@ -388,13 +346,10 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         salesItemLists.setQdel_date (delivery_date.getText ().toString ());
         salesItemLists.setQstatus ("Submitted");
         salesItemLists.setOnlineStatus ("0");
-        salesItemLists.setTaxType (tax.getText ().toString ());
         salesItemLists.setTaxTypeid (String.valueOf (tax_id));
         salesItemLists.setTax_value (String.valueOf (tax_value));
         salesItemLists.setQuoteType (typeOfOrder.getText ().toString ());
         salesItemLists.setTotalPrice (gross_amount.getText ().toString ());
-        salesItemLists.setNetrice (total_price.getText ().toString ().trim ());
-        salesItemLists.setTaxTotal (total_tax.getText ().toString ().trim ());
         uploadLocalPurchase (salesItemLists, nextId);
     }
 
@@ -409,7 +364,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
                         realm.beginTransaction ();
                         QuoteItemList allSalesOrder = realm.copyToRealm (salesItemList);
                         realm.commitTransaction ();
-                        uploadLine (nextid);
+                        lineSave (nextid);
                     }
 
                     @Override
@@ -427,31 +382,45 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
                     }
                 });
     }
+    public void lineSave(final int hdrid){
 
-    private void uploadLine(int nextid) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                int nextId_line ;
+                for (int j = 0; j < enquiryLineLists.size (); j++) {
 
-        realm.beginTransaction ();
-        for (int i = 0; i < enquiryLineLists.size (); i++) {
-            QuoteItemLineList quoteItemList = realm.createObject (QuoteItemLineList.class);
-            quoteItemList.setProductPosition (enquiryLineLists.get (i).getEnquiryProductPosition ());
-            quoteItemList.setProduct (enquiryLineLists.get (i).getEnquiryProduct ());
-            quoteItemList.setProductId (enquiryLineLists.get (i).getProductId ());
-            quoteItemList.setUomId (enquiryLineLists.get (i).getEnquiryUomId ());
-            quoteItemList.setUnitPrice (enquiryLineLists.get (i).getUnitPrice ());
-            quoteItemList.setUom (enquiryLineLists.get (i).getEnquiryUom ());
-            quoteItemList.setLineTotal (enquiryLineLists.get (i).getLineTotal ());
-            quoteItemList.setDisPer (enquiryLineLists.get (i).getDiscountPercent ());
-            quoteItemList.setDisAmt (enquiryLineLists.get (i).getDiscountAmount ());
-            quoteItemList.setMrp (enquiryLineLists.get (i).getOriginalCost ());
-            quoteItemList.setQuantity (enquiryLineLists.get (i).getEnquiryRequiredQuantity ());
-            QuoteItemList quoteItemList1 = realm.where (QuoteItemList.class).equalTo ("id", nextid).findFirst ();
-            quoteItemList1.getQuoteItemLines ().add (quoteItemList);
-        }
+                    Number currentIdNum = realm.where (QuoteItemLineList.class).max ("quoteLineId");
+                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                    }
+                    QuoteItemLineList quoteItemLineList=new QuoteItemLineList ();
+                    quoteItemLineList.setQuoteLineId (nextId_line);
+                    quoteItemLineList.setQuoteHdrId (hdrid);
+                    quoteItemLineList.setProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
+                    quoteItemLineList.setProduct (enquiryLineLists.get (j).getEnquiryProduct ());
+                    quoteItemLineList.setProductId (enquiryLineLists.get (j).getProductId ());
+                    quoteItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
+                    quoteItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
+                    quoteItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
+                    quoteItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
+                    quoteItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
+                    quoteItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());
+                    quoteItemLineList.setMrp (enquiryLineLists.get (j).getOriginalCost ());
+                    quoteItemLineList.setQuantity (enquiryLineLists.get (j).getEnquiryRequiredQuantity ());
+                    realm.insert (quoteItemLineList);
 
-        realm.commitTransaction ();
-        Intent intent = new Intent (ConvertFromEnquiryToQuoteActivity.this, Dashboard.class);
-        startActivity (intent);
+                }
+                Intent intent = new Intent (ConvertFromEnquiryToQuoteActivity.this, SubDashboard.class);
+                intent.putExtra ("type", "Sales");
+                startActivity (intent);
+
+            }
+        });
     }
+
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
@@ -493,24 +462,13 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
 
     }
 
-    public void setDiscount(int mPosition, double discountper, double total, double disamt, double total_amount) {
+    public void setDiscount(int mPosition, double discountper, double total, double disamt, double total_amount,int tax_id) {
         enquiryLineLists.get (mPosition).setDiscountPercent (String.valueOf (discountper));
         enquiryLineLists.get (mPosition).setOriginalCost (String.valueOf (total));
         enquiryLineLists.get (mPosition).setDiscountAmount (String.valueOf (disamt));
         enquiryLineLists.get (mPosition).setLineTotal (String.valueOf (total_amount));
+        enquiryLineLists.get (mPosition).setTaxId (tax_id);
         grandTotal (enquiryLineLists);
-    }
-
-    @Override
-    public void onItemtaxPostion(int position) {
-        String Name = allDataList.get (0).getTaxType ().get (position).getTaxType ();
-        int id = allDataList.get (0).getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataList.get (0).getTaxType ().get (position).getTaxValue ());
-        tax.setText (Name);
-        tax.setError (null);
-        tax_id = id;
-        chartAlertDialog.dismiss ();
-
     }
 
     @Override

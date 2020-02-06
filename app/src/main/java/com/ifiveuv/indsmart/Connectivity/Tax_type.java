@@ -7,89 +7,52 @@ import io.realm.RealmObject;
 
 public class Tax_type extends RealmObject {
 
-    @SerializedName("tax_type_id")
-    @Expose
-    private Integer taxTypeId;
-    @SerializedName("tax_type")
-    @Expose
-    private String taxType;
-    @SerializedName("tax_value")
-    @Expose
-    private String taxValue;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("createdOn")
-    @Expose
-    private String createdOn;
-    @SerializedName("updatedOn")
-    @Expose
-    private String updatedOn;
-    @SerializedName("createdBy")
-    @Expose
-    private String createdBy;
-    @SerializedName("updatedBy")
-    @Expose
-    private Integer updatedBy;
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("org_id")
-    @Expose
-    private Integer orgId;
-    @SerializedName("loc_id")
-    @Expose
-    private Integer locId;
-    @SerializedName("cmpy_id")
-    @Expose
-    private Integer cmpyId;
-
-    public Integer getTaxTypeId() {
-        return taxTypeId;
+    public Integer getTaxGroupId() {
+        return taxGroupId;
     }
 
-    public void setTaxTypeId(Integer taxTypeId) {
-        this.taxTypeId = taxTypeId;
+    public void setTaxGroupId(Integer taxGroupId) {
+        this.taxGroupId = taxGroupId;
     }
 
-    public String getTaxType() {
-        return taxType;
+    public String getTaxGroupName() {
+        return taxGroupName;
     }
 
-    public void setTaxType(String taxType) {
-        this.taxType = taxType;
+    public void setTaxGroupName(String taxGroupName) {
+        this.taxGroupName = taxGroupName;
     }
 
-    public String getTaxValue() {
-        return taxValue;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setTaxValue(String taxValue) {
-        this.taxValue = taxValue;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getActive() {
+        return active;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setActive(String active) {
+        this.active = active;
     }
 
-    public String getCreatedOn() {
-        return createdOn;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdatedOn() {
-        return updatedOn;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdatedOn(String updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getCreatedBy() {
@@ -100,44 +63,70 @@ public class Tax_type extends RealmObject {
         this.createdBy = createdBy;
     }
 
-    public Integer getUpdatedBy() {
-        return updatedBy;
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
     }
 
-    public void setUpdatedBy(Integer updatedBy) {
-        this.updatedBy = updatedBy;
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public String getStatus() {
-        return status;
+    public Integer getLocationId() {
+        return locationId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
-    public Integer getOrgId() {
-        return orgId;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setOrgId(Integer orgId) {
-        this.orgId = orgId;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
-    public Integer getLocId() {
-        return locId;
+    @SerializedName("tax_group_id")
+    @Expose
+    private Integer taxGroupId;
+    @SerializedName("tax_group_name")
+    @Expose
+    private String taxGroupName;
+    @SerializedName("display_name")
+    @Expose
+    private String displayName;
+    @SerializedName("active")
+    @Expose
+    private String active;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+    @SerializedName("created_by")
+    @Expose
+    private String createdBy;
+    @SerializedName("last_updated_by")
+    @Expose
+    private String lastUpdatedBy;
+    @SerializedName("location_id")
+    @Expose
+    private Integer locationId;
+    @SerializedName("company_id")
+    @Expose
+    private Integer companyId;
+
+    public Integer getOrganizationId() {
+        return organizationId;
     }
 
-    public void setLocId(Integer locId) {
-        this.locId = locId;
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 
-    public Integer getCmpyId() {
-        return cmpyId;
-    }
-
-    public void setCmpyId(Integer cmpyId) {
-        this.cmpyId = cmpyId;
-    }
-
+    @SerializedName("organization_id")
+    @Expose
+    private Integer organizationId;
 }

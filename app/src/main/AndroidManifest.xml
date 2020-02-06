@@ -89,6 +89,7 @@
         <activity android:name=".UI.PurchaseQuote.CreateQuoteActivity" />
         <activity android:name=".UI.PurchaseQuote.EditQuotationActivity" />
         <activity android:name=".UI.PurchaseQuote.ApprovalQuotationList" />
+        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryCopyActivity" />
 
     </application>
 

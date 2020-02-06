@@ -24,19 +24,18 @@ import java.util.Calendar;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class EnquiryItemAdapter extends RecyclerView.Adapter<EnquiryItemAdapter.MyViewHolder> {
     SalesEnquiryCreatingActivity salesEnquiryCreatingActivity;
-    RealmList<EnquiryLineList> itemLists;
+    List<EnquiryLineList> itemLists;
     List<Products> productsList;
     String size;
     Realm realm;
     Calendar neededByDate;
     private Context context;
 
-    public EnquiryItemAdapter(Context context, RealmList<EnquiryLineList> cartList, List<Products> products, SalesEnquiryCreatingActivity salesEnquiryCreatingActivity) {
+    public EnquiryItemAdapter(Context context, List<EnquiryLineList> cartList, List<Products> products, SalesEnquiryCreatingActivity salesEnquiryCreatingActivity) {
         this.context = context;
         this.salesEnquiryCreatingActivity = salesEnquiryCreatingActivity;
         this.itemLists = cartList;

@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,13 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ifiveuv.indsmart.CommanAdapter.CustomerListAdapter;
-import com.ifiveuv.indsmart.CommanAdapter.TaxTypeAdapter;
 import com.ifiveuv.indsmart.Connectivity.AllDataList;
+import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Adapter.EnquiryToSalesLineAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SalesItemLineList;
@@ -59,7 +59,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements RecyclerItemTouchHelperConvertEnquiryToQuote.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner , TaxTypeAdapter.taxonItemClickListner   {
+public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements RecyclerItemTouchHelperConvertEnquiryToQuote.RecyclerItemTouchHelperListener, CustomerListAdapter.onItemClickListner {
     int hdrid;
     EnquiryToSalesLineAdapter salesAdapter;
     @BindView(R.id.so_date)
@@ -70,14 +70,8 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     TextView customer_Name;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
-    @BindView(R.id.total_price)
-    TextView total_price;
     @BindView(R.id.type_of_order)
     TextView typeOfOrder;
-    @BindView(R.id.tax)
-    TextView tax;
-    @BindView(R.id.total_tax)
-    TextView total_tax;
     @BindView(R.id.gross_amount)
     TextView gross_amount;
     @BindView(R.id.submit_data)
@@ -89,10 +83,10 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     RecyclerView.LayoutManager mLayoutManager;
     String onlineSE;
     ActionBar actionBar;
-    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<>();
+    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
-    int nextId, cus_id = 0,tax_id;
+    int nextId, cus_id = 0;
     SaleItemList salesItemLists;
     RealmResults<EnquiryItemModel> enquiryItemModels;
     private Menu menu;
@@ -103,38 +97,32 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     ProgressDialog pDialog;
     List<AllDataList> allDataLists = new ArrayList<AllDataList> ();
     SessionManager sessionManager;
-    double tax_value = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales_order);
-        ButterKnife.bind(this);
-        actionBar = getSupportActionBar();
-        Intent intent = getIntent();
-        hdrid = Integer.parseInt(intent.getStringExtra("hdrid"));
+        super.onCreate (savedInstanceState);
+        setContentView (R.layout.activity_sales_order);
+        ButterKnife.bind (this);
+        actionBar = getSupportActionBar ();
+        Intent intent = getIntent ();
+        hdrid = Integer.parseInt (intent.getStringExtra ("hdrid"));
 
-        Realm.init(this);
+        Realm.init (this);
         RealmConfiguration realmConfiguration = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.setDefaultConfiguration(realmConfiguration);
-        realm = Realm.getDefaultInstance();
+                .Builder ()
+                .deleteRealmIfMigrationNeeded ()
+                .build ();
+        Realm.setDefaultConfiguration (realmConfiguration);
+        realm = Realm.getDefaultInstance ();
         pDialog = IFiveEngine.getProgDialog (this);
         sessionManager = new SessionManager ();
-        sodateCalendar = Calendar.getInstance();
-        deldateCalendar = Calendar.getInstance();
+        sodateCalendar = Calendar.getInstance ();
+        deldateCalendar = Calendar.getInstance ();
         allDataLists.addAll (realm.where (AllDataList.class).findAll ());
-        so_date.setText(IFiveEngine.myInstance.getSimpleCalenderDate(sodateCalendar));
-        //loadData();
-        tax.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                loadTaxName ();
+        so_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (sodateCalendar));
 
-            }
-        });
-        loadCustomerName();
+
+        loadData ();
 
     }
 
@@ -176,54 +164,35 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
             }
         });
     }
-//    private void loadData() {
-//        enquiryItemModels = realm.where(EnquiryItemModel.class)
-//                .equalTo("enquiryId", hdrid)
-//                .findAll();
-//        delivery_date.setText(enquiryItemModels.get(0).getDeliveryDate ());
-//        so_date.setText(enquiryItemModels.get(0).getEnquiryDate ());
-//        so_status.setText(enquiryItemModels.get(0).getEnquiryStatus ());
-//
-//        customer_Name.setText(enquiryItemModels.get(0).getEnquiryCustomerName ());
-//        typeOfOrder.setText(enquiryItemModels.get(0).getEnquiryType ());
-//        cus_id = enquiryItemModels.get(0).getEnquiryCustomerId ();
-//        onlineSE = enquiryItemModels.get(0).getEnqOnlineId ();
-//        enquiryLineLists.addAll(enquiryItemModels.get(0).getEnquiryLineLists());
-//        List<Products> products = new ArrayList<Products>();
-//        products.addAll(realm.where(Products.class).findAll());
-//        salesAdapter = new EnquiryToSalesLineAdapter (this, enquiryLineLists, products, this);
-//        itemRecyclerView.setAdapter(salesAdapter);
-//        mLayoutManager = new LinearLayoutManager(this);
-//        itemRecyclerView.setLayoutManager(mLayoutManager);
-//        itemRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        salesAdapter.notifyDataSetChanged();
-//        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelperConvertEnquiryToQuote(0, ItemTouchHelper.LEFT, this);
-//        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(itemRecyclerView);
-//
-//    }
-    private void loadTaxName() {
 
+    private void loadData() {
+        enquiryItemModels = realm.where (EnquiryItemModel.class)
+                .equalTo ("enquiryId", hdrid)
+                .findAll ();
+        delivery_date.setText (enquiryItemModels.get (0).getDeliveryDate ());
+        so_date.setText (enquiryItemModels.get (0).getEnquiryDate ());
+        so_status.setText (enquiryItemModels.get (0).getEnquiryStatus ());
 
-        View addItemView = LayoutInflater.from (this)
-                .inflate (R.layout.autosearch_recycler, null);
-        chartDialog = new AlertDialog.Builder (this);
-        chartDialog.setView (addItemView);
-        chartAlertDialog = chartDialog.show ();
-
-        chartAlertDialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-        RecyclerView townsDataList = addItemView.findViewById (R.id.items_data_list);
-        final EditText search_type = addItemView.findViewById (R.id.search_type);
-        TextView textTitle = addItemView.findViewById (R.id.text_title);
-        textTitle.setText ("Customer");
-
-        final TaxTypeAdapter itemShowAdapter = new TaxTypeAdapter (this, allDataLists.get (0).getTaxType (), this);
-
-        townsDataList.setAdapter (itemShowAdapter);
+        customer_Name.setText (enquiryItemModels.get (0).getEnquiryCustomerName ());
+        typeOfOrder.setText (enquiryItemModels.get (0).getEnquiryType ());
+        cus_id = enquiryItemModels.get (0).getEnquiryCustomerId ();
+        onlineSE = enquiryItemModels.get (0).getEnqOnlineId ();
+        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
+                .equalTo ("enquiryHdrId", hdrid)
+                .findAll ()));
+        List<Products> products = new ArrayList<Products> ();
+        products.addAll (realm.where (Products.class).findAll ());
+        salesAdapter = new EnquiryToSalesLineAdapter (this, enquiryLineLists, products, this);
+        itemRecyclerView.setAdapter (salesAdapter);
         mLayoutManager = new LinearLayoutManager (this);
-        townsDataList.setLayoutManager (mLayoutManager);
-        townsDataList.setItemAnimator (new DefaultItemAnimator ());
+        itemRecyclerView.setLayoutManager (mLayoutManager);
+        itemRecyclerView.setItemAnimator (new DefaultItemAnimator ());
+        salesAdapter.notifyDataSetChanged ();
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelperConvertEnquiryToQuote (0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper (itemTouchHelperCallback).attachToRecyclerView (itemRecyclerView);
 
     }
+
 
     @OnClick(R.id.submit_data)
     public void submitdata() {
@@ -253,181 +222,167 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
         } else if (enquiryLineLists.get (position - 1).getLineTotal ().equals ("")) {
             Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
         } else {
-            headerdraftSave();
+            headerdraftSave ();
         }
-
 
 
     }
 
     private void headerdraftSave() {
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                EnquiryItemModel enquiryItemModel = realm.where(EnquiryItemModel.class).equalTo("enquiryId", hdrid).findFirst();
-//                enquiryItemModel.setEnquiryStatus ("converted");
-//            }
-//        });
+        realm.executeTransaction (new Realm.Transaction () {
+            @Override
+            public void execute(Realm realm) {
+                EnquiryItemModel enquiryItemModel = realm.where (EnquiryItemModel.class).equalTo ("enquiryId", hdrid).findFirst ();
+                enquiryItemModel.setEnquiryStatus ("converted");
+            }
+        });
 
-        Number currentIdNum = realm.where(SaleItemList.class).max("SalesOrderid");
+        Number currentIdNum = realm.where (SaleItemList.class).max ("SalesOrderid");
         if (currentIdNum == null) {
             nextId = 1;
         } else {
-            nextId = currentIdNum.intValue() + 1;
+            nextId = currentIdNum.intValue () + 1;
         }
-        salesItemLists = new SaleItemList();
+        salesItemLists = new SaleItemList ();
         salesItemLists.setSalesOrderid (nextId);
         salesItemLists.setSeId (hdrid);
         salesItemLists.setOnlineseId (onlineSE);
-        salesItemLists.setSodate (so_date.getText().toString());
-        salesItemLists.setCus_name (customer_Name.getText().toString().trim());
+        salesItemLists.setSodate (so_date.getText ().toString ());
+        salesItemLists.setCus_name (customer_Name.getText ().toString ().trim ());
         salesItemLists.setCus_id (cus_id);
-        salesItemLists.setTaxType (tax.getText().toString());
-        salesItemLists.setTaxTypeID (String.valueOf (tax_id));
-        salesItemLists.setTaxValue (String.valueOf (tax_value));
-        salesItemLists.setTotalTax (total_tax.getText().toString());
-        salesItemLists.setNetPrice (gross_amount.getText().toString());
-        salesItemLists.setDel_date (delivery_date.getText().toString());
+        salesItemLists.setNetPrice (gross_amount.getText ().toString ());
+        salesItemLists.setDel_date (delivery_date.getText ().toString ());
         salesItemLists.setStatus ("Opened");
         salesItemLists.setOnlinestatus ("0");
-        salesItemLists.setTypeOfOrder (typeOfOrder.getText().toString());
-        salesItemLists.setTotalPrice(total_price.getText().toString());
-        uploadLocalPurchase(salesItemLists, nextId);
+        salesItemLists.setTypeOfOrder (typeOfOrder.getText ().toString ());
+
+        uploadLocalPurchase (salesItemLists, nextId);
     }
 
 
     @OnClick(R.id.delivery_date)
     public void salesorderDate() {
-        DatePickerDialog dialog = new DatePickerDialog(ConvertFromEnquiryToSalesActivity.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog (ConvertFromEnquiryToSalesActivity.this, new DatePickerDialog.OnDateSetListener () {
 
             @Override
             public void onDateSet(DatePicker arg0, int year, int monthOfYear, int dayOfMonth) {
-                deldateCalendar.set(Calendar.YEAR, year);
-                deldateCalendar.set(Calendar.MONTH, monthOfYear);
-                deldateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                delivery_date.setText(IFiveEngine.myInstance.getSimpleCalenderDate(deldateCalendar));
+                deldateCalendar.set (Calendar.YEAR, year);
+                deldateCalendar.set (Calendar.MONTH, monthOfYear);
+                deldateCalendar.set (Calendar.DAY_OF_MONTH, dayOfMonth);
+                delivery_date.setText (IFiveEngine.myInstance.getSimpleCalenderDate (deldateCalendar));
 
             }
-        }, deldateCalendar.get(Calendar.YEAR), deldateCalendar.get(Calendar.MONTH), deldateCalendar.get(Calendar.DAY_OF_MONTH));
-        dialog.show();
+        }, deldateCalendar.get (Calendar.YEAR), deldateCalendar.get (Calendar.MONTH), deldateCalendar.get (Calendar.DAY_OF_MONTH));
+        dialog.show ();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.add_item, menu);
+        getMenuInflater ().inflate (R.menu.add_item, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
+        int id = item.getItemId ();
         if (id == R.id.add_item) {
-            int position = enquiryLineLists.size();
-            insertItem(position);
+            int position = enquiryLineLists.size ();
+            insertItem (position);
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected (item);
     }
 
     private void insertItem(int position) {
-        enquiryLineLists.add(new EnquiryLineList());
-        salesAdapter.notifyItemInserted(position);
+        enquiryLineLists.add (new EnquiryLineList ());
+        salesAdapter.notifyItemInserted (position);
     }
 
 
-    public void setProductList(int pos,int pro_id, String name, int uomId, String uomName) {
-        realm.beginTransaction();
-        enquiryLineLists.get(pos).setEnquiryProduct (name);
-        enquiryLineLists.get(pos).setProductId (String.valueOf (pro_id));
-        enquiryLineLists.get(pos).setEnquiryUomId (uomId);
-        enquiryLineLists.get(pos).setEnquiryUom (uomName);
-        realm.commitTransaction();
+    public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
+        realm.beginTransaction ();
+        enquiryLineLists.get (pos).setEnquiryProduct (name);
+        enquiryLineLists.get (pos).setProductId (String.valueOf (pro_id));
+        enquiryLineLists.get (pos).setEnquiryUomId (uomId);
+        enquiryLineLists.get (pos).setEnquiryUom (uomName);
+        realm.commitTransaction ();
     }
 
     public void setQuantity(int position, int quant) {
-       enquiryLineLists.get(position).setEnquiryRequiredQuantity (String.valueOf(quant));
+        enquiryLineLists.get (position).setEnquiryRequiredQuantity (String.valueOf (quant));
     }
 
     public void grandTotal(List<EnquiryLineList> items) {
         double grosspay = 0.0;
-        double tax_total = 0.0;
-        double totalPrice = 0.0;
-        for (int i = 0; i < items.size(); i++) {
-            if(items.get(i).getLineTotal ()!=null){
-                totalPrice += Double.parseDouble (items.get(i).getLineTotal ());
+
+        for (int i = 0; i < items.size (); i++) {
+            if (items.get (i).getLineTotal () != null) {
+                grosspay += Double.parseDouble (items.get (i).getLineTotal ());
             }
         }
 
-        total_price.setText (String.valueOf (totalPrice));
-        tax_total = (tax_value / 100) * totalPrice;
-        grosspay = totalPrice + tax_total;
-        total_price.setText (totalPrice + "");
-        total_tax.setText (tax_total + "");
+
         gross_amount.setText (grosspay + "");
 
     }
 
 
     public void headerSave() {
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                EnquiryItemModel enquiryItemModel = realm.where(EnquiryItemModel.class).equalTo("enquiryId", hdrid).findFirst();
-//                enquiryItemModel.setEnquiryStatus ("converted");
-//            }
-//        });
+        realm.executeTransaction (new Realm.Transaction () {
+            @Override
+            public void execute(Realm realm) {
+                EnquiryItemModel enquiryItemModel = realm.where (EnquiryItemModel.class).equalTo ("enquiryId", hdrid).findFirst ();
+                enquiryItemModel.setEnquiryStatus ("converted");
+            }
+        });
 
-        Number currentIdNum = realm.where(SaleItemList.class).max("SalesOrderid");
+        Number currentIdNum = realm.where (SaleItemList.class).max ("SalesOrderid");
         if (currentIdNum == null) {
             nextId = 1;
         } else {
-            nextId = currentIdNum.intValue() + 1;
+            nextId = currentIdNum.intValue () + 1;
         }
-        salesItemLists = new SaleItemList();
+        salesItemLists = new SaleItemList ();
         salesItemLists.setSalesOrderid (nextId);
         salesItemLists.setSeId (hdrid);
         salesItemLists.setOnlineseId (onlineSE);
-        salesItemLists.setSodate (so_date.getText().toString());
-        salesItemLists.setTaxType (tax.getText().toString());
-        salesItemLists.setTaxTypeID (String.valueOf (tax_id));
-        salesItemLists.setTaxValue (String.valueOf (tax_value));
-        salesItemLists.setTotalTax (total_tax.getText().toString());
-        salesItemLists.setNetPrice (total_price.getText().toString());
-        salesItemLists.setTotalPrice(gross_amount.getText().toString());
-        salesItemLists.setCus_name (customer_Name.getText().toString().trim());
+        salesItemLists.setSodate (so_date.getText ().toString ());
+
+        salesItemLists.setTotalPrice (gross_amount.getText ().toString ());
+        salesItemLists.setCus_name (customer_Name.getText ().toString ().trim ());
         salesItemLists.setCus_id (cus_id);
-        salesItemLists.setDel_date (delivery_date.getText().toString());
+        salesItemLists.setDel_date (delivery_date.getText ().toString ());
         salesItemLists.setStatus ("Submitted");
         salesItemLists.setOnlinestatus ("0");
-        salesItemLists.setTypeOfOrder (typeOfOrder.getText().toString());
+        salesItemLists.setTypeOfOrder (typeOfOrder.getText ().toString ());
 
-        uploadLocalPurchase(salesItemLists, nextId);
+        uploadLocalPurchase (salesItemLists, nextId);
     }
 
     private void uploadLocalPurchase(final SaleItemList salesItemList, final int nextid) {
-        realm = Realm.getDefaultInstance();
-        Observable<Integer> observable = Observable.just(1);
+        realm = Realm.getDefaultInstance ();
+        Observable<Integer> observable = Observable.just (1);
         observable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Integer>() {
+                .subscribeOn (AndroidSchedulers.mainThread ())
+                .subscribe (new Observer<Integer> () {
                     @Override
                     public void onCompleted() {
-                        realm.beginTransaction();
-                        SaleItemList allSalesOrder = realm.copyToRealm(salesItemList);
-                        realm.commitTransaction();
-                        uploadLine(nextid);
+                        realm.beginTransaction ();
+                        SaleItemList allSalesOrder = realm.copyToRealm (salesItemList);
+                        realm.commitTransaction ();
+                        uploadLine (nextid);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("Test", "In onError()");
+                        Log.d ("Test", "In onError()");
                     }
 
                     @Override
                     public void onNext(Integer integer) {
-                        realm.executeTransaction(new Realm.Transaction() {
+                        realm.executeTransaction (new Realm.Transaction () {
                             @Override
                             public void execute(Realm realm) {
                             }
@@ -436,59 +391,71 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
                 });
     }
 
-    private void uploadLine(int nextid) {
+    private void uploadLine(final int nextid) {
 
-        realm.beginTransaction();
-        for (int i = 0; i < enquiryLineLists.size(); i++) {
-            SalesItemLineList salesItemLineList = realm.createObject(SalesItemLineList.class);
-            salesItemLineList.setProductPosition(enquiryLineLists.get(i).getEnquiryProductPosition ());
-            salesItemLineList.setProduct(enquiryLineLists.get(i).getEnquiryProduct ());
-            salesItemLineList.setProductId (enquiryLineLists.get(i).getProductId ());
 
-            salesItemLineList.setUomId(enquiryLineLists.get(i).getEnquiryUomId ());
-            salesItemLineList.setUom(enquiryLineLists.get(i).getEnquiryUom ());
+        realm.executeTransaction (new Realm.Transaction () {
+            @Override
+            public void execute(Realm realm) {
+                int nextId_line;
+                for (int j = 0; j < enquiryLineLists.size (); j++) {
+                    Number currentIdNum = realm.where (SalesItemLineList.class).max ("saleId");
+                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                    }
+                    SalesItemLineList salesItemLineList=new SalesItemLineList ();
+                    salesItemLineList.setSaleId (nextId_line);
+                    salesItemLineList.setSalesHdrid (nextid);
+                    salesItemLineList.setProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
+                    salesItemLineList.setProduct (enquiryLineLists.get (j).getEnquiryProduct ());
+                    salesItemLineList.setProductId (enquiryLineLists.get (j).getProductId ());
+                    salesItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
+                    salesItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
+                    salesItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
+                    salesItemLineList.setQuantity (Integer.valueOf (enquiryLineLists.get (j).getEnquiryRequiredQuantity ()));
+                    salesItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
+                    salesItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());
+                    salesItemLineList.setOrgCost (enquiryLineLists.get (j).getOriginalCost ());
+                    salesItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
+                    realm.insert (salesItemLineList);
+                    Intent intent = new Intent (ConvertFromEnquiryToSalesActivity.this, SubDashboard.class);
+                    intent.putExtra ("type", "Sales");
+                    startActivity (intent);
+                }
+            }
+        });
 
-            salesItemLineList.setUnitPrice(enquiryLineLists.get(i).getUnitPrice());
-            salesItemLineList.setQuantity (Integer.valueOf (enquiryLineLists.get(i).getEnquiryRequiredQuantity ()));
-            salesItemLineList.setDisPer (enquiryLineLists.get(i).getDiscountPercent ());
-            salesItemLineList.setDisAmt (enquiryLineLists.get(i).getDiscountAmount ());
-            salesItemLineList.setOrgCost (enquiryLineLists.get(i).getOriginalCost ());
-            salesItemLineList.setLineTotal (enquiryLineLists.get(i).getLineTotal ());
 
-            SaleItemList saleItemList = realm.where(SaleItemList.class).equalTo("SalesOrderid", nextid).findFirst();
-            saleItemList.getSalesItemLineLists ().add(salesItemLineList);
-        }
-
-        realm.commitTransaction();
-        Intent intent = new Intent(ConvertFromEnquiryToSalesActivity.this, Dashboard.class);
-        startActivity(intent);
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof EnquiryToQuoteLineAdapter.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = enquiryLineLists.get(viewHolder.getAdapterPosition()).getEnquiryProduct ();
+            String name = enquiryLineLists.get (viewHolder.getAdapterPosition ()).getEnquiryProduct ();
             // backup of removed item for undo purpose
-            final EnquiryLineList deletedItem = enquiryLineLists.get(viewHolder.getAdapterPosition());
-            final int deletedIndex = viewHolder.getAdapterPosition();
+            final EnquiryLineList deletedItem = enquiryLineLists.get (viewHolder.getAdapterPosition ());
+            final int deletedIndex = viewHolder.getAdapterPosition ();
             // remove the item from recycler view
-            salesAdapter.removeItem(viewHolder.getAdapterPosition());
+            salesAdapter.removeItem (viewHolder.getAdapterPosition ());
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(((Activity) this).findViewById(android.R.id.content),
+                    .make (((Activity) this).findViewById (android.R.id.content),
                             name + " removed from cart!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+            snackbar.setAction ("UNDO", new View.OnClickListener () {
                 @Override
                 public void onClick(View view) {
                     // undo is selected, restore the deleted item
-                    salesAdapter.restoreItem(deletedItem, deletedIndex);
+                    salesAdapter.restoreItem (deletedItem, deletedIndex);
                 }
             });
-            snackbar.setActionTextColor(Color.YELLOW);
-            snackbar.show();
+            snackbar.setActionTextColor (Color.YELLOW);
+            snackbar.show ();
         }
     }
+
     @Override
     public void onItemPostion(int position) {
         String Name = allDataLists.get (0).getCustomerLists ().get (position).getCusName ();
@@ -498,25 +465,14 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
         cus_id = id;
         chartAlertDialog.dismiss ();
     }
-    @Override
-    public void onItemtaxPostion(int position) {
-        String Name = allDataLists.get (0).getTaxType ().get (position).getTaxType ();
-        int id = allDataLists.get (0).getTaxType ().get (position).getTaxTypeId ();
-        tax_value = Double.parseDouble (allDataLists.get (0).getTaxType ().get (position).getTaxValue ());
-        tax.setText (Name);
-        tax.setError (null);
-        tax_id = id;
-        chartAlertDialog.dismiss ();
-
-    }
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(ConvertFromEnquiryToSalesActivity.this, SubDashboard.class);
-        it.putExtra("type", "Sales");
-        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(it);
-        finish();
+        Intent it = new Intent (ConvertFromEnquiryToSalesActivity.this, SubDashboard.class);
+        it.putExtra ("type", "Sales");
+        it.addFlags (Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity (it);
+        finish ();
     }
 
     public void setUnitPrice(int mPosition, int uni) {
@@ -529,7 +485,7 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
         enquiryLineLists.get (mPosition).setOriginalCost (String.valueOf (unit_quan));
         enquiryLineLists.get (mPosition).setDiscountAmount (String.valueOf (disamt));
         enquiryLineLists.get (mPosition).setLineTotal (String.valueOf (amount));
-        grandTotal(enquiryLineLists);
+        grandTotal (enquiryLineLists);
 
     }
 }

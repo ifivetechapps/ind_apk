@@ -90,7 +90,7 @@ public class RequisitionLines extends RealmObject {
 
     @SerializedName("price")
     @Expose
-    private int price;
+    private Integer price;
     @SerializedName("product_position")
     @Expose
     private int productPosition;
@@ -108,11 +108,11 @@ public class RequisitionLines extends RealmObject {
     }
 
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

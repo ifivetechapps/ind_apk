@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.Connectivity.Products;
+import com.ifiveuv.indsmart.Connectivity.Tax_type;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
@@ -32,9 +33,10 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
     ConvertFromEnquiryToQuoteActivity saleOrderActivity;
     RealmList<EnquiryLineList> itemLists;
     List<Products> productsList;
+    int tax_id;
     Realm realm;
     private Context context;
-
+    double tax_value=0.0;
     public EnquiryToQuoteLineAdapter(Context context, RealmList<EnquiryLineList> cartList, List<Products> products, ConvertFromEnquiryToQuoteActivity saleOrderActivity) {
         this.context = context;
         this.saleOrderActivity = saleOrderActivity;
@@ -68,6 +70,9 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
                 itemList.setEnquiryProductPosition (gPosition);
                 itemList.setEnquiryProduct (holder.productAdapter.getItem(gPosition).getProduct_name());
                 realm.commitTransaction();
+                RealmResults<Tax_type> taxModels = realm.where (Tax_type.class).equalTo ("taxGroupId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_group_id ())).findAll ();
+                tax_value= Integer.parseInt (taxModels.get (0).getDisplayName ());
+                tax_id= Integer.parseInt (String.valueOf (taxModels.get (0).getTaxGroupId ()));
                 RealmResults<UomModel> uomModels = realm.where(UomModel.class).equalTo("uom_id", Integer.valueOf(holder.productAdapter.getItem(gPosition).getUom_id())).findAll();
                 holder.uom.setText(uomModels.get(0).getUom_name());
                 saleOrderActivity.setProductList(mPosition,  holder.productAdapter.getItem(gPosition).getPro_id (),holder.productAdapter.getItem(gPosition).getProduct_name(), holder.productAdapter.getItem(gPosition).getUom_id(), uomModels.get(0).getUom_name());
@@ -234,6 +239,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
                     double quantity = 0;
                     double total = 0;
                     double total_amount=0.0;
+                    double tax_cal;
 
 
                     double unit_price=0.0;
@@ -241,7 +247,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
                         total = 0;
                         discountper = 0;
                         realm.beginTransaction ();
-                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
+                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount,tax_id );
                         realm.commitTransaction ();
                     } else {
                         discountper = Double.parseDouble(s.toString());
@@ -252,11 +258,12 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
 
                         total = quantity * unit_price;
                         disamt = ((discountper / 100) * total);
+                        tax_cal = ((tax_value / 100) * disamt);
 
-                        total_amount = total - disamt;
+                        total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         realm.beginTransaction ();
-                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
+                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount,tax_id );
                         realm.commitTransaction ();
                     }
 
@@ -282,6 +289,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
                     double quantity = 0;
                     double total = 0;
                     double total_amount=0.0;
+                    double tax_cal=0.0;
 
 
                     double unit_price=0.0;
@@ -289,7 +297,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
                         total = 0;
                         discountper = 0;
                         realm.beginTransaction ();
-                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
+                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount,tax_id );
                         realm.commitTransaction ();
                     } else {
                         discountper = Double.parseDouble(s.toString());
@@ -300,11 +308,12 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
 
                         total = quantity * unit_price;
                         disamt = ((discountper / 100) * total);
+                        tax_cal = ((tax_value / 100) * disamt);
 
-                        total_amount = total - disamt;
+                        total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         realm.beginTransaction ();
-                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
+                        saleOrderActivity.setDiscount(mPosition, discountper,total,disamt,total_amount,tax_id );
                         realm.commitTransaction ();
                     }
 

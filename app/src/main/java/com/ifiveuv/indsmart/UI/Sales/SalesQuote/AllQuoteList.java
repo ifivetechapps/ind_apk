@@ -24,6 +24,7 @@ import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.AllQuoteListAdapter;
+import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,7 +58,7 @@ public class AllQuoteList extends BaseActivity {
     int typeid, status;
     QuoteItemList quoteItemList;
     EnquiryResponse enquiryResponse;
-
+    RealmList<QuoteItemLineList> quoteItemLineList = new RealmList<> ();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +202,11 @@ public class AllQuoteList extends BaseActivity {
         quoteItemList.setNetrice (quoteItemModels.get (0).getNetrice ());
         quoteItemList.setTaxTotal (quoteItemModels.get (0).getTaxTotal ());
         quoteItemList.setOnlineEnquiryId (quoteItemModels.get (0).getOnlineEnquiryId ());
-        quoteItemList.setQuoteItemLines (quoteItemModels.get (0).getQuoteItemLines ());
+
+        quoteItemLineList.addAll (realm.copyFromRealm (realm.where (QuoteItemLineList.class)
+                .equalTo ("quoteHdrId", quiteId)
+                .findAll ()));
+        quoteItemList.setQuoteItemLines (quoteItemLineList);
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
             UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
@@ -272,7 +278,11 @@ public class AllQuoteList extends BaseActivity {
         quoteItemList.setQdel_date (IFiveEngine.myInstance.formatDate (quoteItemModels.get (0).getQdel_date ()));
         quoteItemList.setTotalPrice (quoteItemModels.get (0).getTotalPrice ());
         quoteItemList.setOnlineEnquiryId (quoteItemModels.get (0).getOnlineEnquiryId ());
-        quoteItemList.setQuoteItemLines (quoteItemModels.get (0).getQuoteItemLines ());
+
+        quoteItemLineList.addAll (realm.copyFromRealm (realm.where (QuoteItemLineList.class)
+                .equalTo ("quoteHdrId", quiteId)
+                .findAll ()));
+        quoteItemList.setQuoteItemLines (quoteItemLineList);
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
             UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);

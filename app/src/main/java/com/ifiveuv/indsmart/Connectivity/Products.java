@@ -28,9 +28,29 @@ public class Products extends RealmObject {
     @SerializedName("hsn_id")
     @Expose
     private int hsn_id;
-    @SerializedName("tax_id")
+
+    public int getTax_group_id() {
+        return tax_group_id;
+    }
+
+    public void setTax_group_id(int tax_group_id) {
+        this.tax_group_id = tax_group_id;
+    }
+
+    public String getTax_group_name() {
+        return tax_group_name;
+    }
+
+    public void setTax_group_name(String tax_group_name) {
+        this.tax_group_name = tax_group_name;
+    }
+
+    @SerializedName("tax_group_id")
     @Expose
-    private int tax_id;
+    private int tax_group_id;
+    @SerializedName("tax_group_name")
+    @Expose
+    private String tax_group_name;
     @SerializedName("product_description")
     @Expose
     private String description;
@@ -89,13 +109,7 @@ public class Products extends RealmObject {
         this.hsn_id = hsn_id;
     }
 
-    public int getTax_id() {
-        return tax_id;
-    }
 
-    public void setTax_id(int tax_id) {
-        this.tax_id = tax_id;
-    }
 
     public String getDescription() {
         return description;

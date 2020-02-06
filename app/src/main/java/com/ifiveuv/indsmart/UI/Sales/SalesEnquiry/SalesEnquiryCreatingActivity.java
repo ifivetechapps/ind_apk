@@ -74,8 +74,8 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
 
     RecyclerView.LayoutManager mLayoutManager;
     EnquiryItemModel enquiryItemModel;
-    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
-    RealmList<EnquiryLineList> enquiryLineListRealmList;
+    List<EnquiryLineList> enquiryLineLists = new RealmList<> ();
+
     Calendar enquiry_date_calendar,deldateCalendar;
     Realm realm;
     EnquiryItemAdapter enquiryItemAdapter;
@@ -119,7 +119,6 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
     @OnClick(R.id.delivery_date)
     public void salesorderDate() {
         DatePickerDialog dialog = new DatePickerDialog(SalesEnquiryCreatingActivity.this, new DatePickerDialog.OnDateSetListener() {
-
             @Override
             public void onDateSet(DatePicker arg0, int year, int monthOfYear, int dayOfMonth) {
                 deldateCalendar.set(Calendar.YEAR, year);
@@ -218,9 +217,9 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
         enquiryItemModel.setEnquiryCustomerName (customer_Name.getText ().toString ().trim ());
         enquiryItemModel.setEnquiryStatus (so_status.getText ().toString ());
         enquiryItemModel.setEnquiryRemarks (remarks.getText ().toString ());
-        enquiryItemModel.setEnquiryLineLists (enquiryLineListRealmList);
+       // enquiryItemModel.setEnquiryLineLists (enquiryLineListRealmList);
 
-        uploadLocalPurchase (enquiryItemModel);
+        uploadLocalPurchase (enquiryItemModel,nextId);
     }
 
 
@@ -262,7 +261,7 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
         itemRecyclerView.setLayoutManager (mLayoutManager);
         itemRecyclerView.setItemAnimator (new DefaultItemAnimator ());
         enquiryItemAdapter.notifyDataSetChanged ();
-        enquiryLineListRealmList = enquiryLineLists;
+
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelperSalesEnquiryLines (0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper (itemTouchHelperCallback).attachToRecyclerView (itemRecyclerView);
     }
@@ -299,11 +298,11 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
         enquiryItemModel.setEnquiryRemarks (remarks.getText ().toString ());
         enquiryItemModel.setEnquiryStatus ("Submitted");
         enquiryItemModel.setStautsOnline ("0");
-        enquiryItemModel.setEnquiryLineLists (enquiryLineListRealmList);
-        uploadLocalPurchase (enquiryItemModel);
+       // enquiryItemModel.setEnquiryLineLists (enquiryLineListRealmList);
+        uploadLocalPurchase (enquiryItemModel,nextId);
     }
 
-    private void uploadLocalPurchase(final EnquiryItemModel quoteItemLists) {
+    private void uploadLocalPurchase(final EnquiryItemModel quoteItemLists, final int nextId) {
         realm = Realm.getDefaultInstance ();
         Observable<Integer> observable = Observable.just (1);
         observable
@@ -313,10 +312,12 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
                     public void onCompleted() {
                         realm.beginTransaction ();
                         EnquiryItemModel allSalesOrder = realm.copyToRealm (quoteItemLists);
+
                         realm.commitTransaction ();
-                        Intent intent = new Intent (SalesEnquiryCreatingActivity.this, SubDashboard.class);
-                        intent.putExtra ("type", "Sales");
-                        startActivity (intent);
+                        lineSave(nextId);
+//                        Intent intent = new Intent (SalesEnquiryCreatingActivity.this, SubDashboard.class);
+//                        intent.putExtra ("type", "Sales");
+//                        startActivity (intent);
                     }
 
                     @Override
@@ -334,7 +335,38 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
                     }
                 });
     }
+public void lineSave(final int hdrid){
 
+    realm.executeTransaction(new Realm.Transaction() {
+        @Override
+        public void execute(Realm realm) {
+            int nextId_line ;
+            for (int j = 0; j < enquiryLineLists.size (); j++) {
+
+                Number currentIdNum = realm.where (EnquiryLineList.class).max ("enqLineId");
+                if (currentIdNum == null) {
+                    nextId_line = 1;
+                } else {
+                    nextId_line = currentIdNum.intValue () + 1;
+                }
+                EnquiryLineList enquiryLineList=new EnquiryLineList ();
+                enquiryLineList.setEnqLineId (nextId_line);
+                enquiryLineList.setEnquiryHdrId (hdrid);
+                enquiryLineList.setEnquiryProductId (enquiryLineLists.get (j).getEnquiryProductId ());
+                enquiryLineList.setEnquiryProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
+                enquiryLineList.setEnquiryProduct (enquiryLineLists.get (j).getEnquiryProduct ());
+                enquiryLineList.setEnquiryUomId (enquiryLineLists.get (j).getEnquiryUomId ());
+                enquiryLineList.setEnquiryUom (enquiryLineLists.get (j).getEnquiryUom ());
+                enquiryLineList.setEnquiryRequiredQuantity (enquiryLineLists.get (j).getEnquiryRequiredQuantity ());
+                realm.insert (enquiryLineList);
+                                        Intent intent = new Intent (SalesEnquiryCreatingActivity.this, SubDashboard.class);
+                        intent.putExtra ("type", "Sales");
+                        startActivity (intent);
+
+            }
+        }
+    });
+}
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof EnquiryItemAdapter.MyViewHolder) {

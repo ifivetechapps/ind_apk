@@ -28,15 +28,10 @@ import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifiveuv.indsmart.UI.Masters.Model.FreightList;
-import com.ifiveuv.indsmart.UI.Masters.Model.SupplierList;
-
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Adapter.EditQuoteLineAdapter;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Model.QuotationHeader;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Model.QuotationLines;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
-import com.ifiveuv.indsmart.Utils.FreightListAdapter;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -339,16 +334,12 @@ public class EditQuotationActivity extends BaseActivity implements SupplierListA
                 });
     }
 
-    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name, Integer hsnId, String hsnName, Integer taxId, String taxName, Integer rate) {
+    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name) {
         quoteItemLineLists.get (mPosition).setProduct (product);
         quoteItemLineLists.get (mPosition).setProductId (po_id);
         quoteItemLineLists.get (mPosition).setUomId (uom_id);
         quoteItemLineLists.get (mPosition).setUom (uom_name);
-        quoteItemLineLists.get (mPosition).setHsnCode (hsnName);
-        quoteItemLineLists.get (mPosition).setHsnId (hsnId);
-        quoteItemLineLists.get (mPosition).setTaxId (taxId);
-        quoteItemLineLists.get (mPosition).setTaxGroup (taxName);
-        quoteItemLineLists.get (mPosition).setPrice (rate);
+
     }
 
     @Override

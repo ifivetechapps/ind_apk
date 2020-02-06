@@ -24,6 +24,7 @@ import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Adapter.SalesEnquiryAllListAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
+import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +51,7 @@ public class SalesEnquiryList extends BaseActivity {
     private FloatingActionButton createStandard, createLabour;
     private List<EnquiryItemModel> enquiryItemModels;
     EnquiryItemModel enquiryItemModel;
+    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
     int typeid,status;
     EnquiryResponse enquiryResponse;
     private Menu menu;
@@ -127,7 +130,10 @@ public class SalesEnquiryList extends BaseActivity {
         enquiryItemModel.setEnquiryDate (IFiveEngine.myInstance.formatDate (enquiryItemModels.get (0).getEnquiryDate ()));
         enquiryItemModel.setDeliveryDate (IFiveEngine.myInstance.formatDate (enquiryItemModels.get (0).getDeliveryDate ()));
         enquiryItemModel.setEnquiryRemarks (enquiryItemModels.get (0).getEnquiryRemarks ());
-        enquiryItemModel.setEnquiryLineLists (enquiryItemModels.get (0).getEnquiryLineLists ());
+        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
+                .equalTo ("enquiryHdrId", enquiryId)
+                .findAll ()));
+        enquiryItemModel.setEnquiryLineLists (enquiryLineLists);
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
             UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);
@@ -191,7 +197,10 @@ public class SalesEnquiryList extends BaseActivity {
         enquiryItemModel.setEnquiryDate (IFiveEngine.myInstance.formatDate (enquiryItemModels.get (0).getEnquiryDate ()));
         enquiryItemModel.setDeliveryDate (IFiveEngine.myInstance.formatDate (enquiryItemModels.get (0).getDeliveryDate ()));
         enquiryItemModel.setEnquiryRemarks (enquiryItemModels.get (0).getEnquiryRemarks ());
-        enquiryItemModel.setEnquiryLineLists (enquiryItemModels.get (0).getEnquiryLineLists ());
+        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
+                .equalTo ("enquiryHdrId", enquiryId)
+                .findAll ()));
+        enquiryItemModel.setEnquiryLineLists (enquiryLineLists);
         if (IFiveEngine.isNetworkAvailable (this)) {
             progressDialog.show ();
             UserAPICall userAPICall = RetroFitEngine.getRetrofit ().create (UserAPICall.class);

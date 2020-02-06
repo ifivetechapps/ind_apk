@@ -81,7 +81,9 @@ public class SalesQuoteViewActivity extends BaseActivity {
         order_date.setText(salesItemLists.get(0).getQodate());
         status.setText(salesItemLists.get(0).getQstatus ());
         customer_name.setText(salesItemLists.get(0).getQcus_name());
-        salesItemLinesall.addAll(salesItemLists.get(0).getQuoteItemLines());
+        salesItemLinesall.addAll (realm.copyFromRealm (realm.where (QuoteItemLineList.class)
+                .equalTo ("quoteHdrId", hdrid)
+                .findAll ()));
         salesAdapter = new SalesQuoteviewAdapter(this, salesItemLinesall, this);
         item_data_list.setAdapter(salesAdapter);
         item_data_list.setItemViewCacheSize(salesItemLinesall.size());

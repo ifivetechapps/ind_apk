@@ -30,15 +30,12 @@ import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
-import com.ifiveuv.indsmart.UI.Masters.Model.FreightList;
-import com.ifiveuv.indsmart.UI.Masters.Model.SupplierList;
 import com.ifiveuv.indsmart.UI.PurchaseEnquiry.Model.EnquiryItemList;
 import com.ifiveuv.indsmart.UI.PurchaseEnquiry.Model.PurchaseEnquiryData;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Adapter.EnquiryQuoteLineAdapter;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Model.QuotationHeader;
 import com.ifiveuv.indsmart.UI.PurchaseQuote.Model.QuotationLines;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
-import com.ifiveuv.indsmart.Utils.FreightListAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,8 +60,6 @@ public class ConvertEnquirytoQuoteActivity extends BaseActivity implements Suppl
     TextView supplier_name;
     @BindView(R.id.supplier_site)
     TextView supplier_site;
-    @BindView(R.id.freight_address)
-    TextView freight_address;
     @BindView(R.id.delivery_date)
     TextView delivery_date;
     @BindView(R.id.tax_total)
@@ -263,15 +258,12 @@ public class ConvertEnquirytoQuoteActivity extends BaseActivity implements Suppl
         enquiryItemListRealmList.get (mPosition).setPromised_date (date);
     }
 
-    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name, Integer hsnId, String hsnName, Integer taxId, String taxName) {
+    public void setProductList(int mPosition, String product, Integer po_id, Integer uom_id, String uom_name) {
         enquiryItemListRealmList.get (mPosition).setProduct (product);
         enquiryItemListRealmList.get (mPosition).setProductId (po_id);
         enquiryItemListRealmList.get (mPosition).setUom_id (uom_id);
         enquiryItemListRealmList.get (mPosition).setUom (uom_name);
-        enquiryItemListRealmList.get (mPosition).setHsnCode (hsnName);
-        enquiryItemListRealmList.get (mPosition).setHsnId (hsnId);
-        enquiryItemListRealmList.get (mPosition).setTaxId (taxId);
-        enquiryItemListRealmList.get (mPosition).setTaxGroup (taxName);
+
     }
 
     @OnClick(R.id.draft_data)
@@ -329,7 +321,6 @@ public class ConvertEnquirytoQuoteActivity extends BaseActivity implements Suppl
         quotationHeader.setStatus ("Submit");
         quotationHeader.setQuoteDate (enq_date);
         quotationHeader.setDeliveryDate (delivery_date.getText ().toString ());
-        quotationHeader.setFreight_carrier (freight_address.getText ().toString ());
         quotationHeader.setGrandTotal (grand_total.getText ().toString ());
         quotationHeader.setGrandTax (tax_total.getText ().toString ());
 
@@ -362,7 +353,7 @@ public class ConvertEnquirytoQuoteActivity extends BaseActivity implements Suppl
         quotationHeader.setSource (source_enquiry);
         quotationHeader.setQuoteDate (enq_date);
         quotationHeader.setDeliveryDate (delivery_date.getText ().toString ());
-        quotationHeader.setFreight_carrier (freight_address.getText ().toString ());
+
         quotationHeader.setGrandTotal (grand_total.getText ().toString ());
         quotationHeader.setGrandTax (tax_total.getText ().toString ());
         uploadLocalPurchase (quotationHeader, nextId);
@@ -439,7 +430,7 @@ public class ConvertEnquirytoQuoteActivity extends BaseActivity implements Suppl
     public void onItemPostion(int position) {
         String name = allDataLists.get (0).getSupplierList ().get (position).getSupplierName ();
         supplier_name.setText (name);
-        freight_address.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
+        supplier_site.setText (allDataLists.get (0).getSupplierList ().get (position).getSupplierAddress ());
         supplier_id = allDataLists.get (0).getSupplierList ().get (position).getSupplierTblId ();
         chartAlertDialog.dismiss ();
 

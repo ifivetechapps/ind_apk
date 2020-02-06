@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class EnquiryLineList extends RealmObject {
 
@@ -56,7 +57,30 @@ public class EnquiryLineList extends RealmObject {
     }
 
 
+    public int getEnqLineId() {
+        return enqLineId;
+    }
 
+    public void setEnqLineId(int enqLineId) {
+        this.enqLineId = enqLineId;
+    }
+
+    @PrimaryKey
+    @SerializedName("enq_id")
+    @Expose
+    private int enqLineId;
+
+    public int getEnquiryHdrId() {
+        return enquiryHdrId;
+    }
+
+    public void setEnquiryHdrId(int enquiryHdrId) {
+        this.enquiryHdrId = enquiryHdrId;
+    }
+
+    @SerializedName("enquiry_header_id")
+    @Expose
+    private int enquiryHdrId;
     @SerializedName("enquiry_product_position")
     @Expose
     private int enquiryProductPosition;
@@ -74,6 +98,18 @@ public class EnquiryLineList extends RealmObject {
     @SerializedName("enquiry_uom_id")
     @Expose
     private Integer enquiryUomId;
+
+    public Integer getTaxId() {
+        return taxId;
+    }
+
+    public void setTaxId(Integer taxId) {
+        this.taxId = taxId;
+    }
+
+    @SerializedName("tax_id")
+    @Expose
+    private Integer taxId;
     @SerializedName("enquiry_quantity")
     @Expose
     private String enquiryRequiredQuantity;
