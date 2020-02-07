@@ -90,6 +90,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     ProgressDialog pDialog;
     SessionManager sessionManager;
     List<AllDataList> allDataLists = new ArrayList<> ();
+    String se_id=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -387,6 +388,7 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
                     quoteItemLineList.setDisPer (quoteItemLineLists.get (j).getDisPer ());
                     quoteItemLineList.setDisAmt (quoteItemLineLists.get (j).getDisAmt ());
                     quoteItemLineList.setMrp (quoteItemLineLists.get (j).getMrp ());
+                    quoteItemLineList.setQuote_taxAmt (quoteItemLineLists.get (j).getQuote_taxAmt ());
                     quoteItemLineList.setQuantity (quoteItemLineLists.get (j).getQuantity ());
                     realm.insert (quoteItemLineList);
                     Intent intent = new Intent (CreateSalesQuote.this, SubDashboard.class);

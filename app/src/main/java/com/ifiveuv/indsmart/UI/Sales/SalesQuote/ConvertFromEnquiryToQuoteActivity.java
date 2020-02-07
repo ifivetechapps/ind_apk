@@ -294,7 +294,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
         realm.beginTransaction ();
         enquiryLineLists.get (pos).setEnquiryProduct (name);
-        enquiryLineLists.get (pos).setProductId (String.valueOf (pro_id));
+        enquiryLineLists.get (pos).setEnquiryProductId (String.valueOf (pro_id));
         enquiryLineLists.get (pos).setEnquiryUomId (uomId);
         enquiryLineLists.get (pos).setEnquiryUom (uomName);
 
@@ -402,10 +402,11 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
                     quoteItemLineList.setQuoteHdrId (hdrid);
                     quoteItemLineList.setProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
                     quoteItemLineList.setProduct (enquiryLineLists.get (j).getEnquiryProduct ());
-                    quoteItemLineList.setProductId (enquiryLineLists.get (j).getProductId ());
+                    quoteItemLineList.setProductId (enquiryLineLists.get (j).getEnquiryProductId ());
                     quoteItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
                     quoteItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
                     quoteItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
+                    quoteItemLineList.setQuote_taxAmt (enquiryLineLists.get (j).getTaxAmt ());
                     quoteItemLineList.setQuoteTaxId (enquiryLineLists.get (j).getTaxId ());
                     quoteItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
                     quoteItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());

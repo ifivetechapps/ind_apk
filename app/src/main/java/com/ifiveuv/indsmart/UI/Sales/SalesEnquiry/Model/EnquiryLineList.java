@@ -65,10 +65,6 @@ public class EnquiryLineList extends RealmObject {
         this.enqLineId = enqLineId;
     }
 
-    @PrimaryKey
-    @SerializedName("enq_id")
-    @Expose
-    private int enqLineId;
 
     public int getEnquiryHdrId() {
         return enquiryHdrId;
@@ -78,26 +74,6 @@ public class EnquiryLineList extends RealmObject {
         this.enquiryHdrId = enquiryHdrId;
     }
 
-    @SerializedName("enquiry_header_id")
-    @Expose
-    private int enquiryHdrId;
-    @SerializedName("enquiry_product_position")
-    @Expose
-    private int enquiryProductPosition;
-
-    @SerializedName("enquiry_product")
-    @Expose
-    private String enquiryProduct;
-
-    @SerializedName("enquiry_product_id")
-    @Expose
-    private String enquiryProductId;
-    @SerializedName("enquiry_uom")
-    @Expose
-    private String enquiryUom;
-    @SerializedName("enquiry_uom_id")
-    @Expose
-    private Integer enquiryUomId;
 
     public Integer getTaxId() {
         return taxId;
@@ -106,13 +82,6 @@ public class EnquiryLineList extends RealmObject {
     public void setTaxId(Integer taxId) {
         this.taxId = taxId;
     }
-
-    @SerializedName("tax_id")
-    @Expose
-    private Integer taxId;
-    @SerializedName("enquiry_quantity")
-    @Expose
-    private String enquiryRequiredQuantity;
 
     public String getDiscountPercent() {
         return discountPercent;
@@ -154,14 +123,22 @@ public class EnquiryLineList extends RealmObject {
         this.lineTotal = lineTotal;
     }
 
-    public String getProductId() {
-        return productId;
+
+    public String getTaxAmt() {
+        return taxAmt;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setTaxAmt(String taxAmt) {
+        this.taxAmt = taxAmt;
     }
+    @PrimaryKey
+    @SerializedName("enq_id")
+    @Expose
+    private int enqLineId;
 
+    @SerializedName("enquiry_header_id")
+    @Expose
+    private int enquiryHdrId;
     @SerializedName("discount_percent")
     @Expose
     private String discountPercent;
@@ -177,8 +154,32 @@ public class EnquiryLineList extends RealmObject {
     @SerializedName("line_total")
     @Expose
     private String lineTotal;
-    @SerializedName("product_id")
+    @SerializedName("enquiry_product_position")
     @Expose
-    private String productId;
+    private int enquiryProductPosition;
+    @SerializedName("enquiry_product")
+    @Expose
+    private String enquiryProduct;
+    @SerializedName("enquiry_product_id")
+    @Expose
+    private String enquiryProductId;
+    @SerializedName("enquiry_uom")
+    @Expose
+    private String enquiryUom;
+    @SerializedName("enquiry_uom_id")
+    @Expose
+    private Integer enquiryUomId;
+    @SerializedName("tax_id")
+    @Expose
+    private Integer taxId;
+
+
+
+    @SerializedName("tax_amt")
+    @Expose
+    private String taxAmt;
+    @SerializedName("enquiry_quantity")
+    @Expose
+    private String enquiryRequiredQuantity;
 
 }

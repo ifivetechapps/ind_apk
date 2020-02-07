@@ -304,7 +304,7 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
         realm.beginTransaction ();
         enquiryLineLists.get (pos).setEnquiryProduct (name);
-        enquiryLineLists.get (pos).setProductId (String.valueOf (pro_id));
+        enquiryLineLists.get (pos).setEnquiryProductId (String.valueOf (pro_id));
         enquiryLineLists.get (pos).setEnquiryUomId (uomId);
         enquiryLineLists.get (pos).setEnquiryUom (uomName);
         realm.commitTransaction ();
@@ -410,7 +410,7 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
                     salesItemLineList.setSalesHdrid (nextid);
                     salesItemLineList.setProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
                     salesItemLineList.setProduct (enquiryLineLists.get (j).getEnquiryProduct ());
-                    salesItemLineList.setProductId (enquiryLineLists.get (j).getProductId ());
+                    salesItemLineList.setProductId (enquiryLineLists.get (j).getEnquiryProductId ());
                     salesItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
                     salesItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
                     salesItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
@@ -418,6 +418,7 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
                     salesItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
                     salesItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());
                     salesItemLineList.setTaxId (enquiryLineLists.get (j).getTaxId ());
+                    salesItemLineList.setTaxAmt (enquiryLineLists.get (j).getTaxAmt ());
                     salesItemLineList.setOrgCost (enquiryLineLists.get (j).getOriginalCost ());
                     salesItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
                     realm.insert (salesItemLineList);

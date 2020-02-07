@@ -286,7 +286,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:color/transparent"
-                    android:weightSum="6">
+                    android:weightSum="4">
 
                     <TextView
                         android:layout_width="0dip"
@@ -331,34 +331,6 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="Qty"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sub_text" />
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/top_head_middle"
-                        android:fontFamily="@font/helvetica"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:singleLine="true"
-                        android:text="Unit Price"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sub_text" />
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/top_head_middle"
-                        android:fontFamily="@font/helvetica"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:singleLine="true"
-                        android:text="Dis %"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sub_text" />
 

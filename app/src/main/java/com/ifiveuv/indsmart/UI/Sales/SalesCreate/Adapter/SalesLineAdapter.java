@@ -60,7 +60,12 @@ public class SalesLineAdapter extends RecyclerView.Adapter<SalesLineAdapter.MyVi
         holder.productAdapter = new ProductAdapter (context, android.R.layout.simple_spinner_item, productsList, holder.productId);
         holder.product.setAdapter (holder.productAdapter);
 
-        holder.product.setSelection (itemList.getProductPosition ());
+        if(itemList.getProductId ()!=null){
+            Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getProductId ())).findFirst ();
+            int spinnerPosition = holder.productAdapter.getPosition(products);
+            holder.product.setSelection(spinnerPosition);
+
+        }
 
         holder.product.setOnItemSelectedListener (new AdapterView.OnItemSelectedListener () {
             @Override
@@ -250,6 +255,7 @@ public class SalesLineAdapter extends RecyclerView.Adapter<SalesLineAdapter.MyVi
                             tax_cal = ((tax_value / 100) * amount);
 
                             total_amount = amount + tax_cal;
+                            itemList.setTaxAmt (String.valueOf (tax_cal));
                             holder.amount.setText (String.valueOf (total_amount));
                             saleOrderActivity.setLineTotal (mPosition, disper, unit_quan, disamt, total_amount);
                         }
@@ -295,6 +301,7 @@ public class SalesLineAdapter extends RecyclerView.Adapter<SalesLineAdapter.MyVi
                             tax_cal = ((tax_value / 100) * amount);
 
                             total_amount = amount + tax_cal;
+                            itemList.setTaxAmt (String.valueOf (tax_cal));
                             holder.amount.setText (String.valueOf (total_amount));
                             saleOrderActivity.setLineTotal (mPosition, disper, unit_quan, disamt, total_amount);
                         }
