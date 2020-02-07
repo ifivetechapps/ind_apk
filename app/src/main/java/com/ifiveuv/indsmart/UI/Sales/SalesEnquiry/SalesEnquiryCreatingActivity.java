@@ -217,8 +217,6 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
         enquiryItemModel.setEnquiryCustomerName (customer_Name.getText ().toString ().trim ());
         enquiryItemModel.setEnquiryStatus (so_status.getText ().toString ());
         enquiryItemModel.setEnquiryRemarks (remarks.getText ().toString ());
-       // enquiryItemModel.setEnquiryLineLists (enquiryLineListRealmList);
-
         uploadLocalPurchase (enquiryItemModel,nextId);
     }
 
@@ -266,12 +264,13 @@ public class SalesEnquiryCreatingActivity extends BaseActivity implements Recycl
         new ItemTouchHelper (itemTouchHelperCallback).attachToRecyclerView (itemRecyclerView);
     }
 
-    public void setProductList(int pos, int gPosition, int productId, String name, int uomId, String uomName) {
+    public void setProductList(int pos, int gPosition, int productId, String name, int uomId, String uomName,int tax_id) {
         enquiryLineLists.get (pos).setEnquiryProductPosition (gPosition);
         enquiryLineLists.get (pos).setEnquiryProductId (String.valueOf (productId));
         enquiryLineLists.get (pos).setEnquiryProduct (name);
         enquiryLineLists.get (pos).setEnquiryUom (uomName);
         enquiryLineLists.get (pos).setEnquiryUomId (uomId);
+        enquiryLineLists.get (pos).setTaxId (tax_id);
     }
 
     public void setQuantity(int position, String quant) {
@@ -357,6 +356,7 @@ public void lineSave(final int hdrid){
                 enquiryLineList.setEnquiryProduct (enquiryLineLists.get (j).getEnquiryProduct ());
                 enquiryLineList.setEnquiryUomId (enquiryLineLists.get (j).getEnquiryUomId ());
                 enquiryLineList.setEnquiryUom (enquiryLineLists.get (j).getEnquiryUom ());
+                enquiryLineList.setTaxId (enquiryLineLists.get (j).getTaxId ());
                 enquiryLineList.setEnquiryRequiredQuantity (enquiryLineLists.get (j).getEnquiryRequiredQuantity ());
                 realm.insert (enquiryLineList);
                                         Intent intent = new Intent (SalesEnquiryCreatingActivity.this, SubDashboard.class);

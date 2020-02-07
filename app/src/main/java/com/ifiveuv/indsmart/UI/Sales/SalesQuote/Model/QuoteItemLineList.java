@@ -15,7 +15,55 @@ public class QuoteItemLineList extends RealmObject {
     @SerializedName("product")
     @Expose
     private String product;
+    @SerializedName("quote_product_id")
+    @Expose
+    private String productId;
+    @SerializedName("uom")
+    @Expose
+    private String uom;
 
+    @SerializedName("quote_uom_id")
+    @Expose
+    private Integer uomId;
+
+
+    @SerializedName("quote_Hdr_id")
+    @Expose
+    private Integer  quoteHdrId;
+    @SerializedName("quote_taxid")
+    @Expose
+    private Integer  quoteTaxId;
+    @PrimaryKey
+    @SerializedName("quote_line_id")
+    @Expose
+    private Integer quoteLineId;
+
+    @SerializedName("quote_quantity")
+    @Expose
+    private String quantity;
+
+    @SerializedName("discount_percent")
+    @Expose
+    private String disPer;
+    @SerializedName("discount_amount")
+    @Expose
+    private String disAmt;
+    @SerializedName("mrp")
+    @Expose
+    private String mrp;
+    @SerializedName("quote_tax")
+    @Expose
+    private String quote_tax;
+    @SerializedName("quote_tax_amt")
+    @Expose
+    private String quote_taxAmt;
+
+    @SerializedName("quote_unit_price")
+    @Expose
+    private String unitPrice;
+    @SerializedName("quote_total_cost")
+    @Expose
+    private String lineTotal;
     public String getProductId() {
         return productId;
     }
@@ -24,9 +72,6 @@ public class QuoteItemLineList extends RealmObject {
         this.productId = productId;
     }
 
-    @SerializedName("quote_product_id")
-    @Expose
-    private String productId;
 
     public int getProductPosition() {
         return productPosition;
@@ -36,13 +81,6 @@ public class QuoteItemLineList extends RealmObject {
         this.productPosition = productPosition;
     }
 
-    @SerializedName("uom")
-    @Expose
-    private String uom;
-
-    @SerializedName("quote_uom_id")
-    @Expose
-    private Integer uomId;
 
     public Integer getQuoteHdrId() {
         return quoteHdrId;
@@ -60,20 +98,6 @@ public class QuoteItemLineList extends RealmObject {
         this.quoteLineId = quoteLineId;
     }
 
-    @SerializedName("quote_Hdr_id")
-    @Expose
-    private Integer  quoteHdrId;
-    @SerializedName("quote_taxid")
-    @Expose
-    private Integer  quoteTaxId;
-    @PrimaryKey
-    @SerializedName("quote_line_id")
-    @Expose
-    private Integer quoteLineId;
-
-    @SerializedName("quote_quantity")
-    @Expose
-    private String quantity;
 
     public Integer getQuoteTaxId() {
         return quoteTaxId;
@@ -91,16 +115,7 @@ public class QuoteItemLineList extends RealmObject {
         this.quote_tax = quote_tax;
     }
 
-    @SerializedName("quote_tax")
-    @Expose
-    private String quote_tax;
 
-    @SerializedName("quote_unit_price")
-    @Expose
-    private String unitPrice;
-    @SerializedName("quote_total_cost")
-    @Expose
-    private String lineTotal;
 
     public String getDisPer() {
         return disPer;
@@ -126,15 +141,6 @@ public class QuoteItemLineList extends RealmObject {
         this.mrp = mrp;
     }
 
-    @SerializedName("discount_percent")
-    @Expose
-    private String disPer;
-    @SerializedName("discount_amount")
-    @Expose
-    private String disAmt;
-    @SerializedName("mrp")
-    @Expose
-    private String mrp;
 
     public Integer getUomId() {
         return uomId;
@@ -182,6 +188,14 @@ public class QuoteItemLineList extends RealmObject {
 
     public void setLineTotal(String lineTotal) {
         this.lineTotal = lineTotal;
+    }
+
+    public String getQuote_taxAmt() {
+        return quote_taxAmt;
+    }
+
+    public void setQuote_taxAmt(String quote_taxAmt) {
+        this.quote_taxAmt = quote_taxAmt;
     }
 }
 

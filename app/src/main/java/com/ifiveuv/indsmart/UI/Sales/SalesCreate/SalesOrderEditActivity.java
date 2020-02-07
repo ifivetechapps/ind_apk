@@ -505,6 +505,7 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
                     salesItemLineLists.setQuantity (Integer.valueOf (salesItemLineList.get (j).getQuantity ()));
                     salesItemLineLists.setDisPer (salesItemLineList.get (j).getDisPer ());
                     salesItemLineLists.setDisAmt (salesItemLineList.get (j).getDisAmt ());
+                    salesItemLineLists.setTaxAmt (salesItemLineList.get (j).getTaxAmt ());
                     salesItemLineLists.setOrgCost (salesItemLineList.get (j).getOrgCost ());
                     salesItemLineLists.setLineTotal (salesItemLineList.get (j).getLineTotal ());
                     realm.copyToRealmOrUpdate (salesItemLineLists);
@@ -551,9 +552,15 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
             @Override
             public void execute(Realm realm) {
                 for (int j = 0; j < salesItemLineList.size (); j++) {
-
+                    int nextId_line;
+                    Number currentIdNum = realm.where (SalesItemLineList.class).max ("saleId");
+                    if (currentIdNum == null) {
+                        nextId_line = 1;
+                    } else {
+                        nextId_line = currentIdNum.intValue () + 1;
+                    }
                     SalesItemLineList salesItemLineLists=new SalesItemLineList ();
-                    salesItemLineLists.setSaleId (salesItemLineList.get (j).getSaleId ());
+                    salesItemLineLists.setSaleId (nextId_line);
                     salesItemLineLists.setSalesHdrid (nextId);
                     salesItemLineLists.setProductPosition (salesItemLineList.get (j).getProductPosition ());
                     salesItemLineLists.setProduct (salesItemLineList.get (j).getProduct ());
@@ -564,6 +571,7 @@ public class SalesOrderEditActivity extends BaseActivity implements RecyclerItem
                     salesItemLineLists.setUnitPrice (salesItemLineList.get (j).getUnitPrice ());
                     salesItemLineLists.setQuantity (Integer.valueOf (salesItemLineList.get (j).getQuantity ()));
                     salesItemLineLists.setDisPer (salesItemLineList.get (j).getDisPer ());
+                    salesItemLineLists.setTaxAmt (salesItemLineList.get (j).getTaxAmt ());
                     salesItemLineLists.setDisAmt (salesItemLineList.get (j).getDisAmt ());
                     salesItemLineLists.setOrgCost (salesItemLineList.get (j).getOrgCost ());
                     salesItemLineLists.setLineTotal (salesItemLineList.get (j).getLineTotal ());

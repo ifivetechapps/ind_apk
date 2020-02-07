@@ -59,7 +59,12 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
         holder.productAdapter = new ProductAdapter(context, android.R.layout.simple_spinner_item, productsList, holder.productId);
         holder.product.setAdapter(holder.productAdapter);
 
-        holder.product.setSelection(itemList.getProductPosition ());
+        if(itemList.getProductId ()!=null){
+            Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getProductId ())).findFirst ();
+            int spinnerPosition = holder.productAdapter.getPosition(products);
+            holder.product.setSelection(spinnerPosition);
+
+        }
 
         holder.product.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

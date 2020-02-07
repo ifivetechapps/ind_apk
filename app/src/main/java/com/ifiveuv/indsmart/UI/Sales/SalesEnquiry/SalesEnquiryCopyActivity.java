@@ -295,12 +295,13 @@ public class SalesEnquiryCopyActivity extends BaseActivity implements RecyclerIt
     }
 
 
-    public void setProductList(int pos, int gPosition, int productId, String name, int uomId, String uomName) {
+    public void setProductList(int pos, int gPosition, int productId, String name, int uomId, String uomName,int tax_id) {
         enquiryLineLists.get (pos).setEnquiryProductPosition (gPosition);
         enquiryLineLists.get (pos).setEnquiryProductId (String.valueOf (productId));
         enquiryLineLists.get (pos).setEnquiryProduct (name);
         enquiryLineLists.get (pos).setEnquiryUom (uomName);
         enquiryLineLists.get (pos).setEnquiryUomId (uomId);
+        enquiryLineLists.get (pos).setTaxId (tax_id);
     }
 
     public void setQuantity(int position, String quant) {
@@ -368,6 +369,7 @@ public class SalesEnquiryCopyActivity extends BaseActivity implements RecyclerIt
                     enquiryLineList.setEnquiryProduct (enquiryLineLists.get (j).getEnquiryProduct ());
                     enquiryLineList.setEnquiryUomId (enquiryLineLists.get (j).getEnquiryUomId ());
                     enquiryLineList.setEnquiryUom (enquiryLineLists.get (j).getEnquiryUom ());
+                    enquiryLineList.setTaxId (enquiryLineLists.get (j).getTaxId ());
                     enquiryLineList.setEnquiryRequiredQuantity (enquiryLineLists.get (j).getEnquiryRequiredQuantity ());
                     realm.insert (enquiryLineList);
                     Intent intent = new Intent (SalesEnquiryCopyActivity.this, SubDashboard.class);

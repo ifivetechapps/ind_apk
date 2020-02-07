@@ -56,7 +56,7 @@ public class SalesQuoteViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.salesorder_view);
+        setContentView(R.layout.quoteorder_view);
         ButterKnife.bind(this);
 
         Realm.init(this);

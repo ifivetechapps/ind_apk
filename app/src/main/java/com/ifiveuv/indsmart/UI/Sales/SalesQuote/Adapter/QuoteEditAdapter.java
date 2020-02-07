@@ -63,7 +63,12 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
         holder.productAdapter = new ProductAdapter(context, android.R.layout.simple_spinner_item, productsList, holder.productId);
         holder.product.setAdapter(holder.productAdapter);
 
-        holder.product.setSelection(itemList.getProductPosition ());
+        if(itemList.getProductId ()!=null){
+            Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getProductId ())).findFirst ();
+            int spinnerPosition = holder.productAdapter.getPosition(products);
+            holder.product.setSelection(spinnerPosition);
+
+        }
 
         holder.product.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -261,6 +266,7 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
                         total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         realm.beginTransaction ();
+                        itemList.setQuote_taxAmt (String.valueOf (tax_cal));
                         salesQuoteEditActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
                         realm.commitTransaction ();
                     }
@@ -309,6 +315,7 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
                         total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         realm.beginTransaction ();
+                        itemList.setQuote_taxAmt (String.valueOf (tax_cal));
                         salesQuoteEditActivity.setDiscount(mPosition, discountper,total,disamt,total_amount );
                         realm.commitTransaction ();
                     }

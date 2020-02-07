@@ -1,13 +1,14 @@
 package com.ifiveuv.indsmart.UI.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.Connectivity.Products;
+import com.ifiveuv.indsmart.R;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class ProductAdapter extends ArrayAdapter<Products> {
 //        label.setTextSize(MukthaEngine.myInstance.getDPPixel(15,context));
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
+        Log.d("positionadapter", String.valueOf (position));
         if (values.get(position).getPro_id() == -1) {
             label.setText("--select--");
         } else {
@@ -94,4 +96,5 @@ public class ProductAdapter extends ArrayAdapter<Products> {
     public void setPosition(int position) {
         selectedPostion = position;
     }
+
 }

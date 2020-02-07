@@ -54,15 +54,6 @@ public class SalesItemLineList extends RealmObject {
     @SerializedName("so_uom_id")
     @Expose
     private Integer uomId;
-
-    public Integer getTaxId() {
-        return taxId;
-    }
-
-    public void setTaxId(Integer taxId) {
-        this.taxId = taxId;
-    }
-
     @SerializedName("so_tax_id")
     @Expose
     private Integer taxId;
@@ -84,6 +75,42 @@ public class SalesItemLineList extends RealmObject {
     @SerializedName("so_total_cost")
     @Expose
     private String lineTotal;
+    @SerializedName("Invoice_qty")
+    @Expose
+    private String invoiceQty;
+    @SerializedName("Invoice_amt")
+    @Expose
+    private String invoiceAmt;
+    @SerializedName("Invoice_dis")
+    @Expose
+    private String invoiceDis;
+    @SerializedName("Invoice_dis_per")
+    @Expose
+    private String invoiceDisPer;
+    @SerializedName("Invoice_total")
+    @Expose
+    private String invoiceTotal;
+
+    public String getTaxAmt() {
+        return taxAmt;
+    }
+
+    public void setTaxAmt(String taxAmt) {
+        this.taxAmt = taxAmt;
+    }
+
+    @SerializedName("tax_amt")
+    @Expose
+    private String taxAmt;
+    public Integer getTaxId() {
+        return taxId;
+    }
+
+    public void setTaxId(Integer taxId) {
+        this.taxId = taxId;
+    }
+
+
 
     public String getInvoiceQty() {
         return invoiceQty;
@@ -109,21 +136,7 @@ public class SalesItemLineList extends RealmObject {
         this.invoiceDis = invoiceDis;
     }
 
-    @SerializedName("Invoice_qty")
-    @Expose
-    private String invoiceQty;
-    @SerializedName("Invoice_amt")
-    @Expose
-    private String invoiceAmt;
-    @SerializedName("Invoice_dis")
-    @Expose
-    private String invoiceDis;
-    @SerializedName("Invoice_dis_per")
-    @Expose
-    private String invoiceDisPer;
-    @SerializedName("Invoice_total")
-    @Expose
-    private String invoiceTotal;
+
     public String getInvoiceDisPer() {
         return invoiceDisPer;
     }
