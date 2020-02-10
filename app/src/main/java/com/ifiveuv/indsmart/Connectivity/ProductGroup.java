@@ -7,7 +7,6 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class ProductGroup extends RealmObject {
-    @PrimaryKey
     @SerializedName("product_group_id")
     @Expose
     private Integer pg_id;

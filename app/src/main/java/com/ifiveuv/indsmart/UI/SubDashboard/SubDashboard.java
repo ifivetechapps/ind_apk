@@ -1,5 +1,6 @@
 package com.ifiveuv.indsmart.UI.SubDashboard;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
+import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.DashboardItemsList;
@@ -30,6 +32,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class SubDashboard extends BaseActivity {
 
@@ -39,19 +43,31 @@ public class SubDashboard extends BaseActivity {
     SubDashboardAdapter dashboardListAdapter;
     ActionBar actionBar;
     String typeName;
+    Realm realm;
     private SessionManager sessionManager;
-
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.dashboard_activity);
         ButterKnife.bind (this);
         actionBar = getSupportActionBar ();
-        sessionManager = new SessionManager ();
+        sessionManager = new SessionManager();
+        pDialog = IFiveEngine.getProgDialog(this);
         typeName = getIntent ().getExtras ().getString ("type");
         Log.d ("aaaa", "" + typeName);
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        realm = Realm.getDefaultInstance();
         getMenuItems ();
+
     }
+
+
 
 
     private void getMenuItems() {

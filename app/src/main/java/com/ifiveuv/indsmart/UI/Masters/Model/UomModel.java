@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class UomModel extends RealmObject {
-    @PrimaryKey
+
     @SerializedName("uom_id")
     @Expose
     private Integer uom_id;

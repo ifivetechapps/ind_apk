@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.ConvertFromEnquiryAdapter;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
@@ -45,10 +46,9 @@ public class ConvertFromEnquiry extends BaseActivity {
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
         realm = Realm.getDefaultInstance();
-        RealmResults<EnquiryItemModel> results;
-        results = realm.where(EnquiryItemModel.class).equalTo("stautsOnline", "1")
-                .and ()
-                .notEqualTo ("enquiryStatus","converted")
+        RealmResults<OnlineEnquiryItemModel> results;
+        results = realm.where(OnlineEnquiryItemModel.class)
+                .equalTo ("approveStatus","APPROVED")
                 .findAll();
         if (results.size() != 0) {
             ll1.setVisibility(View.VISIBLE);

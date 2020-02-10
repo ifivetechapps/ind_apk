@@ -89,32 +89,27 @@ public class Dashboard extends BaseActivity {
             realm.commitTransaction();
             if (IFiveEngine.isNetworkAvailable(this)) {
                 pDialog.show();
-
                 UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
                 Call<AllDataList> callEnqueue = userAPICall.allDataList(sessionManager.getToken(this));
                 callEnqueue.enqueue(new Callback<AllDataList>() {
                     @Override
                     public void onResponse(Call<AllDataList> call, Response<AllDataList> response) {
                         uploadToRealmDB(response.body());
-
                         if ((pDialog != null) && pDialog.isShowing())
                             pDialog.dismiss();
                     }
-
                     @Override
                     public void onFailure(Call<AllDataList> call, Throwable t) {
                         if ((pDialog != null) && pDialog.isShowing())
                             pDialog.dismiss();
                         Log.d("throwing Error", t.getMessage());
-                        Toast.makeText(Dashboard.this, "Please check the ID or Password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Dashboard.this, "Syn incomplete", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                //  IFiveEngine.myInstance.snackbarNoInternet(this);
+                  IFiveEngine.myInstance.snackbarNoInternet(this);
             }
         }
-
-
     }
 
     private void uploadToRealmDB(final AllDataList body) {

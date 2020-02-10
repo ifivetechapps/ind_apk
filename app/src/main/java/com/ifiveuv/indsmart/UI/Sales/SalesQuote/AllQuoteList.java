@@ -74,6 +74,7 @@ public class AllQuoteList extends BaseActivity {
         createLabour.setOnClickListener (onButtonClick ());
         fromenquiry.setOnClickListener (onButtonClick ());
         sessionManager = new SessionManager ();
+
         Realm.init (this);
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder ()
@@ -97,6 +98,7 @@ public class AllQuoteList extends BaseActivity {
 
 
     }
+
 
     private View.OnClickListener onButtonClick() {
         return new View.OnClickListener () {
