@@ -90,6 +90,7 @@
         <activity android:name=".UI.PurchaseQuote.EditQuotationActivity" />
         <activity android:name=".UI.PurchaseQuote.ApprovalQuotationList" />
         <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryCopyActivity" />
+        <activity android:name=".UI.DashBoard.SyncAllDataActivity" />
 
     </application>
 

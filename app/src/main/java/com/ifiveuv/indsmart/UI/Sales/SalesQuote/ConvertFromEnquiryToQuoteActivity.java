@@ -34,6 +34,7 @@ import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.EnquiryToQuoteLineAdapter;
@@ -88,6 +89,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     int nextId, cus_id = 0, tax_id;
     QuoteItemList salesItemLists;
     RealmResults<EnquiryItemModel> enquiryItemModels;
+    RealmResults<OnlineEnquiryItemModel> onlineEnquiryItemModels;
     private Menu menu;
     AlertDialog.Builder chartDialog;
     AlertDialog chartAlertDialog;
@@ -166,6 +168,9 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
 
 
     private void loadData() {
+        onlineEnquiryItemModels = realm.where (OnlineEnquiryItemModel.class)
+                .equalTo ("salesEnquiryNo", hdrid)
+                .findAll ();
         enquiryItemModels = realm.where (EnquiryItemModel.class)
                 .equalTo ("enquiryId", hdrid)
                 .findAll ();

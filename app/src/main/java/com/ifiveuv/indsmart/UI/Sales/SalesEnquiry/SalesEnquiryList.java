@@ -52,10 +52,11 @@ public class SalesEnquiryList extends BaseActivity {
     private List<EnquiryItemModel> enquiryItemModels;
     EnquiryItemModel enquiryItemModel;
     RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
-    int typeid,status;
+    int typeid, status;
     EnquiryResponse enquiryResponse;
     private Menu menu;
     int enq_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
@@ -111,19 +112,21 @@ public class SalesEnquiryList extends BaseActivity {
     }
 
     public void onlineSyncMethodAll(final Integer enquiryId) {
+
         Toast.makeText (SalesEnquiryList.this, "calling method", Toast.LENGTH_SHORT).show ();
-        Log.d("onlineSyncMethodSingle", String.valueOf (enquiryId));
+        Log.d ("onlineSyncMethodSingle", String.valueOf (enquiryId));
         enquiryItemModels = new ArrayList<> ();
-        enquiryItemModels.addAll(realm.copyFromRealm(realm.where(EnquiryItemModel.class).equalTo ("enquiryId",enquiryId)
-                .findAll()));
-        if(enquiryItemModels.get (0).getEnquiryStatus ().equals ("Submitted")){
-            status=2;
-        } if(enquiryItemModels.get (0).getEnquiryType ().equals ("standard")){
-            typeid=1;
-        } else {
-            typeid=2;
+        enquiryItemModels.addAll (realm.copyFromRealm (realm.where (EnquiryItemModel.class).equalTo ("enquiryId", enquiryId)
+                .findAll ()));
+        if (enquiryItemModels.get (0).getEnquiryStatus ().equals ("Submitted")) {
+            status = 2;
         }
-        enquiryItemModel=new EnquiryItemModel ();
+        if (enquiryItemModels.get (0).getEnquiryType ().equals ("standard")) {
+            typeid = 1;
+        } else {
+            typeid = 2;
+        }
+        enquiryItemModel = new EnquiryItemModel ();
         enquiryItemModel.setEnquiryCustomerId (enquiryItemModels.get (0).getEnquiryCustomerId ());
         enquiryItemModel.setEnquiryStatus (String.valueOf (status));
         enquiryItemModel.setEnquiryType (String.valueOf (typeid));
@@ -142,23 +145,24 @@ public class SalesEnquiryList extends BaseActivity {
                 @Override
                 public void onResponse(Call<EnquiryResponse> call, Response<EnquiryResponse> response) {
 
-                    enquiryResponse=new EnquiryResponse ();
-                    enquiryResponse=response.body ();
+                    enquiryResponse = new EnquiryResponse ();
+                    enquiryResponse = response.body ();
 
                     realm.executeTransaction (new Realm.Transaction () {
                         @Override
                         public void execute(Realm realm) {
 
-                            Log.d("onlineSyncMethodinside", String.valueOf (enquiryId));
-                            EnquiryItemModel enquiryItemModel= realm.where (EnquiryItemModel.class).equalTo ("enquiryId", enquiryId).findFirst ();
+                            Log.d ("onlineSyncMethodinside", String.valueOf (enquiryId));
+                            EnquiryItemModel enquiryItemModel = realm.where (EnquiryItemModel.class).equalTo ("enquiryId", enquiryId).findFirst ();
                             enquiryItemModel.setStautsOnline ("1");
                             enquiryItemModel.setEnqOnlineId (enquiryResponse.getEnquiryId ());
                             Toast.makeText (SalesEnquiryList.this, enquiryResponse.getMessage (), Toast.LENGTH_SHORT).show ();
-                            sendAllData();
+                            sendAllData ();
+
                         }
                     });
-                    enquiryResponse.getEnquiryId ();
 
+                    enquiryResponse.getEnquiryId ();
 
 
                     if ((progressDialog != null) && progressDialog.isShowing ())
@@ -177,20 +181,23 @@ public class SalesEnquiryList extends BaseActivity {
         }
 
     }
+
     public void onlineSyncMethodSingle(final Integer enquiryId) {
+
         Toast.makeText (SalesEnquiryList.this, "calling method", Toast.LENGTH_SHORT).show ();
-        Log.d("onlineSyncMethodSingle", String.valueOf (enquiryId));
+        Log.d ("onlineSyncMethodSingle", String.valueOf (enquiryId));
         enquiryItemModels = new ArrayList<> ();
-        enquiryItemModels.addAll(realm.copyFromRealm(realm.where(EnquiryItemModel.class).equalTo ("enquiryId",enquiryId)
-                .findAll()));
-        if(enquiryItemModels.get (0).getEnquiryStatus ().equals ("Submitted")){
-            status=2;
-        } if(enquiryItemModels.get (0).getEnquiryType ().equals ("standard")){
-            typeid=1;
-        } else {
-            typeid=2;
+        enquiryItemModels.addAll (realm.copyFromRealm (realm.where (EnquiryItemModel.class).equalTo ("enquiryId", enquiryId)
+                .findAll ()));
+        if (enquiryItemModels.get (0).getEnquiryStatus ().equals ("Submitted")) {
+            status = 2;
         }
-        enquiryItemModel=new EnquiryItemModel ();
+        if (enquiryItemModels.get (0).getEnquiryType ().equals ("standard")) {
+            typeid = 1;
+        } else {
+            typeid = 2;
+        }
+        enquiryItemModel = new EnquiryItemModel ();
         enquiryItemModel.setEnquiryCustomerId (enquiryItemModels.get (0).getEnquiryCustomerId ());
         enquiryItemModel.setEnquiryStatus (String.valueOf (status));
         enquiryItemModel.setEnquiryType (String.valueOf (typeid));
@@ -209,25 +216,27 @@ public class SalesEnquiryList extends BaseActivity {
                 @Override
                 public void onResponse(Call<EnquiryResponse> call, Response<EnquiryResponse> response) {
 
-                    enquiryResponse=new EnquiryResponse ();
-                    enquiryResponse=response.body ();
+                    enquiryResponse = new EnquiryResponse ();
+                    enquiryResponse = response.body ();
 
                     realm.executeTransaction (new Realm.Transaction () {
                         @Override
                         public void execute(Realm realm) {
 
-                            Log.d("onlineSyncMethodinside", String.valueOf (enquiryId));
-                            EnquiryItemModel enquiryItemModel= realm.where (EnquiryItemModel.class).equalTo ("enquiryId", enquiryId).findFirst ();
+                            Log.d ("onlineSyncMethodinside", String.valueOf (enquiryId));
+                            EnquiryItemModel enquiryItemModel = realm.where (EnquiryItemModel.class).equalTo ("enquiryId", enquiryId).findFirst ();
                             enquiryItemModel.setStautsOnline ("1");
                             enquiryItemModel.setEnqOnlineId (enquiryResponse.getEnquiryId ());
                             Toast.makeText (SalesEnquiryList.this, enquiryResponse.getMessage (), Toast.LENGTH_SHORT).show ();
                             //sendAllData();
-                            Intent intent=new Intent (SalesEnquiryList.this, SalesEnquiryList.class);
-                            startActivity (intent);
+
+
                         }
                     });
-                    enquiryResponse.getEnquiryId ();
 
+                    enquiryResponse.getEnquiryId ();
+                    Intent intent = new Intent (SalesEnquiryList.this, SalesEnquiryList.class);
+                    startActivity (intent);
 
 
                     if ((progressDialog != null) && progressDialog.isShowing ())
@@ -258,10 +267,10 @@ public class SalesEnquiryList extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId ();
-        Log.d("LAALALAL", String.valueOf (id));
-        Log.d("LAALALAL123", String.valueOf (R.id.sync_item_black));
+        Log.d ("LAALALAL", String.valueOf (id));
+        Log.d ("LAALALAL123", String.valueOf (R.id.sync_item_black));
         if (id == R.id.sync_item_black) {
-            sendAllData();
+            sendAllData ();
         }
         return super.onOptionsItemSelected (item);
     }
@@ -269,41 +278,43 @@ public class SalesEnquiryList extends BaseActivity {
     private void sendAllData() {
         RealmResults<EnquiryItemModel> results;
         results = realm.where (EnquiryItemModel.class)
-                .notEqualTo ("stautsOnline","1")
+                .notEqualTo ("stautsOnline", "1")
                 .and ()
-                .equalTo ("enquiryStatus","Submitted")
+                .equalTo ("enquiryStatus", "Submitted")
                 .findAll ();
-        checkData(results);
+        checkData (results);
 
 
-
-        }
+    }
 
     private void checkData(RealmResults<EnquiryItemModel> results) {
 
-            int count=results.size ();
-            if(results.size ()!=0){
-                for(int i=0;i<results.size ();i++){
-                    count--;
-                }
-                onlineSyncMethodAll(results.get (count).getEnquiryId ());
+        int count = results.size ();
+        if (results.size () != 0) {
+            for (int i = 0; i < results.size (); i++) {
+                count--;
+            }
+            onlineSyncMethodAll (results.get (count).getEnquiryId ());
 
-            } else{
-                Intent intent=new Intent (SalesEnquiryList.this, SalesEnquiryList.class);
-                startActivity (intent);
-                Toast.makeText (this, "No data to Sync", Toast.LENGTH_SHORT).show ();
+        } else {
+            Intent intent = new Intent (SalesEnquiryList.this, SalesEnquiryList.class);
+            startActivity (intent);
+            Toast.makeText (this, "No data to Sync", Toast.LENGTH_SHORT).show ();
 
 
         }
 
 
     }
+
+
+
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(SalesEnquiryList.this, Dashboard.class);
-        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(it);
-        finish();
+        Intent it = new Intent (SalesEnquiryList.this, Dashboard.class);
+        it.addFlags (Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity (it);
+        finish ();
     }
 
 }

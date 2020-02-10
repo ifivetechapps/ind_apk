@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.R;
+import com.ifiveuv.indsmart.UI.DashBoard.SyncAllDataActivity;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryList;
 import com.ifiveuv.indsmart.UI.login.LoginActivity;
 
@@ -92,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
 
     private void getMenuItems() {
         menuItemsList = new ArrayList<> ();
-        menuItemsList.add (setMenuItem (SalesEnquiryList.class, "Create Sales Order",
+        menuItemsList.add (setMenuItem (SyncAllDataActivity.class, "Sync Data",
                 R.drawable.purchase, null, true));
 
         setMenuRecycler ();

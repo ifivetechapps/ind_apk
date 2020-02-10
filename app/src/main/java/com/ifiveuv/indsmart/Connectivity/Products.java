@@ -8,7 +8,6 @@ import io.realm.annotations.PrimaryKey;
 
 public class Products extends RealmObject {
 
-    @PrimaryKey
     @SerializedName("product_id")
     @Expose
     private Integer pro_id;

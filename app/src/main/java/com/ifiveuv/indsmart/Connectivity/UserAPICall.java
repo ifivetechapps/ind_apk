@@ -7,8 +7,11 @@ import com.ifiveuv.indsmart.UI.Masters.UomSave;
 
 import com.ifiveuv.indsmart.UI.PurchaseEnquiry.Model.PurchaseEnquiryData;
 import com.ifiveuv.indsmart.UI.PurchaseRequisition.Model.RequisitionHeader;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SalesOrderAll;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SalesQuoteOrderAll;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SalesEnquiryOrderAll;
 import com.ifiveuv.indsmart.UI.Sales.SalesInvoice.Model.InvoiceItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 import com.ifiveuv.indsmart.UI.SalesApprove.ApproveRequest;
@@ -91,5 +94,11 @@ public interface UserAPICall {
     @POST("public/api-save-po-enq")
     Call<EnquiryResponse> sendPurachseEnquirySingleData(@Header("token") String token, @Body PurchaseEnquiryData saleItemList);
 
+    @POST("public/api-so-enquiry-details")
+    Call<SalesEnquiryOrderAll> allenquiry(@Header("token") String token);
+    @POST("public/api-so-quote-details")
+    Call<SalesQuoteOrderAll> allquote(@Header("token") String token);
+    @POST("public/api-so-order-details")
+    Call<SalesOrderAll> allsales(@Header("token") String token);
 
 }
