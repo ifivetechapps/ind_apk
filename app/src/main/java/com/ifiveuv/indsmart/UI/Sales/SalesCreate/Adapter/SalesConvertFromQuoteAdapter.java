@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.R;
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SoHeaderquoteDetail;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.ConvertFromQuoteToSalesActivity;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.SalesConvertFromQuote;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
@@ -22,10 +24,10 @@ import io.realm.RealmResults;
 public class SalesConvertFromQuoteAdapter extends RecyclerView.Adapter<SalesConvertFromQuoteAdapter.MyViewHolder> {
     Realm realm;
     private Context context;
-    private RealmResults<QuoteItemList> cartList;
+    private RealmResults<SoHeaderquoteDetail> cartList;
 
 
-    public SalesConvertFromQuoteAdapter(RealmResults<QuoteItemList> cartList, SalesConvertFromQuote context) {
+    public SalesConvertFromQuoteAdapter(RealmResults<SoHeaderquoteDetail> cartList, SalesConvertFromQuote context) {
         this.context = context;
         this.cartList = cartList;
         realm = Realm.getDefaultInstance();
@@ -42,18 +44,24 @@ public class SalesConvertFromQuoteAdapter extends RecyclerView.Adapter<SalesConv
 
     @Override
     public void onBindViewHolder(SalesConvertFromQuoteAdapter.MyViewHolder holder, final int position) {
-        final QuoteItemList item = cartList.get(position);
+        final SoHeaderquoteDetail item = cartList.get(position);
 
-        holder.so_num.setText(item.getOnlineId ());
-        holder.so_date.setText(item.getQodate ());
-        holder.cus_name.setText(item.getQcus_name ());
-        holder.enq_type.setText(item.getQuoteType ());
-        holder.status.setText(item.getQstatus ());
+        holder.so_num.setText(item.getSalesQuoteNo ());
+        holder.so_date.setText(item.getDeliveryDate ());
+        CustomerList customer=realm.where (CustomerList.class).equalTo ("cusNo",item.getCustomerId ()).findFirst ();
+        holder.cus_name.setText(customer.getCusName ());
+
+        if(item.getTypeId ()==1){
+            holder.enq_type.setText ("Standard");
+        }else{
+            holder.enq_type.setText ("Labour");
+        }
+        holder.status.setText(item.getApproveStatus ());
         holder.viewForeground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ConvertFromQuoteToSalesActivity.class);
-                intent.putExtra("hdrid", String.valueOf(item.getQuoteItemlist ()));
+                intent.putExtra("hdrid", String.valueOf(item.getSalesQuoteId ()));
                 context.startActivity(intent);
             }
         });

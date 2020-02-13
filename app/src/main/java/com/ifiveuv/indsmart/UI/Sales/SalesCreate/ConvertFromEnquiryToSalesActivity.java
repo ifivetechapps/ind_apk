@@ -34,6 +34,9 @@ import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryItemModel;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Adapter.EnquiryToSalesLineAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SalesItemLineList;
@@ -83,7 +86,7 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     RecyclerView.LayoutManager mLayoutManager;
     String onlineSE;
     ActionBar actionBar;
-    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
+    RealmList<OnlineEnquiryLineList> enquiryLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
     int nextId, cus_id = 0;
@@ -91,9 +94,9 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     RealmResults<EnquiryItemModel> enquiryItemModels;
     private Menu menu;
     AlertDialog.Builder chartDialog;
-
+    String enq_online_id;
     AlertDialog chartAlertDialog;
-
+    RealmResults<OnlineEnquiryItemModel> onlineEnquiryItemModels;
     ProgressDialog pDialog;
     List<AllDataList> allDataLists = new ArrayList<AllDataList> ();
     SessionManager sessionManager;
@@ -166,19 +169,25 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     }
 
     private void loadData() {
-        enquiryItemModels = realm.where (EnquiryItemModel.class)
-                .equalTo ("enquiryId", hdrid)
+        onlineEnquiryItemModels = realm.where (OnlineEnquiryItemModel.class)
+                .equalTo ("salesEnquiryHdrId", hdrid)
                 .findAll ();
-        delivery_date.setText (enquiryItemModels.get (0).getDeliveryDate ());
-        so_date.setText (enquiryItemModels.get (0).getEnquiryDate ());
-        so_status.setText (enquiryItemModels.get (0).getEnquiryStatus ());
 
-        customer_Name.setText (enquiryItemModels.get (0).getEnquiryCustomerName ());
-        typeOfOrder.setText (enquiryItemModels.get (0).getEnquiryType ());
-        cus_id = enquiryItemModels.get (0).getEnquiryCustomerId ();
-        onlineSE = enquiryItemModels.get (0).getEnqOnlineId ();
-        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
-                .equalTo ("enquiryHdrId", hdrid)
+        delivery_date.setText (onlineEnquiryItemModels.get (0).getDeliveryDate ());
+        so_date.setText (onlineEnquiryItemModels.get (0).getSalesEnquiryDate ());
+        so_status.setText ("Opened");
+        int cus_id=onlineEnquiryItemModels.get (0).getCustomerId ();
+        CustomerList cusotmer_names=realm.where (CustomerList.class).equalTo ("cusNo",cus_id).findFirst ();
+        customer_Name.setText (cusotmer_names.getCusName ());
+        int type_id=onlineEnquiryItemModels.get (0).getTypeId ();
+        if(type_id==1){
+            typeOfOrder.setText ("Standard");
+        }else{
+            typeOfOrder.setText ("Labour");
+        }
+        enq_online_id = onlineEnquiryItemModels.get (0).getSalesEnquiryNo ();
+        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (OnlineEnquiryLineList.class)
+                .equalTo ("salesEnquiryHdrId", hdrid)
                 .findAll ()));
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
@@ -296,25 +305,23 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     }
 
     private void insertItem(int position) {
-        enquiryLineLists.add (new EnquiryLineList ());
+        enquiryLineLists.add (new OnlineEnquiryLineList ());
         salesAdapter.notifyItemInserted (position);
     }
 
 
     public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
-        realm.beginTransaction ();
-        enquiryLineLists.get (pos).setEnquiryProduct (name);
-        enquiryLineLists.get (pos).setEnquiryProductId (String.valueOf (pro_id));
-        enquiryLineLists.get (pos).setEnquiryUomId (uomId);
-        enquiryLineLists.get (pos).setEnquiryUom (uomName);
-        realm.commitTransaction ();
+
+        enquiryLineLists.get (pos).setProductName  (pro_id);
+        enquiryLineLists.get (pos).setUomId (uomId);
+
     }
 
     public void setQuantity(int position, int quant) {
-        enquiryLineLists.get (position).setEnquiryRequiredQuantity (String.valueOf (quant));
+        enquiryLineLists.get (position).setOrderQty (quant);
     }
 
-    public void grandTotal(List<EnquiryLineList> items) {
+    public void grandTotal(List<OnlineEnquiryLineList> items) {
         double grosspay = 0.0;
 
         for (int i = 0; i < items.size (); i++) {
@@ -333,11 +340,10 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
         realm.executeTransaction (new Realm.Transaction () {
             @Override
             public void execute(Realm realm) {
-                EnquiryItemModel enquiryItemModel = realm.where (EnquiryItemModel.class).equalTo ("enquiryId", hdrid).findFirst ();
-                enquiryItemModel.setEnquiryStatus ("converted");
+                OnlineEnquiryItemModel enquiryItemModel = realm.where (OnlineEnquiryItemModel.class).equalTo ("salesEnquiryHdrId", hdrid).findFirst ();
+                enquiryItemModel.setApproveStatus ("converted");
             }
         });
-
         Number currentIdNum = realm.where (SaleItemList.class).max ("SalesOrderid");
         if (currentIdNum == null) {
             nextId = 1;
@@ -408,16 +414,14 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
                     SalesItemLineList salesItemLineList=new SalesItemLineList ();
                     salesItemLineList.setSaleId (nextId_line);
                     salesItemLineList.setSalesHdrid (nextid);
-                    salesItemLineList.setProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
-                    salesItemLineList.setProduct (enquiryLineLists.get (j).getEnquiryProduct ());
-                    salesItemLineList.setProductId (enquiryLineLists.get (j).getEnquiryProductId ());
-                    salesItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
-                    salesItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
+                    salesItemLineList.setProductId (String.valueOf (enquiryLineLists.get (j).getProductName ()));
+                    salesItemLineList.setUomId (enquiryLineLists.get (j).getUomId ());
+
                     salesItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
-                    salesItemLineList.setQuantity (Integer.valueOf (enquiryLineLists.get (j).getEnquiryRequiredQuantity ()));
+                    salesItemLineList.setQuantity (Integer.valueOf (enquiryLineLists.get (j).getOrderQty ()));
                     salesItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
                     salesItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());
-                    salesItemLineList.setTaxId (enquiryLineLists.get (j).getTaxId ());
+                    salesItemLineList.setTaxId (enquiryLineLists.get (j).getTax ());
                     salesItemLineList.setTaxAmt (enquiryLineLists.get (j).getTaxAmt ());
                     salesItemLineList.setOrgCost (enquiryLineLists.get (j).getOriginalCost ());
                     salesItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
@@ -436,9 +440,11 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof EnquiryToQuoteLineAdapter.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = enquiryLineLists.get (viewHolder.getAdapterPosition ()).getEnquiryProduct ();
+            Products products=realm.where (Products.class).equalTo ("pro_id", enquiryLineLists.get (viewHolder.getAdapterPosition ()).getProductName ()).findFirst ();
+
+            String name =products.getProduct_name ();
             // backup of removed item for undo purpose
-            final EnquiryLineList deletedItem = enquiryLineLists.get (viewHolder.getAdapterPosition ());
+            final OnlineEnquiryLineList deletedItem = enquiryLineLists.get (viewHolder.getAdapterPosition ());
             final int deletedIndex = viewHolder.getAdapterPosition ();
             // remove the item from recycler view
             salesAdapter.removeItem (viewHolder.getAdapterPosition ());
@@ -477,15 +483,16 @@ public class ConvertFromEnquiryToSalesActivity extends BaseActivity implements R
         finish ();
     }
 
-    public void setUnitPrice(int mPosition, int uni) {
+    public void setUnitPrice(int mPosition, double uni) {
         enquiryLineLists.get (mPosition).setUnitPrice (String.valueOf (uni));
 
     }
 
-    public void setLineTotal(int mPosition, double disper, double unit_quan, double disamt, double amount) {
+    public void setLineTotal(int mPosition, double disper, double unit_quan, double disamt, double amount,int tax_id) {
         enquiryLineLists.get (mPosition).setDiscountPercent (String.valueOf (disper));
         enquiryLineLists.get (mPosition).setOriginalCost (String.valueOf (unit_quan));
         enquiryLineLists.get (mPosition).setDiscountAmount (String.valueOf (disamt));
+        enquiryLineLists.get (mPosition).setTax (tax_id);
         enquiryLineLists.get (mPosition).setLineTotal (String.valueOf (amount));
         grandTotal (enquiryLineLists);
 

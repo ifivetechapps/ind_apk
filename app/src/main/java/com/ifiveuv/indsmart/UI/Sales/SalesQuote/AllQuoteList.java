@@ -195,8 +195,7 @@ public class AllQuoteList extends BaseActivity {
         quoteItemList.setQuoteItemlist (quoteItemModels.get (0).getQuoteItemlist ());
         quoteItemList.setQstatus (String.valueOf (status));
         quoteItemList.setQuoteType (String.valueOf (typeid));
-        quoteItemList.setTax_value (quoteItemModels.get (0).getTax_value ());
-        quoteItemList.setTaxTypeid (quoteItemModels.get (0).getTaxTypeid ());
+
         quoteItemList.setQcus_id (quoteItemModels.get (0).getQcus_id ());
         quoteItemList.setQodate (IFiveEngine.myInstance.formatDate (quoteItemModels.get (0).getQodate ()));
         quoteItemList.setQdel_date (IFiveEngine.myInstance.formatDate (quoteItemModels.get (0).getQdel_date ()));
@@ -272,8 +271,7 @@ public class AllQuoteList extends BaseActivity {
         quoteItemList.setQstatus (String.valueOf (status));
         quoteItemList.setQuoteType (String.valueOf (typeid));
         quoteItemList.setNetrice (quoteItemModels.get (0).getNetrice ());
-        quoteItemList.setTaxTypeid (quoteItemModels.get (0).getTaxTypeid ());
-        quoteItemList.setTax_value (quoteItemModels.get (0).getTax_value ());
+
         quoteItemList.setTaxTotal (quoteItemModels.get (0).getTaxTotal ());
         quoteItemList.setQcus_id (quoteItemModels.get (0).getQcus_id ());
         quoteItemList.setQodate (IFiveEngine.myInstance.formatDate (quoteItemModels.get (0).getQodate ()));

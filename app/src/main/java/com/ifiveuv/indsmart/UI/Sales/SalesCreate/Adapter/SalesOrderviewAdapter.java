@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.R;
+import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SalesItemLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.SalesOrderViewActivity;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public class SalesOrderviewAdapter extends RecyclerView.Adapter<SalesOrderviewAdapter.MyViewHolder> {
     SalesOrderViewActivity salesOrderEditActivity;
@@ -40,12 +43,16 @@ public class SalesOrderviewAdapter extends RecyclerView.Adapter<SalesOrderviewAd
     public void onBindViewHolder(final SalesOrderviewAdapter.MyViewHolder holder, final int mPosition) {
         final SalesItemLineList itemList = itemLists.get(mPosition);
         Log.d("position", String.valueOf(mPosition));
-       holder.product.setText (itemList.getProduct ());
-       holder.quantity.setText (itemList.getQuantity ()+"");
+        Products products=realm.where (Products.class).equalTo ("pro_id", Integer.parseInt (itemList.getProductId ())).findFirst ();
+
+        String name =products.getProduct_name ();
+        holder.product.setText(name);
+        holder.quantity.setText (itemList.getQuantity ()+"");
        holder.unit_price.setText (itemList.getUnitPrice ());
        holder.discount.setText (itemList.getDisAmt ());
        holder.amount.setText (itemList.getLineTotal ());
-       holder.uom.setText (itemList.getUom ());
+        RealmResults<UomModel> uomModels = realm.where(UomModel.class).equalTo("uom_id", Integer.valueOf(itemList.getUomId())).findAll();
+        holder.uom.setText(uomModels.get(0).getUom_name());
     }
 
     @Override

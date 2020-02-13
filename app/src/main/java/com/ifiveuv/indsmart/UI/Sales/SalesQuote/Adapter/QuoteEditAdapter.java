@@ -64,7 +64,7 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
         holder.product.setAdapter(holder.productAdapter);
 
         if(itemList.getProductId ()!=null){
-            Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getProductId ())).findFirst ();
+            Products products=realm.where (Products.class).equalTo ("pro_id",itemList.getProductId ()).findFirst ();
             int spinnerPosition = holder.productAdapter.getPosition(products);
             holder.product.setSelection(spinnerPosition);
 
@@ -75,10 +75,7 @@ public class QuoteEditAdapter extends RecyclerView.Adapter<QuoteEditAdapter.MyVi
             public void onItemSelected(AdapterView<?> adapterView, View view, int gPosition, long l) {
 
                 holder.productAdapter.setPosition(gPosition);
-                realm.beginTransaction();
-                itemList.setProductPosition (gPosition);
-                itemList.setProduct (holder.productAdapter.getItem(gPosition).getProduct_name());
-                realm.commitTransaction();
+
                 RealmResults<Tax_type> taxModels = realm.where (Tax_type.class).equalTo ("taxGroupId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_group_id ())).findAll ();
                 tax_value= Integer.parseInt (taxModels.get (0).getDisplayName ());
                 tax_id= Integer.parseInt (String.valueOf (taxModels.get (0).getTaxGroupId ()));

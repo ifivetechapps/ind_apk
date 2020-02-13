@@ -47,6 +47,76 @@ public class OnlineEnquiryLineList extends RealmObject {
     @Expose
     private Integer cmpyId;
 
+    public String getTaxAmt() {
+        return taxAmt;
+    }
+
+    public void setTaxAmt(String taxAmt) {
+        this.taxAmt = taxAmt;
+    }
+
+    public String getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(String unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(String discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public String getLineTotal() {
+        return lineTotal;
+    }
+
+    public void setLineTotal(String lineTotal) {
+        this.lineTotal = lineTotal;
+    }
+
+    @SerializedName("tax_amt")
+    @Expose
+    private String taxAmt;
+    @SerializedName("unit_price_quote")
+    @Expose
+    private String unitPrice;
+    @SerializedName("discount_amount")
+    @Expose
+    private String discountAmount;
+    @SerializedName("line_total")
+    @Expose
+    private String lineTotal;
+
+    public String getOriginalCost() {
+        return originalCost;
+    }
+
+    public void setOriginalCost(String originalCost) {
+        this.originalCost = originalCost;
+    }
+
+    @SerializedName("cost")
+    @Expose
+    private String originalCost;
+
+
+    public String getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public void setDiscountPercent(String discountPercent) {
+        this.discountPercent = discountPercent;
+    }
+
+    @SerializedName("discount_percent")
+    @Expose
+    private String discountPercent;
+
     public Integer getSalesEnquiryDetailsId() {
         return salesEnquiryDetailsId;
     }

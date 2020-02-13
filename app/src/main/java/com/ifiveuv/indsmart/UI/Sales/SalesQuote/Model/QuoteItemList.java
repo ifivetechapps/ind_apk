@@ -52,11 +52,11 @@ public class QuoteItemList extends RealmObject {
     private String totalPrice;
 
     public String getNetrice() {
-        return netrice;
+        return netprice;
     }
 
     public void setNetrice(String netrice) {
-        this.netrice = netrice;
+        this.netprice = netrice;
     }
 
     public String getTaxTotal() {
@@ -69,44 +69,12 @@ public class QuoteItemList extends RealmObject {
 
     @SerializedName("net_price")
     @Expose
-    private String netrice;
+    private String netprice;
     @SerializedName("tax_total")
     @Expose
     private String taxTotal;
 
-    public String getTaxTypeid() {
-        return taxTypeid;
-    }
 
-    public void setTaxTypeid(String taxTypeid) {
-        this.taxTypeid = taxTypeid;
-    }
-
-    @SerializedName("tax_type")
-    @Expose
-    private String taxTypeid;
-    @SerializedName("taxType")
-    @Expose
-    private String taxType;
-    @SerializedName("tax_value")
-    @Expose
-    private String tax_value;
-
-    public String getTaxType() {
-        return taxType;
-    }
-
-    public void setTaxType(String taxType) {
-        this.taxType = taxType;
-    }
-
-    public String getTax_value() {
-        return tax_value;
-    }
-
-    public void setTax_value(String tax_value) {
-        this.tax_value = tax_value;
-    }
 
     @SerializedName("sales_convertstatus")
     @Expose

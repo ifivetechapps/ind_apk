@@ -35,6 +35,10 @@ import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifiveuv.indsmart.UI.DashBoard.Dashboard;
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryLineList;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SoHeaderquoteDetail;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SoQuoteDetail;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Adapter.QuoteToSalesLineAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SaleItemList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Model.SalesItemLineList;
@@ -84,14 +88,14 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     RecyclerView.LayoutManager mLayoutManager;
     String onlineSQ;
     ActionBar actionBar;
-    RealmList<QuoteItemLineList> quoteItemLineLists = new RealmList<> ();
+    RealmList<SoQuoteDetail> quoteItemLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
 
 
     int nextId, cus_id = 0, tax_id;
     SaleItemList saleItemList;
-    RealmResults<QuoteItemList> quoteItemLists;
+    RealmResults<SoHeaderquoteDetail> quoteItemLists;
     private Menu menu;
     AlertDialog.Builder chartDialog;
     AlertDialog chartAlertDialog;
@@ -170,22 +174,28 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
 
 
     private void loadData() {
-        quoteItemLists = realm.where (QuoteItemList.class)
-                .equalTo ("id", hdrid)
+        quoteItemLists = realm.where (SoHeaderquoteDetail.class)
+                .equalTo ("salesQuoteId", hdrid)
                 .findAll ();
-        delivery_date.setText (quoteItemLists.get (0).getQdel_date ());
-        so_date.setText (quoteItemLists.get (0).getQodate ());
-        so_status.setText (quoteItemLists.get (0).getQstatus ());
+        delivery_date.setText (quoteItemLists.get (0).getDeliveryDate ());
+        so_date.setText (quoteItemLists.get (0).getSalesQuoteDate ());
+        so_status.setText (quoteItemLists.get (0).getApproveStatus ());
 
+        CustomerList customer=realm.where (CustomerList.class).equalTo ("cusNo",quoteItemLists.get (0).getCustomerId ()).findFirst ();
 
-        customer_Name.setText (quoteItemLists.get (0).getQcus_name ());
+        customer_Name.setText (customer.getCusName ());
 
-        gross_amount.setText (quoteItemLists.get (0).getTotalPrice ());
-        typeOfOrder.setText (quoteItemLists.get (0).getQuoteType ());
-        cus_id = Integer.parseInt (quoteItemLists.get (0).getQcus_id ());
-        onlineSQ = quoteItemLists.get (0).getOnlineId ();
-        quoteItemLineLists.addAll (realm.copyFromRealm (realm.where (QuoteItemLineList.class)
-                .equalTo ("quoteHdrId", hdrid)
+        gross_amount.setText (quoteItemLists.get (0).getGrossAmount ()+"");
+        if(quoteItemLists.get (0).getTypeId ()==1){
+            typeOfOrder.setText ("Standard");
+        }else{
+            typeOfOrder.setText ("Labour");
+        }
+
+        cus_id =quoteItemLists.get (0).getCustomerId ();
+        onlineSQ = quoteItemLists.get (0).getSalesQuoteNo ();
+        quoteItemLineLists.addAll (realm.copyFromRealm (realm.where (SoQuoteDetail.class)
+                .equalTo ("salesQuoteId", hdrid)
                 .findAll ()));
 
         List<Products> products = new ArrayList<Products> ();
@@ -209,7 +219,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
             customer_Name.setError ("Required");
         } else if (delivery_date.getText ().toString ().equals ("")) {
             delivery_date.setError ("Required");
-        } else if (quoteItemLineLists.get (position - 1).getLineTotal ().equals ("")) {
+        } else if (quoteItemLineLists.get (position - 1).getTotalCost ().equals ("")) {
             Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
         } else {
             headerSave ();
@@ -226,7 +236,7 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
             customer_Name.setError ("Required");
         } else if (delivery_date.getText ().toString ().equals ("")) {
             delivery_date.setError ("Required");
-        } else if (quoteItemLineLists.get (position - 1).getLineTotal ().equals ("")) {
+        } else if (quoteItemLineLists.get (position - 1).getTotalCost ().equals ("")) {
             Toast.makeText (this, "Enter the above row", Toast.LENGTH_SHORT).show ();
         } else {
             headerdraftSave ();
@@ -239,8 +249,8 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         realm.executeTransaction (new Realm.Transaction () {
             @Override
             public void execute(Realm realm) {
-                QuoteItemList enquiryItemModel = realm.where (QuoteItemList.class).equalTo ("id", hdrid).findFirst ();
-                enquiryItemModel.setQstatus ("converted");
+                SoQuoteDetail enquiryItemModel = realm.where (SoQuoteDetail.class).equalTo ("salesQuoteId", hdrid).findFirst ();
+                enquiryItemModel.setStatus ("converted");
             }
         });
 
@@ -302,29 +312,29 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     }
 
     private void insertItem(int position) {
-        quoteItemLineLists.add (new QuoteItemLineList ());
+        quoteItemLineLists.add (new SoQuoteDetail ());
         salesAdapter.notifyItemInserted (position);
     }
 
 
     public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
         realm.beginTransaction ();
-        quoteItemLineLists.get (pos).setProduct (name);
-        quoteItemLineLists.get (pos).setProductId (String.valueOf (pro_id));
+
+        quoteItemLineLists.get (pos).setProductName (pro_id);
         quoteItemLineLists.get (pos).setUomId (uomId);
-        quoteItemLineLists.get (pos).setUom (uomName);
+
         realm.commitTransaction ();
     }
 
     public void setQuantity(int position, int quant) {
-        quoteItemLineLists.get (position).setQuantity (String.valueOf (quant));
+        quoteItemLineLists.get (position).setOrderQty (quant);
     }
 
-    public void grandTotal(List<QuoteItemLineList> items) {
+    public void grandTotal(List<SoQuoteDetail> items) {
   double grosspay=0.0;
         for (int i = 0; i < items.size(); i++) {
-            if(items.get(i).getLineTotal ()!=null){
-                grosspay += Double.parseDouble (items.get(i).getLineTotal ());
+            if(items.get(i).getTotalCost ()!=null){
+                grosspay += Double.parseDouble (String.valueOf (items.get(i).getTotalCost ()));
             }
         }
 
@@ -337,8 +347,8 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
         realm.executeTransaction (new Realm.Transaction () {
             @Override
             public void execute(Realm realm) {
-                QuoteItemList enquiryItemModel = realm.where (QuoteItemList.class).equalTo ("id", hdrid).findFirst ();
-                enquiryItemModel.setQstatus ("converted");
+                SoQuoteDetail enquiryItemModel = realm.where (SoQuoteDetail.class).equalTo ("salesQuoteId", hdrid).findFirst ();
+                enquiryItemModel.setStatus ("converted");
             }
         });
         Number currentIdNum = realm.where (SaleItemList.class).max ("SalesOrderid");
@@ -409,19 +419,17 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
                     SalesItemLineList salesItemLineList=new SalesItemLineList ();
                     salesItemLineList.setSaleId (nextId_line);
                     salesItemLineList.setSalesHdrid (nextid);
-                    salesItemLineList.setProductPosition (quoteItemLineLists.get (i).getProductPosition ());
-                    salesItemLineList.setProduct (quoteItemLineLists.get (i).getProduct ());
-                    salesItemLineList.setProductId (quoteItemLineLists.get (i).getProductId ());
-                    salesItemLineList.setTaxAmt (quoteItemLineLists.get (i).getQuote_taxAmt ());
+                    salesItemLineList.setProductId (String.valueOf (quoteItemLineLists.get (i).getProductName ()));
+                    salesItemLineList.setTaxAmt (quoteItemLineLists.get (i).getTaxAmt ());
                     salesItemLineList.setUomId (quoteItemLineLists.get (i).getUomId ());
-                    salesItemLineList.setUom (quoteItemLineLists.get (i).getUom ());
-                    salesItemLineList.setTaxId (quoteItemLineLists.get (i).getQuoteTaxId ());
-                    salesItemLineList.setUnitPrice (quoteItemLineLists.get (i).getUnitPrice ());
-                    salesItemLineList.setQuantity (Integer.valueOf (quoteItemLineLists.get (i).getQuantity ()));
-                    salesItemLineList.setDisPer (quoteItemLineLists.get (i).getDisPer ());
-                    salesItemLineList.setDisAmt (quoteItemLineLists.get (i).getDisAmt ());
-                    salesItemLineList.setOrgCost (quoteItemLineLists.get (i).getMrp ());
-                    salesItemLineList.setLineTotal (quoteItemLineLists.get (i).getLineTotal ());
+                    salesItemLineList.setTaxId (quoteItemLineLists.get (i).getTax ());
+                    salesItemLineList.setUnitPrice (String.valueOf (quoteItemLineLists.get (i).getUnitSellingPrice ()));
+                    salesItemLineList.setQuantity (Integer.valueOf (quoteItemLineLists.get (i).getOrderQty ()));
+                    salesItemLineList.setDisPer (String.valueOf (quoteItemLineLists.get (i).getDiscountPer ()));
+                    salesItemLineList.setDisAmt (String.valueOf (quoteItemLineLists.get (i).getDiscountAmount ()));
+                    salesItemLineList.setOrgCost (String.valueOf (quoteItemLineLists.get (i).getTotalCost ()));
+                    salesItemLineList.setLineTotal (String.valueOf (quoteItemLineLists.get (i).getTotalCost ()));
+
                     realm.insert (salesItemLineList);
 
                 }
@@ -436,25 +444,26 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof EnquiryToQuoteLineAdapter.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = quoteItemLineLists.get (viewHolder.getAdapterPosition ()).getProduct ();
+     //       String name = quoteItemLineLists.get (viewHolder.getAdapterPosition ()).getProduct ();
             // backup of removed item for undo purpose
-            final QuoteItemLineList deletedItem = quoteItemLineLists.get (viewHolder.getAdapterPosition ());
-            final int deletedIndex = viewHolder.getAdapterPosition ();
+            Products products=realm.where (Products.class).equalTo ("pro_id", quoteItemLineLists.get (viewHolder.getAdapterPosition ()).getProductName ()).findFirst ();
+
+            String name =products.getProduct_name ();            final int deletedIndex = viewHolder.getAdapterPosition ();
             // remove the item from recycler view
             salesAdapter.removeItem (viewHolder.getAdapterPosition ());
             // showing snack bar with Undo option
-            Snackbar snackbar = Snackbar
-                    .make (((Activity) this).findViewById (android.R.id.content),
-                            name + " removed from cart!", Snackbar.LENGTH_LONG);
-            snackbar.setAction ("UNDO", new View.OnClickListener () {
-                @Override
-                public void onClick(View view) {
-                    // undo is selected, restore the deleted item
-                    salesAdapter.restoreItem (deletedItem, deletedIndex);
-                }
-            });
-            snackbar.setActionTextColor (Color.YELLOW);
-            snackbar.show ();
+//            Snackbar snackbar = Snackbar
+//                    .make (((Activity) this).findViewById (android.R.id.content),
+//                            name + " removed from cart!", Snackbar.LENGTH_LONG);
+//            snackbar.setAction ("UNDO", new View.OnClickListener () {
+//                @Override
+//                public void onClick(View view) {
+//                    // undo is selected, restore the deleted item
+//                    salesAdapter.restoreItem (deletedItem, deletedIndex);
+//                }
+//            });
+//            snackbar.setActionTextColor (Color.YELLOW);
+//            snackbar.show ();
         }
     }
 
@@ -480,17 +489,18 @@ public class ConvertFromQuoteToSalesActivity extends BaseActivity implements Rec
     }
 
     public void setUnitPrice(int mPosition, int uni) {
-        quoteItemLineLists.get (mPosition).setUnitPrice (String.valueOf (uni));
+        quoteItemLineLists.get (mPosition).setUnitSellingPrice (uni);
 
     }
 
-    public void setLineTotal(int mPosition, double disper, double unit_quan, double disamt, double amount) {
-        quoteItemLineLists.get (mPosition).setDisPer (String.valueOf (disper));
-        quoteItemLineLists.get (mPosition).setMrp (String.valueOf (unit_quan));
-        quoteItemLineLists.get (mPosition).setDisAmt (String.valueOf (disamt));
-        quoteItemLineLists.get (mPosition).setLineTotal (String.valueOf (amount));
+    public void setLineTotal(int mPosition, double disper, double unit_quan, double disamt, double total_amount) {
+        quoteItemLineLists.get (mPosition).setDiscountPer ((int) disper);
+        //quoteItemLineLists.get (mPosition).setTotalCost (String.valueOf (unit_quan));
+        quoteItemLineLists.get (mPosition).setDiscountAmount ((float) disamt);
+        quoteItemLineLists.get (mPosition).setTotalCost ((int) total_amount);
         grandTotal (quoteItemLineLists);
 
     }
+
 }
 

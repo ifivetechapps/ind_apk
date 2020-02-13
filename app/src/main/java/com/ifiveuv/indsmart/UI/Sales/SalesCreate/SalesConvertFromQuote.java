@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SoHeaderquoteDetail;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.Adapter.SalesConvertFromQuoteAdapter;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemList;
 import com.ifiveuv.indsmart.UI.SubDashboard.SubDashboard;
@@ -47,10 +48,10 @@ public class SalesConvertFromQuote extends BaseActivity {
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
         realm = Realm.getDefaultInstance();
-        RealmResults<QuoteItemList> results;
-        results = realm.where(QuoteItemList.class).equalTo("onlineStatus", "1")
-                .and ()
-                .notEqualTo ("qstatus","converted")
+        RealmResults<SoHeaderquoteDetail> results;
+        results = realm.where(SoHeaderquoteDetail.class)
+                .equalTo ("approveStatus","APPROVED")
+
                 .findAll();
         if (results.size() != 0) {
             ll1.setVisibility(View.VISIBLE);
