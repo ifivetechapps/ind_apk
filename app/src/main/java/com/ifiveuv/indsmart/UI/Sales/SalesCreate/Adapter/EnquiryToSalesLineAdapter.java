@@ -20,8 +20,9 @@ import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.ConvertFromEnquiryToSalesActivity;
-import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
+
 
 import java.util.List;
 
@@ -32,13 +33,13 @@ import io.realm.RealmResults;
 
 public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSalesLineAdapter.MyViewHolder> {
     ConvertFromEnquiryToSalesActivity saleOrderActivity;
-    RealmList<EnquiryLineList> itemLists;
+    RealmList<OnlineEnquiryLineList> itemLists;
     List<Products> productsList;
     Realm realm;
     private Context context;
     int tax_id;
     double tax_value=0.0;
-    public EnquiryToSalesLineAdapter(Context context, RealmList<EnquiryLineList> cartList, List<Products> products, ConvertFromEnquiryToSalesActivity saleOrderActivity) {
+    public EnquiryToSalesLineAdapter(Context context, RealmList<OnlineEnquiryLineList> cartList, List<Products> products, ConvertFromEnquiryToSalesActivity saleOrderActivity) {
         this.context = context;
         this.saleOrderActivity = saleOrderActivity;
         this.itemLists = cartList;
@@ -55,13 +56,12 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
 
     @Override
     public void onBindViewHolder(final EnquiryToSalesLineAdapter.MyViewHolder holder, final int mPosition) {
-        final EnquiryLineList itemList = itemLists.get(mPosition);
+        final OnlineEnquiryLineList itemList = itemLists.get(mPosition);
         Log.d("position", String.valueOf(mPosition));
         holder.productAdapter = new ProductAdapter(context, android.R.layout.simple_spinner_item, productsList, holder.productId);
         holder.product.setAdapter(holder.productAdapter);
-
-        if(itemList.getEnquiryProductId ()!=null){
-            Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getEnquiryProductId ())).findFirst ();
+        if(itemList.getProductName ()!=null){
+            Products products=realm.where (Products.class).equalTo ("pro_id",itemList.getProductName ()).findFirst ();
             int spinnerPosition = holder.productAdapter.getPosition(products);
             holder.product.setSelection(spinnerPosition);
 
@@ -73,15 +73,14 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
 
                 holder.productAdapter.setPosition(gPosition);
                 realm.beginTransaction();
-                itemList.setEnquiryProductPosition (gPosition);
-                itemList.setEnquiryProduct (holder.productAdapter.getItem(gPosition).getProduct_name());
-                realm.commitTransaction();
+                itemList.setProductName (holder.productAdapter.getItem(gPosition).getPro_id ());
                 RealmResults<Tax_type> taxModels = realm.where (Tax_type.class).equalTo ("taxGroupId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_group_id ())).findAll ();
                 tax_value= Integer.parseInt (taxModels.get (0).getDisplayName ());
                 tax_id= Integer.parseInt (String.valueOf (taxModels.get (0).getTaxGroupId ()));
                 RealmResults<UomModel> uomModels = realm.where(UomModel.class).equalTo("uom_id", Integer.valueOf(holder.productAdapter.getItem(gPosition).getUom_id())).findAll();
                 holder.uom.setText(uomModels.get(0).getUom_name());
                 saleOrderActivity.setProductList(mPosition,  holder.productAdapter.getItem(gPosition).getPro_id (),holder.productAdapter.getItem(gPosition).getProduct_name(), holder.productAdapter.getItem(gPosition).getUom_id(), uomModels.get(0).getUom_name());
+                realm.commitTransaction();
             }
 
             @Override
@@ -90,7 +89,7 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
             }
 
         });
-        if (itemList.getEnquiryRequiredQuantity () == null) {
+        if (itemList.getOrderQty () == null) {
             holder.quantity.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,7 +118,7 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
                 }
             });
         } else {
-            holder.quantity.setText(String.valueOf(itemList.getEnquiryRequiredQuantity()));
+            holder.quantity.setText(String.valueOf(itemList.getOrderQty ()));
             holder.quantity.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -141,8 +140,6 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
                     Realm.setDefaultConfiguration(realmConfiguration);
                     realm = Realm.getDefaultInstance();
                     realm.beginTransaction();
-                    int quan = IFiveEngine.myInstance.convertStringToInt(s.toString());
-                    itemList.setEnquiryRequiredQuantity (String.valueOf(quan));
                     int quantity;
                     if (s.toString().equals(null) || s.toString().equals("")) {
                         quantity = 0;
@@ -169,13 +166,19 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    int up=0;
+                    double quantity,up  ;
+
 
                     realm.beginTransaction();
                     if (s.toString().equals(null) || s.toString().equals("")) {
-                        up=0;
+                        quantity = Double.parseDouble (holder.quantity.getText ().toString ());
+                        quantity = 0.0;
+
+                        up=0.0;
+
                     } else {
-                        up=Integer.parseInt (s.toString ());
+                        quantity = Double.parseDouble (holder.quantity.getText ().toString ());
+                        up = Double.parseDouble (s.toString ());
                         saleOrderActivity.setUnitPrice(mPosition, up);
                     }
                     realm.commitTransaction();
@@ -184,7 +187,6 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
             });
         } else {
             holder.unit_price.setText(String.valueOf(itemList.getUnitPrice ()));
-            holder.amount.setText(String.valueOf(itemList.getLineTotal ()));
             holder.unit_price.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -206,11 +208,16 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
                     Realm.setDefaultConfiguration(realmConfiguration);
                     realm = Realm.getDefaultInstance();
                     realm.beginTransaction();
-                    int up=0;
+                    double up;
+
+
                     if (s.toString().equals(null) || s.toString().equals("")) {
-                        up=0;
+
+                        up=0.0;
                     } else {
-                        up=Integer.parseInt (s.toString ());
+
+                        up = Double.parseDouble (s.toString ());
+
                         saleOrderActivity.setUnitPrice(mPosition, up);
                     }
                     realm.commitTransaction();
@@ -219,7 +226,6 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
             });
 
         }
-
         if (itemList.getDiscountPercent () == null) {
             holder.discount.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -233,32 +239,39 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    double quantity,up ,amount,disper,disamt,unit_quan,tax_cal,total_amount;
-                    quantity = Double.parseDouble (holder.quantity.getText ().toString ());
-                    up = Double.parseDouble (holder.unit_price.getText ().toString ());
+                    double discountper = 0;
+                    double disamt = 0;
+                    double quantity = 0;
+                    double total = 0;
+                    double total_amount=0.0;
+                    double tax_cal;
 
-                    realm.beginTransaction();
+
+                    double unit_price=0.0;
                     if (s.toString().equals(null) || s.toString().equals("")) {
-                        disper=0.0;
-                        unit_quan=0.0;
-                        disamt=0.0;
-                        tax_cal=0.0;
-                        total_amount=0.0;
-
+                        total = 0;
+                        discountper = 0;
+                        realm.beginTransaction ();
+                        saleOrderActivity.setLineTotal(mPosition, discountper,total,disamt,total_amount,tax_id );
+                        realm.commitTransaction ();
                     } else {
-                        disper = Double.parseDouble (s.toString ());
-                        unit_quan=up*quantity;
-                        disamt = ((disper / 100) * unit_quan);
-                        amount=unit_quan-disamt;
+                        discountper = Double.parseDouble(s.toString());
+                        quantity= Double.parseDouble (holder.quantity.getText ().toString ().trim ());
+                        unit_price= Double.parseDouble (holder.unit_price.getText().toString ().trim ());
 
+                        Log.e("454ff", String.valueOf(unit_price));
 
-                        tax_cal = ((tax_value / 100) * amount);
+                        total = quantity * unit_price;
+                        disamt = ((discountper / 100) * total);
+                        tax_cal = ((tax_value / 100) * disamt);
 
-                        total_amount = amount+tax_cal;
+                        total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
-                        saleOrderActivity.setLineTotal(mPosition,disper,unit_quan,disamt,total_amount);
+                        realm.beginTransaction ();
+                        itemList.setTaxAmt (String.valueOf (tax_cal));
+                        saleOrderActivity.setLineTotal(mPosition, discountper,total,disamt,total_amount,tax_id );
+                        realm.commitTransaction ();
                     }
-                    realm.commitTransaction();
 
                 }
             });
@@ -268,7 +281,6 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
             holder.discount.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                 }
 
                 @Override
@@ -278,32 +290,40 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    double quantity,up ,amount,disper,disamt,unit_quan,tax_cal,total_amount;
-                    quantity = Double.parseDouble (holder.quantity.getText ().toString ());
-                    up = Double.parseDouble (holder.unit_price.getText ().toString ());
+                    double discountper = 0;
+                    double disamt = 0;
+                    double quantity = 0;
+                    double total = 0;
+                    double total_amount=0.0;
+                    double tax_cal=0.0;
 
-                    realm.beginTransaction();
+
+                    double unit_price=0.0;
                     if (s.toString().equals(null) || s.toString().equals("")) {
-                        disper=0.0;
-                        unit_quan=0.0;
-                        disamt=0.0;
-                        tax_cal=0.0;
-                        total_amount=0.0;
-
+                        total = 0;
+                        discountper = 0;
+                        realm.beginTransaction ();
+                        saleOrderActivity.setLineTotal(mPosition, discountper,total,disamt,total_amount,tax_id );
+                        realm.commitTransaction ();
                     } else {
-                        disper = Double.parseDouble (s.toString ());
-                        unit_quan=up*quantity;
-                        disamt = ((disper / 100) * unit_quan);
-                        amount=unit_quan-disamt;
+                        discountper = Double.parseDouble(s.toString());
+                        quantity= Double.parseDouble (holder.quantity.getText ().toString ().trim ());
+                        unit_price= Double.parseDouble (holder.unit_price.getText().toString ().trim ());
 
+                        Log.e("454ff", String.valueOf(unit_price));
 
-                        tax_cal = ((tax_value / 100) * amount);
+                        total = quantity * unit_price;
+                        disamt = ((discountper / 100) * total);
+                        tax_cal = ((tax_value / 100) * disamt);
 
-                        total_amount = amount+tax_cal;
+                        total_amount = (total - disamt)+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
-                        saleOrderActivity.setLineTotal(mPosition,disper,unit_quan,disamt,total_amount);
+                        realm.beginTransaction ();
+                        itemList.setTaxAmt (String.valueOf (tax_cal));
+                        saleOrderActivity.setLineTotal(mPosition, discountper,total,disamt,total_amount,tax_id );
+                        realm.commitTransaction ();
                     }
-                    realm.commitTransaction();
+
                 }
             });
 
@@ -321,7 +341,7 @@ public class EnquiryToSalesLineAdapter extends RecyclerView.Adapter<EnquiryToSal
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(EnquiryLineList item, int position) {
+    public void restoreItem(OnlineEnquiryLineList item, int position) {
         itemLists.add(position, item);
         notifyItemInserted(position);
     }

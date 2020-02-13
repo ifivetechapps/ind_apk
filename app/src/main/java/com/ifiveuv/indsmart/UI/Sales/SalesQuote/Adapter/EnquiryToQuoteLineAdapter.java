@@ -19,6 +19,7 @@ import com.ifiveuv.indsmart.Connectivity.Tax_type;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.ConvertFromEnquiryToQuoteActivity;
 
@@ -31,13 +32,13 @@ import io.realm.RealmResults;
 
 public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuoteLineAdapter.MyViewHolder> {
     ConvertFromEnquiryToQuoteActivity saleOrderActivity;
-    RealmList<EnquiryLineList> itemLists;
+    RealmList<OnlineEnquiryLineList> itemLists;
     List<Products> productsList;
     int tax_id;
     Realm realm;
     private Context context;
     double tax_value=0.0;
-    public EnquiryToQuoteLineAdapter(Context context, RealmList<EnquiryLineList> cartList, List<Products> products, ConvertFromEnquiryToQuoteActivity saleOrderActivity) {
+    public EnquiryToQuoteLineAdapter(Context context, RealmList<OnlineEnquiryLineList> cartList, List<Products> products, ConvertFromEnquiryToQuoteActivity saleOrderActivity) {
         this.context = context;
         this.saleOrderActivity = saleOrderActivity;
         this.itemLists = cartList;
@@ -54,18 +55,16 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
 
     @Override
     public void onBindViewHolder(final EnquiryToQuoteLineAdapter.MyViewHolder holder, final int mPosition) {
-        final EnquiryLineList itemList = itemLists.get(mPosition);
+        final OnlineEnquiryLineList itemList = itemLists.get(mPosition);
         Log.d("position", String.valueOf(mPosition));
         holder.productAdapter = new ProductAdapter(context, android.R.layout.simple_spinner_item, productsList, holder.productId);
         holder.product.setAdapter(holder.productAdapter);
-       if(itemList.getEnquiryProductId ()!=null){
-           Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getEnquiryProductId ())).findFirst ();
+       if(itemList.getProductName ()!=null){
+           Products products=realm.where (Products.class).equalTo ("pro_id",itemList.getProductName ()).findFirst ();
            int spinnerPosition = holder.productAdapter.getPosition(products);
            holder.product.setSelection(spinnerPosition);
 
        }
-
-
 
         holder.product.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -73,15 +72,14 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
 
                 holder.productAdapter.setPosition(gPosition);
                 realm.beginTransaction();
-                itemList.setEnquiryProductPosition (gPosition);
-                itemList.setEnquiryProduct (holder.productAdapter.getItem(gPosition).getProduct_name());
-                realm.commitTransaction();
+                itemList.setProductName (holder.productAdapter.getItem(gPosition).getPro_id ());
                 RealmResults<Tax_type> taxModels = realm.where (Tax_type.class).equalTo ("taxGroupId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_group_id ())).findAll ();
                 tax_value= Integer.parseInt (taxModels.get (0).getDisplayName ());
                 tax_id= Integer.parseInt (String.valueOf (taxModels.get (0).getTaxGroupId ()));
                 RealmResults<UomModel> uomModels = realm.where(UomModel.class).equalTo("uom_id", Integer.valueOf(holder.productAdapter.getItem(gPosition).getUom_id())).findAll();
                 holder.uom.setText(uomModels.get(0).getUom_name());
                 saleOrderActivity.setProductList(mPosition,  holder.productAdapter.getItem(gPosition).getPro_id (),holder.productAdapter.getItem(gPosition).getProduct_name(), holder.productAdapter.getItem(gPosition).getUom_id(), uomModels.get(0).getUom_name());
+                realm.commitTransaction();
             }
 
             @Override
@@ -90,7 +88,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
             }
 
         });
-        if (itemList.getEnquiryRequiredQuantity () == null) {
+        if (itemList.getOrderQty () == null) {
             holder.quantity.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,7 +117,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
                 }
             });
         } else {
-            holder.quantity.setText(String.valueOf(itemList.getEnquiryRequiredQuantity()));
+            holder.quantity.setText(String.valueOf(itemList.getOrderQty ()));
             holder.quantity.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -342,7 +340,7 @@ public class EnquiryToQuoteLineAdapter extends RecyclerView.Adapter<EnquiryToQuo
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(EnquiryLineList item, int position) {
+    public void restoreItem(OnlineEnquiryLineList item, int position) {
         itemLists.add(position, item);
         notifyItemInserted(position);
     }

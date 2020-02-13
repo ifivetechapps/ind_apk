@@ -49,7 +49,6 @@ public class ConvertFromEnquiryAdapter extends RecyclerView.Adapter<ConvertFromE
         holder.so_num.setText(item.getSalesEnquiryNo ());
         holder.so_date.setText(item.getSalesEnquiryDate ());
         CustomerList customer=realm.where (CustomerList.class).equalTo ("cusNo",item.getCustomerId ()).findFirst ();
-
         holder.cus_name.setText(customer.getCusName ());
         if(item.getTypeId ()==1){
             holder.enq_type.setText ("Standard");

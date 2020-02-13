@@ -208,7 +208,7 @@ public class AllSalesList extends BaseActivity {
         saleItemList.setOnlineseId (saleItemLists.get (0).getOnlineseId ());
         saleItemList.setOnlinesqId (saleItemLists.get (0).getOnlinesqId ());
         salesItemLineLists.addAll (realm.copyFromRealm (realm.where (SalesItemLineList.class)
-                .equalTo ("saleId", soID)
+                .equalTo ("salesHdrid", soID)
                 .findAll ()));
         saleItemList.setSalesItemLineLists (salesItemLineLists);
         if (IFiveEngine.isNetworkAvailable (this)) {

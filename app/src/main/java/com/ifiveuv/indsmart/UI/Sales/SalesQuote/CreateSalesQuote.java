@@ -271,10 +271,10 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
 
     public void setProductList(int pos, int pro_id, String name, int uomId, String uomName,int taxId,String taxName) {
         realm.beginTransaction ();
-        quoteItemLineLists.get (pos).setProduct (name);
-        quoteItemLineLists.get (pos).setProductId (String.valueOf (pro_id));
+
+        quoteItemLineLists.get (pos).setProductId (pro_id);
         quoteItemLineLists.get (pos).setUomId (uomId);
-        quoteItemLineLists.get (pos).setUom (uomName);
+
         quoteItemLineLists.get (pos).setQuote_tax (taxName);
         quoteItemLineLists.get (pos).setQuoteTaxId (taxId);
         realm.commitTransaction ();
@@ -378,11 +378,11 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
                     quoteItemLineList.setQuoteLineId (nextId_line);
                     quoteItemLineList.setQuoteHdrId (hdrid);
                     quoteItemLineList.setProductPosition (quoteItemLineLists.get (j).getProductPosition ());
-                    quoteItemLineList.setProduct (quoteItemLineLists.get (j).getProduct ());
+
                     quoteItemLineList.setProductId (quoteItemLineLists.get (j).getProductId ());
                     quoteItemLineList.setUomId (quoteItemLineLists.get (j).getUomId ());
                     quoteItemLineList.setUnitPrice (quoteItemLineLists.get (j).getUnitPrice ());
-                    quoteItemLineList.setUom (quoteItemLineLists.get (j).getUom ());
+
                     quoteItemLineList.setLineTotal (quoteItemLineLists.get (j).getLineTotal ());
                     quoteItemLineList.setQuoteTaxId (quoteItemLineLists.get (j).getQuoteTaxId ());
                     quoteItemLineList.setDisPer (quoteItemLineLists.get (j).getDisPer ());
@@ -404,25 +404,25 @@ public class CreateSalesQuote extends BaseActivity implements RecyclerItemTouchH
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof QuoteItemAdapter.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = quoteItemLineLists.get (viewHolder.getAdapterPosition ()).getProduct ();
+      ///      String name = quoteItemLineLists.get (viewHolder.getAdapterPosition ()).getProduct ();
             // backup of removed item for undo purpose
             final QuoteItemLineList deletedItem = quoteItemLineLists.get (viewHolder.getAdapterPosition ());
             final int deletedIndex = viewHolder.getAdapterPosition ();
             // remove the item from recycler view
             salesAdapter.removeItem (viewHolder.getAdapterPosition ());
             // showing snack bar with Undo option
-            Snackbar snackbar = Snackbar
-                    .make (((Activity) this).findViewById (android.R.id.content),
-                            name + " removed from cart!", Snackbar.LENGTH_LONG);
-            snackbar.setAction ("UNDO", new View.OnClickListener () {
-                @Override
-                public void onClick(View view) {
-                    // undo is selected, restore the deleted item
-                    salesAdapter.restoreItem (deletedItem, deletedIndex);
-                }
-            });
-            snackbar.setActionTextColor (Color.YELLOW);
-            snackbar.show ();
+//            Snackbar snackbar = Snackbar
+//                    .make (((Activity) this).findViewById (android.R.id.content),
+//                            name + " removed from cart!", Snackbar.LENGTH_LONG);
+//            snackbar.setAction ("UNDO", new View.OnClickListener () {
+//                @Override
+//                public void onClick(View view) {
+//                    // undo is selected, restore the deleted item
+//                    salesAdapter.restoreItem (deletedItem, deletedIndex);
+//                }
+//            });
+//            snackbar.setActionTextColor (Color.YELLOW);
+//            snackbar.show ();
         }
     }
 

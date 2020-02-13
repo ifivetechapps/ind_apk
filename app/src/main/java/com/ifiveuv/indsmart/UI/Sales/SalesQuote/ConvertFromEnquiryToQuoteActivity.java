@@ -34,7 +34,9 @@ import com.ifiveuv.indsmart.Connectivity.SessionManager;
 import com.ifiveuv.indsmart.Engine.IFiveEngine;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.BaseActivity.BaseActivity;
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
 import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryItemModel;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryLineList;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Adapter.EnquiryToQuoteLineAdapter;
@@ -83,12 +85,12 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     RecyclerView.LayoutManager mLayoutManager;
     String enq_online_id;
     ActionBar actionBar;
-    RealmList<EnquiryLineList> enquiryLineLists = new RealmList<> ();
+    RealmList<OnlineEnquiryLineList> enquiryLineLists = new RealmList<> ();
     Calendar sodateCalendar, deldateCalendar;
     Realm realm;
     int nextId, cus_id = 0, tax_id;
     QuoteItemList salesItemLists;
-    RealmResults<EnquiryItemModel> enquiryItemModels;
+
     RealmResults<OnlineEnquiryItemModel> onlineEnquiryItemModels;
     private Menu menu;
     AlertDialog.Builder chartDialog;
@@ -169,20 +171,24 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
 
     private void loadData() {
         onlineEnquiryItemModels = realm.where (OnlineEnquiryItemModel.class)
-                .equalTo ("salesEnquiryNo", hdrid)
+                .equalTo ("salesEnquiryHdrId", hdrid)
                 .findAll ();
-        enquiryItemModels = realm.where (EnquiryItemModel.class)
-                .equalTo ("enquiryId", hdrid)
-                .findAll ();
-        delivery_date.setText (enquiryItemModels.get (0).getDeliveryDate ());
-        so_date.setText (enquiryItemModels.get (0).getEnquiryDate ());
-        so_status.setText (enquiryItemModels.get (0).getEnquiryStatus ());
-        customer_Name.setText (enquiryItemModels.get (0).getEnquiryCustomerName ());
-        typeOfOrder.setText (enquiryItemModels.get (0).getEnquiryType ());
-        cus_id = enquiryItemModels.get (0).getEnquiryCustomerId ();
-        enq_online_id = enquiryItemModels.get (0).getEnqOnlineId ();
-        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (EnquiryLineList.class)
-                .equalTo ("enquiryHdrId", hdrid)
+
+        delivery_date.setText (onlineEnquiryItemModels.get (0).getDeliveryDate ());
+        so_date.setText (onlineEnquiryItemModels.get (0).getSalesEnquiryDate ());
+        so_status.setText ("Opened");
+         cus_id=onlineEnquiryItemModels.get (0).getCustomerId ();
+        CustomerList cusotmer_names=realm.where (CustomerList.class).equalTo ("cusNo",cus_id).findFirst ();
+        customer_Name.setText (cusotmer_names.getCusName ());
+        int type_id=onlineEnquiryItemModels.get (0).getTypeId ();
+        if(type_id==1){
+            typeOfOrder.setText ("Standard");
+        }else{
+            typeOfOrder.setText ("Labour");
+        }
+        enq_online_id = onlineEnquiryItemModels.get (0).getSalesEnquiryNo ();
+        enquiryLineLists.addAll (realm.copyFromRealm (realm.where (OnlineEnquiryLineList.class)
+                .equalTo ("salesEnquiryHdrId", hdrid)
                 .findAll ()));
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
@@ -248,8 +254,8 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         salesItemLists.setOnlineStatus ("0");
         salesItemLists.setQstatus ("Opened");
         salesItemLists.setQuoteType (typeOfOrder.getText ().toString ());
-        salesItemLists.setTaxTypeid (String.valueOf (tax_id));
-        salesItemLists.setTax_value (String.valueOf (tax_value));
+
+
         salesItemLists.setTotalPrice (gross_amount.getText ().toString ());
         uploadLocalPurchase (salesItemLists, nextId);
     }
@@ -291,27 +297,23 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     }
 
     private void insertItem(int position) {
-        enquiryLineLists.add (new EnquiryLineList ());
+        enquiryLineLists.add (new OnlineEnquiryLineList ());
         salesAdapter.notifyItemInserted (position);
     }
 
 
     public void setProductList(int pos, int pro_id, String name, int uomId, String uomName) {
-        realm.beginTransaction ();
-        enquiryLineLists.get (pos).setEnquiryProduct (name);
-        enquiryLineLists.get (pos).setEnquiryProductId (String.valueOf (pro_id));
-        enquiryLineLists.get (pos).setEnquiryUomId (uomId);
-        enquiryLineLists.get (pos).setEnquiryUom (uomName);
 
+        enquiryLineLists.get (pos).setProductName  (pro_id);
+        enquiryLineLists.get (pos).setUomId (uomId);
 
-        realm.commitTransaction ();
     }
 
     public void setQuantity(int position, int quant) {
-        enquiryLineLists.get (position).setEnquiryRequiredQuantity (String.valueOf (quant));
+        enquiryLineLists.get (position).setOrderQty (quant);
     }
 
-    public void grandTotal(List<EnquiryLineList> items) {
+    public void grandTotal(List<OnlineEnquiryLineList> items) {
 
         double grosspay = 0.0;
 
@@ -331,8 +333,8 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         realm.executeTransaction (new Realm.Transaction () {
             @Override
             public void execute(Realm realm) {
-                EnquiryItemModel enquiryItemModel = realm.where (EnquiryItemModel.class).equalTo ("enquiryId", hdrid).findFirst ();
-                enquiryItemModel.setEnquiryStatus ("converted");
+                OnlineEnquiryItemModel enquiryItemModel = realm.where (OnlineEnquiryItemModel.class).equalTo ("salesEnquiryHdrId", hdrid).findFirst ();
+                enquiryItemModel.setApproveStatus ("converted");
             }
         });
 
@@ -352,8 +354,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         salesItemLists.setQdel_date (delivery_date.getText ().toString ());
         salesItemLists.setQstatus ("Submitted");
         salesItemLists.setOnlineStatus ("0");
-        salesItemLists.setTaxTypeid (String.valueOf (tax_id));
-        salesItemLists.setTax_value (String.valueOf (tax_value));
+
         salesItemLists.setQuoteType (typeOfOrder.getText ().toString ());
         salesItemLists.setTotalPrice (gross_amount.getText ().toString ());
         uploadLocalPurchase (salesItemLists, nextId);
@@ -405,19 +406,16 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
                     QuoteItemLineList quoteItemLineList=new QuoteItemLineList ();
                     quoteItemLineList.setQuoteLineId (nextId_line);
                     quoteItemLineList.setQuoteHdrId (hdrid);
-                    quoteItemLineList.setProductPosition (enquiryLineLists.get (j).getEnquiryProductPosition ());
-                    quoteItemLineList.setProduct (enquiryLineLists.get (j).getEnquiryProduct ());
-                    quoteItemLineList.setProductId (enquiryLineLists.get (j).getEnquiryProductId ());
-                    quoteItemLineList.setUomId (enquiryLineLists.get (j).getEnquiryUomId ());
+                    quoteItemLineList.setProductId (enquiryLineLists.get (j).getProductName ());
+                    quoteItemLineList.setUomId (enquiryLineLists.get (j).getUomId ());
                     quoteItemLineList.setUnitPrice (enquiryLineLists.get (j).getUnitPrice ());
-                    quoteItemLineList.setUom (enquiryLineLists.get (j).getEnquiryUom ());
                     quoteItemLineList.setQuote_taxAmt (enquiryLineLists.get (j).getTaxAmt ());
-                    quoteItemLineList.setQuoteTaxId (enquiryLineLists.get (j).getTaxId ());
+                    quoteItemLineList.setQuoteTaxId (enquiryLineLists.get (j).getTax ());
                     quoteItemLineList.setLineTotal (enquiryLineLists.get (j).getLineTotal ());
                     quoteItemLineList.setDisPer (enquiryLineLists.get (j).getDiscountPercent ());
                     quoteItemLineList.setDisAmt (enquiryLineLists.get (j).getDiscountAmount ());
                     quoteItemLineList.setMrp (enquiryLineLists.get (j).getOriginalCost ());
-                    quoteItemLineList.setQuantity (enquiryLineLists.get (j).getEnquiryRequiredQuantity ());
+                    quoteItemLineList.setQuantity (String.valueOf (enquiryLineLists.get (j).getOrderQty ()));
                     realm.insert (quoteItemLineList);
 
                 }
@@ -434,9 +432,11 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof EnquiryToQuoteLineAdapter.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = enquiryLineLists.get (viewHolder.getAdapterPosition ()).getEnquiryProduct ();
+            Products products=realm.where (Products.class).equalTo ("pro_id", enquiryLineLists.get (viewHolder.getAdapterPosition ()).getProductName ()).findFirst ();
+
+            String name =products.getProduct_name ();
             // backup of removed item for undo purpose
-            final EnquiryLineList deletedItem = enquiryLineLists.get (viewHolder.getAdapterPosition ());
+            final OnlineEnquiryLineList deletedItem = enquiryLineLists.get (viewHolder.getAdapterPosition ());
             final int deletedIndex = viewHolder.getAdapterPosition ();
             // remove the item from recycler view
             salesAdapter.removeItem (viewHolder.getAdapterPosition ());
@@ -475,7 +475,7 @@ public class ConvertFromEnquiryToQuoteActivity extends BaseActivity implements R
         enquiryLineLists.get (mPosition).setOriginalCost (String.valueOf (total));
         enquiryLineLists.get (mPosition).setDiscountAmount (String.valueOf (disamt));
         enquiryLineLists.get (mPosition).setLineTotal (String.valueOf (total_amount));
-        enquiryLineLists.get (mPosition).setTaxId (tax_id);
+        enquiryLineLists.get (mPosition).setTax (tax_id);
         grandTotal (enquiryLineLists);
     }
 

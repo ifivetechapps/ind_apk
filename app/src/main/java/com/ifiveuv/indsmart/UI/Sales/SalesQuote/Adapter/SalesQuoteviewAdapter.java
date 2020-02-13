@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ifiveuv.indsmart.Connectivity.Products;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemLineList;
@@ -44,8 +45,13 @@ public class SalesQuoteviewAdapter extends RecyclerView.Adapter<SalesQuoteviewAd
         Log.d("position", String.valueOf(mPosition));
         holder.quantity.setText(String.valueOf(itemList.getQuantity()));
         holder.amount.setText(itemList.getUnitPrice());
-        String product = itemList.getProduct();
-        holder.product.setText(product);
+       // String product = itemList.getProduct();
+        //holder.product.setText(product);
+
+        Products products=realm.where (Products.class).equalTo ("pro_id", itemList.getProductId ()).findFirst ();
+
+        String name =products.getProduct_name ();
+        holder.product.setText(name);
         RealmResults<UomModel> uomModels = realm.where(UomModel.class).equalTo("uom_id", Integer.valueOf(itemList.getUomId())).findAll();
         holder.uom.setText(uomModels.get(0).getUom_name());
     }

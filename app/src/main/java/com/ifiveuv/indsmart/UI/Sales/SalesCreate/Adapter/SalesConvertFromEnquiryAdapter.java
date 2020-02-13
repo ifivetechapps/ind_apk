@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifiveuv.indsmart.R;
+import com.ifiveuv.indsmart.UI.Masters.Model.CustomerList;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryItemModel;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.ConvertFromEnquiryToSalesActivity;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.SalesConvertFromEnquiry;
-import com.ifiveuv.indsmart.UI.Sales.SalesEnquiry.Model.EnquiryItemModel;
+
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -22,10 +24,10 @@ import io.realm.RealmResults;
 public class SalesConvertFromEnquiryAdapter extends RecyclerView.Adapter<SalesConvertFromEnquiryAdapter.MyViewHolder> {
     Realm realm;
     private Context context;
-    private RealmResults<EnquiryItemModel> cartList;
+    private RealmResults<OnlineEnquiryItemModel> cartList;
 
 
-    public SalesConvertFromEnquiryAdapter(RealmResults<EnquiryItemModel> cartList, SalesConvertFromEnquiry context) {
+    public SalesConvertFromEnquiryAdapter(RealmResults<OnlineEnquiryItemModel> cartList, SalesConvertFromEnquiry context) {
         this.context = context;
         this.cartList = cartList;
         realm = Realm.getDefaultInstance();
@@ -42,18 +44,25 @@ public class SalesConvertFromEnquiryAdapter extends RecyclerView.Adapter<SalesCo
 
     @Override
     public void onBindViewHolder(SalesConvertFromEnquiryAdapter.MyViewHolder holder, final int position) {
-        final EnquiryItemModel item = cartList.get(position);
+        final OnlineEnquiryItemModel item = cartList.get(position);
 
-        holder.so_num.setText(item.getEnqOnlineId ());
-        holder.so_date.setText(item.getEnquiryDate ());
-        holder.cus_name.setText(item.getEnquiryCustomerName ());
-        holder.enq_type.setText(item.getEnquiryType ());
-        holder.status.setText(item.getEnquiryStatus ());
+        holder.so_num.setText(item.getSalesEnquiryNo ());
+        holder.so_date.setText(item.getSalesEnquiryDate ());
+        CustomerList customer=realm.where (CustomerList.class).equalTo ("cusNo",item.getCustomerId ()).findFirst ();
+
+        holder.cus_name.setText(customer.getCusName ());
+        if(item.getTypeId ()==1){
+            holder.enq_type.setText ("Standard");
+        }else{
+            holder.enq_type.setText ("Labour");
+        }
+
+        holder.status.setText(item.getApproveStatus ());
         holder.viewForeground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ConvertFromEnquiryToSalesActivity.class);
-                intent.putExtra("hdrid", String.valueOf(item.getEnquiryId ()));
+                intent.putExtra("hdrid", String.valueOf(item.getSalesEnquiryHdrId ()));
                 context.startActivity(intent);
             }
         });

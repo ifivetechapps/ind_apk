@@ -19,6 +19,8 @@ import com.ifiveuv.indsmart.Connectivity.Tax_type;
 import com.ifiveuv.indsmart.R;
 import com.ifiveuv.indsmart.UI.Adapter.ProductAdapter;
 import com.ifiveuv.indsmart.UI.Masters.Model.UomModel;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.OnlineEnquiryLineList;
+import com.ifiveuv.indsmart.UI.Sales.OnlineModel.SoQuoteDetail;
 import com.ifiveuv.indsmart.UI.Sales.SalesCreate.ConvertFromQuoteToSalesActivity;
 import com.ifiveuv.indsmart.UI.Sales.SalesQuote.Model.QuoteItemLineList;
 
@@ -31,13 +33,13 @@ import io.realm.RealmResults;
 
 public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLineAdapter.MyViewHolder> {
     ConvertFromQuoteToSalesActivity saleOrderActivity;
-    RealmList<QuoteItemLineList> itemLists;
+    RealmList<SoQuoteDetail> itemLists;
     List<Products> productsList;
     Realm realm;
     private Context context;
-    int tax_id;
+    Integer tax_id;
     double tax_value=0.0;
-    public QuoteToSalesLineAdapter(Context context, RealmList<QuoteItemLineList> cartList, List<Products> products, ConvertFromQuoteToSalesActivity saleOrderActivity) {
+    public QuoteToSalesLineAdapter(Context context, RealmList<SoQuoteDetail> cartList, List<Products> products, ConvertFromQuoteToSalesActivity saleOrderActivity) {
         this.context = context;
         this.saleOrderActivity = saleOrderActivity;
         this.itemLists = cartList;
@@ -54,13 +56,13 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
 
     @Override
     public void onBindViewHolder(final QuoteToSalesLineAdapter.MyViewHolder holder, final int mPosition) {
-        final QuoteItemLineList itemList = itemLists.get(mPosition);
+        final SoQuoteDetail itemList = itemLists.get(mPosition);
         Log.d("position", String.valueOf(mPosition));
         holder.productAdapter = new ProductAdapter(context, android.R.layout.simple_spinner_item, productsList, holder.productId);
         holder.product.setAdapter(holder.productAdapter);
 
-        if(itemList.getProductId ()!=null){
-            Products products=realm.where (Products.class).equalTo ("pro_id",Integer.parseInt (itemList.getProductId ())).findFirst ();
+        if(itemList.getProductName ()!=null){
+            Products products=realm.where (Products.class).equalTo ("pro_id",itemList.getProductName ()).findFirst ();
             int spinnerPosition = holder.productAdapter.getPosition(products);
             holder.product.setSelection(spinnerPosition);
 
@@ -71,10 +73,7 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
             public void onItemSelected(AdapterView<?> adapterView, View view, int gPosition, long l) {
 
                 holder.productAdapter.setPosition(gPosition);
-                realm.beginTransaction();
-                itemList.setProductPosition (gPosition);
-                itemList.setProduct (holder.productAdapter.getItem(gPosition).getProduct_name());
-                realm.commitTransaction();
+
                 RealmResults<Tax_type> taxModels = realm.where (Tax_type.class).equalTo ("taxGroupId", Integer.valueOf (holder.productAdapter.getItem (gPosition).getTax_group_id ())).findAll ();
                 tax_value= Integer.parseInt (taxModels.get (0).getDisplayName ());
                 tax_id= Integer.parseInt (String.valueOf (taxModels.get (0).getTaxGroupId ()));
@@ -90,7 +89,7 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
             }
 
         });
-        if (itemList.getQuantity () == null) {
+        if (itemList.getOrderQty () == null) {
             holder.quantity.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,7 +118,7 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
                 }
             });
         } else {
-            holder.quantity.setText(String.valueOf(itemList.getQuantity ()));
+            holder.quantity.setText(String.valueOf(itemList.getOrderQty ()));
             holder.quantity.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -155,7 +154,7 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
             });
 
         }
-        if (itemList.getUnitPrice () == null) {
+        if (itemList.getUnitSellingPrice () == null) {
             holder.unit_price.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -182,8 +181,8 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
                 }
             });
         } else {
-            holder.unit_price.setText(String.valueOf(itemList.getUnitPrice ()));
-            holder.amount.setText(String.valueOf(itemList.getLineTotal ()));
+            holder.unit_price.setText(String.valueOf(itemList.getUnitSellingPrice ()));
+            holder.amount.setText(String.valueOf(itemList.getTotalCost ()));
             holder.unit_price.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -219,7 +218,7 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
 
         }
 
-        if (itemList.getDisPer () == null) {
+        if (itemList.getDiscountPer () == null) {
             holder.discount.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -243,13 +242,16 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
                         disamt=0.0;
 
                     } else {
+
                         disper = Double.parseDouble (s.toString ());
                         unit_quan=up*quantity;
                         disamt = ((disper / 100) * unit_quan);
                         amount=unit_quan-disamt;
                         tax_cal = ((tax_value / 100) * amount);
-
+                        itemList.setTax (tax_id);
+                        itemList.setTaxAmt (String.valueOf (tax_cal));
                         total_amount = amount+tax_cal;
+
                         holder.amount.setText (String.valueOf (total_amount));
                         saleOrderActivity.setLineTotal(mPosition,disper,unit_quan,disamt,total_amount);
                     }
@@ -258,8 +260,8 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
                 }
             });
         } else {
-            holder.discount.setText(String.valueOf(itemList.getDisPer ()));
-            holder.amount.setText(String.valueOf(itemList.getLineTotal ()));
+            holder.discount.setText(String.valueOf(itemList.getDiscountPer ()));
+            holder.amount.setText(String.valueOf(itemList.getTotalCost ()));
             holder.discount.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -289,7 +291,8 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
                         disamt = ((disper / 100) * unit_quan);
                         amount=unit_quan-disamt;
                         tax_cal = ((tax_value / 100) * amount);
-
+                        itemList.setTax (tax_id);
+                        itemList.setTaxAmt (String.valueOf (tax_cal));
                         total_amount = amount+tax_cal;
                         holder.amount.setText (String.valueOf (total_amount));
                         saleOrderActivity.setLineTotal(mPosition,disper,unit_quan,disamt,total_amount);
@@ -313,7 +316,7 @@ public class QuoteToSalesLineAdapter extends RecyclerView.Adapter<QuoteToSalesLi
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(QuoteItemLineList item, int position) {
+    public void restoreItem(SoQuoteDetail item, int position) {
         itemLists.add(position, item);
         notifyItemInserted(position);
     }

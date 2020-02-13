@@ -76,10 +76,10 @@ public class SalesQuoteViewActivity extends BaseActivity {
         salesItemLists = realm.where(QuoteItemList.class)
                 .equalTo("id", hdrid)
                 .findAll();
-        order_no.setText("SOQ" + salesItemLists.get(0).getQuoteItemlist());
+        order_no.setText(salesItemLists.get (0).getOnlineId ());
         delivery_date.setText(salesItemLists.get(0).getQdel_date());
         order_date.setText(salesItemLists.get(0).getQodate());
-        status.setText(salesItemLists.get(0).getQstatus ());
+        status.setText(salesItemLists.get(0).getApproval_status ());
         customer_name.setText(salesItemLists.get(0).getQcus_name());
         salesItemLinesall.addAll (realm.copyFromRealm (realm.where (QuoteItemLineList.class)
                 .equalTo ("quoteHdrId", hdrid)
