@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ifiveuv.indsmart">
+    package="com.ifive.indsmart">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.ifive.indsmart.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,76 +21,76 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name="com.ifive.indsmart.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".UI.login.LoginActivity" />
+        <activity android:name="com.ifive.indsmart.UI.login.LoginActivity" />
 
-        <activity android:name=".UI.SubDashboard.SubDashboard" />
-
-
-        <activity android:name=".UI.Masters.CreateUomActivity" />
-        <activity android:name=".UI.Masters.CreatePackingTypeActivity" />
-        <activity android:name=".UI.Masters.CreatePackingSizeActivity" />
+        <activity android:name="com.ifive.indsmart.UI.SubDashboard.SubDashboard" />
 
 
-        <activity android:name=".UI.Masters.CreateSupplierActivity" />
-        <activity android:name=".UI.Masters.CreateCustomerActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Masters.CreateUomActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Masters.CreatePackingTypeActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Masters.CreatePackingSizeActivity" />
 
-        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryCreatingActivity" />
-        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryEditActivity" />
-        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryViewActivity" />
-        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryList" />
 
-        <activity android:name=".UI.logout.LogoutActivity" />
-        <activity android:name=".UI.DashBoard.Dashboard" />
-        <activity android:name=".UI.Sales.SalesQuote.AllQuoteList" />
-        <activity android:name=".UI.Sales.SalesQuote.CreateSalesQuote" />
-        <activity android:name=".UI.Sales.SalesQuote.ConvertFromEnquiry" />
-        <activity android:name=".UI.Sales.SalesQuote.ConvertFromEnquiryToQuoteActivity" />
-        <activity android:name=".UI.Sales.SalesQuote.SalesQuoteEditActivity" />
-        <activity android:name=".UI.Sales.SalesQuote.SalesQuoteViewActivity" />
-        <activity android:name=".UI.Sales.SalesCreate.AllSalesList" />
-        <activity android:name=".UI.Sales.SalesCreate.SalesConvertFromEnquiry" />
-        <activity android:name=".UI.Sales.SalesCreate.ConvertFromEnquiryToSalesActivity" />
-        <activity android:name=".UI.Sales.SalesCreate.CreateSalesActivity" />
-        <activity android:name=".UI.Sales.SalesCreate.SalesConvertFromQuote" />
-        <activity android:name=".UI.Sales.SalesCreate.ConvertFromQuoteToSalesActivity" />
-        <activity android:name=".UI.Sales.SalesCreate.SalesOrderViewActivity" />
-        <activity android:name=".UI.Sales.SalesCreate.SalesOrderEditActivity" />
-        <activity android:name=".UI.Sales.SalesInvoice.SalesOrdertoInvoice" />
-        <activity android:name=".UI.Sales.SalesInvoice.SalesInvoiceActivity" />
-        <activity android:name=".UI.Sales.SalesInvoice.CreateSalesInvoice" />
-        <activity android:name=".UI.Sales.SalesInvoice.SalesInvoiceEditActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Masters.CreateSupplierActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Masters.CreateCustomerActivity" />
 
-        <activity android:name=".UI.Sales.SalesInvoice.SalesInvoiceViewActivity" />
-        <activity android:name=".UI.PurchaseRequisition.ApproveListRequisitionActivity" />
-        <activity android:name=".UI.PurchaseRequisition.ApproveRequisitionActivity" />
-        <activity android:name=".UI.PurchaseRequisition.CreateRequisitionActivity" />
-        <activity android:name=".UI.PurchaseRequisition.EditRequisitionActivity" />
-        <activity android:name=".UI.PurchaseRequisition.ListRequisitionActivity" />
-        <activity android:name=".UI.PurchaseRequisition.ViewRequisitionActivity" />
-        <activity android:name=".UI.PurchaseEnquiry.ConvertRequisitionToEnquiryActivity" />
-        <activity android:name=".UI.PurchaseEnquiry.CreateEnquiryActivity" />
-        <activity android:name=".UI.PurchaseEnquiry.EditEnquiryActivity" />
-        <activity android:name=".UI.PurchaseEnquiry.ListEnquiryActivity" />
-        <activity android:name=".UI.PurchaseEnquiry.RequisitionList" />
-        <activity android:name=".UI.PurchaseEnquiry.ViewEnquiryActivity" />
-        <activity android:name=".UI.SalesApprove.SalesApproveActivity" />
-        <activity android:name=".UI.PurchaseQuote.ViewQuotationActivity" />
-        <activity android:name=".UI.PurchaseQuote.QuoteFromRequisitionActivity" />
-        <activity android:name=".UI.PurchaseQuote.QuoteFromEnquiryActivity" />
-        <activity android:name=".UI.PurchaseQuote.ListQuotationActivity" />
-        <activity android:name=".UI.PurchaseQuote.ConvertRequisitiontoQuoteActivity" />
-        <activity android:name=".UI.PurchaseQuote.ConvertEnquirytoQuoteActivity" />
-        <activity android:name=".UI.PurchaseQuote.CreateQuoteActivity" />
-        <activity android:name=".UI.PurchaseQuote.EditQuotationActivity" />
-        <activity android:name=".UI.PurchaseQuote.ApprovalQuotationList" />
-        <activity android:name=".UI.Sales.SalesEnquiry.SalesEnquiryCopyActivity" />
-        <activity android:name=".UI.DashBoard.SyncAllDataActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryCreatingActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryEditActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryViewActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryList" />
+
+        <activity android:name="com.ifive.indsmart.UI.logout.LogoutActivity" />
+        <activity android:name="com.ifive.indsmart.UI.DashBoard.Dashboard" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesQuote.AllQuoteList" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesQuote.CreateSalesQuote" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesQuote.ConvertFromEnquiry" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesQuote.ConvertFromEnquiryToQuoteActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesQuote.SalesQuoteEditActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesQuote.SalesQuoteViewActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.AllSalesList" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.SalesConvertFromEnquiry" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.ConvertFromEnquiryToSalesActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.CreateSalesActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.SalesConvertFromQuote" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.ConvertFromQuoteToSalesActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.SalesOrderViewActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesCreate.SalesOrderEditActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesInvoice.SalesOrdertoInvoice" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesInvoice.SalesInvoiceActivity" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesInvoice.CreateSalesInvoice" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesInvoice.SalesInvoiceEditActivity" />
+
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesInvoice.SalesInvoiceViewActivity" />
+        <activity android:name=".UI.Purchase.PurchaseRequisition.ApproveListRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseRequisition.ApproveRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseRequisition.CreateRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseRequisition.EditRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseRequisition.ListRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseRequisition.ViewRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseEnquiry.ConvertRequisitionToEnquiryActivity" />
+        <activity android:name=".UI.Purchase.PurchaseEnquiry.CreateEnquiryActivity" />
+        <activity android:name=".UI.Purchase.PurchaseEnquiry.EditEnquiryActivity" />
+        <activity android:name=".UI.Purchase.PurchaseEnquiry.ListEnquiryActivity" />
+        <activity android:name=".UI.Purchase.PurchaseEnquiry.RequisitionList" />
+        <activity android:name=".UI.Purchase.PurchaseEnquiry.ViewEnquiryActivity" />
+        <activity android:name="com.ifive.indsmart.UI.SalesApprove.SalesApproveActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.ViewQuotationActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.QuoteFromRequisitionActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.QuoteFromEnquiryActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.ListQuotationActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.ConvertRequisitiontoQuoteActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.ConvertEnquirytoQuoteActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.CreateQuoteActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.EditQuotationActivity" />
+        <activity android:name=".UI.Purchase.PurchaseQuote.ApprovalQuotationList" />
+        <activity android:name="com.ifive.indsmart.UI.Sales.SalesEnquiry.SalesEnquiryCopyActivity" />
+        <activity android:name="com.ifive.indsmart.UI.DashBoard.SyncAllDataActivity" />
 
     </application>
 
