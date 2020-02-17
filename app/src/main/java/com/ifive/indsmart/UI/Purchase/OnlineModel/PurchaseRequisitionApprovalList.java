@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-public class PurchaseRequisitionList extends RealmObject {
+public class PurchaseRequisitionApprovalList extends RealmObject {
     @SerializedName("purchase_req_id")
     @Expose
     private Integer purchaseReqId;

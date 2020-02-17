@@ -5,12 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +22,11 @@ import com.ifive.indsmart.Engine.RetroFitEngine;
 import com.ifive.indsmart.R;
 import com.ifive.indsmart.UI.BaseActivity.BaseActivity;
 import com.ifive.indsmart.UI.Masters.Model.SupplierList;
-import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionHeader;
-import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionList;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionApprovalList;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionApprover;
 import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.Adapter.ViewRequisitionLineAdapter;
 import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.Model.RequisitionHeader;
 import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.Model.RequisitionLines;
-import com.ifive.indsmart.UI.SalesApprove.SalesEnquiryList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +69,7 @@ public class ApproveRequisitionActivity extends BaseActivity {
     String headerId;
     SessionManager sessionManager;
     ProgressDialog progressDialog;
-    PurchaseRequisitionHeader purchaseRequisitionHeader;
+    PurchaseRequisitionApprover purchaseRequisitionApprover;
 
     @Override
     protected void onCreate(Bundle savedInstance) {
@@ -105,8 +101,8 @@ public class ApproveRequisitionActivity extends BaseActivity {
 
         List<Products> products = new ArrayList<Products> ();
         products.addAll (realm.where (Products.class).findAll ());
-        RealmResults<PurchaseRequisitionList> results;
-        results = realm.where (PurchaseRequisitionList.class)
+        RealmResults<PurchaseRequisitionApprovalList> results;
+        results = realm.where (PurchaseRequisitionApprovalList.class)
                 .equalTo ("Hdrid", hdrid)
                 .findAll ();
         headerId= String.valueOf (results.get (0).getPurchaseReqId ());

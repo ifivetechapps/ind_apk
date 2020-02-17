@@ -1,7 +1,6 @@
 package com.ifive.indsmart.UI.Purchase.PurchaseRequisition.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,19 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifive.indsmart.R;
-import com.ifive.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionList;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionApprovalList;
 import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.ApproveListRequisitionActivity;
-import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.ApproveRequisitionActivity;
 
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmResults;
 
 
 public class ApproveListRequisitionAdapter extends RecyclerView.Adapter<ApproveListRequisitionAdapter.MyViewHolder> {
     private Context context;
-    private RealmList<PurchaseRequisitionList> cartList;
+    private RealmList<PurchaseRequisitionApprovalList> cartList;
     Realm realm;
     ApproveListRequisitionActivity approveListRequisitionActivity;
 
@@ -49,7 +45,7 @@ public class ApproveListRequisitionAdapter extends RecyclerView.Adapter<ApproveL
         }
     }
 
-    public ApproveListRequisitionAdapter(Context context,RealmList<PurchaseRequisitionList> cartList, ApproveListRequisitionActivity approveListRequisitionActivity) {
+    public ApproveListRequisitionAdapter(Context context, RealmList<PurchaseRequisitionApprovalList> cartList, ApproveListRequisitionActivity approveListRequisitionActivity) {
         this.context = context;
         this.approveListRequisitionActivity = approveListRequisitionActivity;
         this.cartList = cartList;
@@ -67,11 +63,16 @@ public class ApproveListRequisitionAdapter extends RecyclerView.Adapter<ApproveL
 
     @Override
     public void onBindViewHolder(ApproveListRequisitionAdapter.MyViewHolder holder, final int position) {
-        final PurchaseRequisitionList item = cartList.get (position);
+        final PurchaseRequisitionApprovalList item = cartList.get (position);
 
         holder.req_num.setText (item.getPurchaseReqNumber ());
         holder.req_name.setText (item.getSupplierName ());
         holder.req_type.setText (item.getPurchaseReqType ());
+        if(item.getPurchaseReqType ().equals ("2")){
+            holder.req_type.setText ("Labour");
+        }else{
+            holder.req_type.setText ("standard");
+        }
         holder.req_date.setText (item.getPurchaseReqDate ());
 if(item.getPurchasereqstatus ().equals ("0")){
     holder.status.setText ("Inititated");

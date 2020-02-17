@@ -5,7 +5,10 @@ import com.ifive.indsmart.UI.Masters.Model.CustomerList;
 import com.ifive.indsmart.UI.Masters.Model.SupplierList;
 import com.ifive.indsmart.UI.Masters.UomSave;
 
-import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionHeader;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseEnquiryAll;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseOrderAll;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionApprover;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.onlineRequisitionAll;
 import com.ifive.indsmart.UI.Purchase.PurchaseEnquiry.Model.PurchaseEnquiryData;
 import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.Model.RequisitionHeader;
 import com.ifive.indsmart.UI.Sales.OnlineModel.SalesOrderAll;
@@ -105,6 +108,12 @@ public interface UserAPICall {
     Call<SalesOrderAll> allsales(@Header("token") String token);
 
     @POST("public/api-purchasereqlist-list")
-    Call<PurchaseRequisitionHeader> allpurchasereqlist(@Header("token") String token);
+    Call<PurchaseRequisitionApprover> allpurchasereqlist(@Header("token") String token);
+    @POST("public/api-purchasereq-list")
+    Call<onlineRequisitionAll> purchasereqdetailedlist(@Header("token") String token);
+    @POST("public/api-purchaseenq-list")
+    Call<PurchaseEnquiryAll> purchaseenqdetailedlist(@Header("token") String token);
+    @POST("public/api-purchase-list")
+    Call<PurchaseOrderAll> purchasedetailedlist(@Header("token") String token);
 
 }

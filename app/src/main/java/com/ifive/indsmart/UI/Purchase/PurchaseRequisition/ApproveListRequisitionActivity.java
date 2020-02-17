@@ -22,8 +22,8 @@ import com.ifive.indsmart.Engine.IFiveEngine;
 import com.ifive.indsmart.Engine.RetroFitEngine;
 import com.ifive.indsmart.R;
 import com.ifive.indsmart.UI.BaseActivity.BaseActivity;
-import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionHeader;
-import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionList;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionApprovalList;
+import com.ifive.indsmart.UI.Purchase.OnlineModel.PurchaseRequisitionApprover;
 import com.ifive.indsmart.UI.Purchase.PurchaseRequisition.Adapter.ApproveListRequisitionAdapter;
 import com.ifive.indsmart.UI.SubDashboard.SubDashboard;
 
@@ -50,10 +50,10 @@ public class ApproveListRequisitionActivity extends BaseActivity {
     Menu menu;
     Message message;
     private FloatingActionMenu fam;
-    PurchaseRequisitionHeader purchaseRequisitionHeader;
+    PurchaseRequisitionApprover purchaseRequisitionApprover;
     ProgressDialog progressDialog;
     SessionManager sessionManager;SendApprovalId sendApprovalId;
-    RealmList<PurchaseRequisitionList> purchaseRequisitionList=new RealmList<> ();
+    RealmList<PurchaseRequisitionApprovalList> purchaseRequisitionApprovalList =new RealmList<> ();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,20 +80,20 @@ public class ApproveListRequisitionActivity extends BaseActivity {
     private void loadData() {
         if (IFiveEngine.isNetworkAvailable(this)) {
             progressDialog.show();
-            purchaseRequisitionHeader = new PurchaseRequisitionHeader ();
+            purchaseRequisitionApprover = new PurchaseRequisitionApprover ();
             SessionManager sessionManager = new SessionManager();
 
             UserAPICall userAPICall = RetroFitEngine.getRetrofit().create(UserAPICall.class);
-            Call<PurchaseRequisitionHeader> callEnqueue = userAPICall.allpurchasereqlist(sessionManager.getToken(this));
-            callEnqueue.enqueue(new Callback<PurchaseRequisitionHeader> () {
+            Call<PurchaseRequisitionApprover> callEnqueue = userAPICall.allpurchasereqlist(sessionManager.getToken(this));
+            callEnqueue.enqueue(new Callback<PurchaseRequisitionApprover> () {
                 @Override
-                public void onResponse(Call<PurchaseRequisitionHeader> call, Response<PurchaseRequisitionHeader> response) {
-                    purchaseRequisitionHeader = response.body();
-                    if (purchaseRequisitionHeader.getPurchaseRequisitionList () != null) {
+                public void onResponse(Call<PurchaseRequisitionApprover> call, Response<PurchaseRequisitionApprover> response) {
+                    purchaseRequisitionApprover = response.body();
+                    if (purchaseRequisitionApprover.getPurchaseRequisitionApprovalList () != null) {
                         realm.executeTransaction (new Realm.Transaction () {
                             @Override
                             public void execute(Realm realm) {
-                                purchaseRequisitionList.addAll (purchaseRequisitionHeader.getPurchaseRequisitionList ());
+                                purchaseRequisitionApprovalList.addAll (purchaseRequisitionApprover.getPurchaseRequisitionApprovalList ());
 
                             }
                         });
@@ -104,7 +104,7 @@ public class ApproveListRequisitionActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailure(Call<PurchaseRequisitionHeader> call, Throwable t) {
+                public void onFailure(Call<PurchaseRequisitionApprover> call, Throwable t) {
 
                 }
             });
@@ -113,10 +113,10 @@ public class ApproveListRequisitionActivity extends BaseActivity {
 
     private void loadAdapter() {
 
-        if (purchaseRequisitionHeader.getPurchaseRequisitionList ().size () != 0) {
+        if (purchaseRequisitionApprover.getPurchaseRequisitionApprovalList ().size () != 0) {
             ll1.setVisibility (View.VISIBLE);
             ll2.setVisibility (View.GONE);
-            ApproveListRequisitionAdapter adapter = new ApproveListRequisitionAdapter (this,purchaseRequisitionHeader.getPurchaseRequisitionList (), this);
+            ApproveListRequisitionAdapter adapter = new ApproveListRequisitionAdapter (this, purchaseRequisitionApprover.getPurchaseRequisitionApprovalList (), this);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager (this, LinearLayoutManager.VERTICAL, false);
 
             salesorder_list.setLayoutManager (linearLayoutManager);
